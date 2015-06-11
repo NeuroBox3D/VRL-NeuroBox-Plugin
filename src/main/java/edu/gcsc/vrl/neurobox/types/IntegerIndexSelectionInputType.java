@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.types;
 
 import eu.mihosoft.vrl.annotation.TypeInfo;
 import eu.mihosoft.vrl.types.Selection;

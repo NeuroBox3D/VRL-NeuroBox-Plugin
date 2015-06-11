@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.control;
 
 import edu.gcsc.vrl.ug.api.AlgebraType;
 import edu.gcsc.vrl.ug.api.ApproximationSpace;

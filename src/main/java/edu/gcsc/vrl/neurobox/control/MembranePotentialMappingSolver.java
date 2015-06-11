@@ -1,55 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// package name
+package edu.gcsc.vrl.neurobox.control;
 
-package edu.gcsc.vrl.neuro;
-
-import edu.gcsc.vrl.ug.api.AssembledOperator;
-import edu.gcsc.vrl.ug.api.BiCGStab;
-import edu.gcsc.vrl.ug.api.CG;
-import edu.gcsc.vrl.ug.api.CompositeConvCheck;
-import edu.gcsc.vrl.ug.api.ConvCheck;
-import edu.gcsc.vrl.ug.api.F_Interpolate;
-import edu.gcsc.vrl.ug.api.F_Print;
-import edu.gcsc.vrl.ug.api.F_TakeMeasurement;
-import edu.gcsc.vrl.ug.api.F_VecScaleAssign;
-import edu.gcsc.vrl.ug.api.GaussSeidel;
-import edu.gcsc.vrl.ug.api.GeometricMultiGrid;
-import edu.gcsc.vrl.ug.api.GridFunction;
-import edu.gcsc.vrl.ug.api.ILU;
-import edu.gcsc.vrl.ug.api.I_ApproximationSpace;
-import edu.gcsc.vrl.ug.api.I_AssembledOperator;
-import edu.gcsc.vrl.ug.api.I_CompositeConvCheck;
-import edu.gcsc.vrl.ug.api.I_ConvCheck;
-import edu.gcsc.vrl.ug.api.I_CplUserNumber;
-import edu.gcsc.vrl.ug.api.I_DomainDiscretization;
-import edu.gcsc.vrl.ug.api.I_GridFunction;
-import edu.gcsc.vrl.ug.api.I_ILinearIterator;
-import edu.gcsc.vrl.ug.api.I_ILinearOperatorInverse;
-import edu.gcsc.vrl.ug.api.I_IPreconditionedLinearOperatorInverse;
-import edu.gcsc.vrl.ug.api.I_NewtonSolver;
-import edu.gcsc.vrl.ug.api.I_SolutionTimeSeries;
-import edu.gcsc.vrl.ug.api.I_ThetaTimeStep;
-import edu.gcsc.vrl.ug.api.I_VTKOutput;
-import edu.gcsc.vrl.ug.api.I_Vector;
-import edu.gcsc.vrl.ug.api.Jacobi;
-import edu.gcsc.vrl.ug.api.LU;
-import edu.gcsc.vrl.ug.api.LinearSolver;
-import edu.gcsc.vrl.ug.api.NewtonSolver;
-import edu.gcsc.vrl.ug.api.SolutionTimeSeries;
-import edu.gcsc.vrl.ug.api.ThetaTimeStep;
+// imports
+import edu.gcsc.vrl.ug.api.*;
 import edu.gcsc.vrl.ug.api.VTKOutput;
 import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
+
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.MethodInfo;
-import eu.mihosoft.vrl.annotation.ObjectInfo;
 import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
 import eu.mihosoft.vrl.math.Trajectory;
+
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,11 +21,11 @@ import java.util.List;
 
 /**
  *
- * @author mbreit, adapted from A. Vogel
+ * @author sgrein, modified after the adaption of mbreit from avogel
+ * 
  */
-@ComponentInfo(name="InstationarySolver", category="Neuro")
-@ObjectInfo(instances = 1)
-public class InstationarySolver implements Serializable
+@ComponentInfo(name="MembranePotentialMappingSolver", category="Neuro")
+public class MembranePotentialMappingSolver implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private boolean stopSolver;
@@ -149,7 +113,7 @@ public class InstationarySolver implements Serializable
         double minStepSize,
         
         @ParamGroupInfo(group="Time Stepping|false")
-        @ParamInfo(name="Time Step Reduction Factor", style="default", options="value=0.5D")
+        @ParamInfo(name="Time Step Reduction Factor", style="default", options="value=0.25D")
         double stepReductionFactor,
         
         // nonlinear solver
@@ -242,10 +206,12 @@ public class InstationarySolver implements Serializable
         double plotStep
     )
     {
+        //if (bEraseOldFiles) eraseAllFilesInFolder(fileOut, "vtu");
+          
         // set abortion flag to false initially (can be changed using stopSolver-Method)
         stopSolver = false;
         
-        //////////////
+         //////////////
         // Operator //
         //////////////
         
@@ -261,6 +227,9 @@ public class InstationarySolver implements Serializable
         op.set_discretization(timeDisc);
         op.init();
         
+        //I_MGSubsetHandler sh = dom.subset_handler();
+
+        
         /////////////
         // Algebra //
         /////////////
@@ -270,7 +239,6 @@ public class InstationarySolver implements Serializable
         convCheckLinear.set_maximum_steps(maxNumIterLinear);
         convCheckLinear.set_minimum_defect(absTolLinear);
         convCheckLinear.set_reduction(minRedLinear);
-        convCheckLinear.set_verbose(false);
 
         // create solver (with preconditioner)
         I_ILinearOperatorInverse solver = null;
@@ -370,6 +338,9 @@ public class InstationarySolver implements Serializable
         I_VTKOutput vtkOut = null;
         if (generateVTKoutput) vtkOut = new VTKOutput();
         
+// voltageFilesInterval: this still has to be dealt woth correctly!
+        double voltageFilesInterval = 0.001;
+        
         ////////////////
         // Simulation //
         ////////////////
@@ -407,14 +378,8 @@ public class InstationarySolver implements Serializable
         }
         
         // write initial solution to vtk file
-        if (vtkOut != null)
-        {
-            // create vtk subfolder if needed
-            new File(outputPath + "vtk/").mkdirs();
-            
-            // output
+        if (generateVTKoutput)
             vtkOut.print(outputPath + "vtk/result", u, (int) Math.floor(time/plotStep+0.5), time);
-        }
         
         // prepare measurements
         List<String> measFct = new ArrayList<String>();
@@ -440,30 +405,26 @@ public class InstationarySolver implements Serializable
         // take first measurement
         for (int i=0; i<measFct.size(); i++)
         {
-            // create meas subfolder if needed
-            new File(outputPath + "meas/").mkdirs();
-            
             F_TakeMeasurement.invoke(u, time, measSs.get(i),
                                      measFct.get(i), outputPath + "meas/data");
         }
         
         // create new grid function for old value
-        I_GridFunction uOld = u.const__clone();
-        
+        I_GridFunction uOld = u.const__clone();  // TODO: was clone() => this is supposed to fail -> now not any more
         
         // store grid function in vector of old solutions
         I_SolutionTimeSeries solTimeSeries = new SolutionTimeSeries();
         solTimeSeries.push(uOld, time);
         
-        /*
+        I_MGSubsetHandler sh = approxSpace.domain().subset_handler();
+        
         // display volumes/areas of subsets
         String allSubsets = "";
         for (int i=0; i<sh.const__num_subsets(); i++)
             allSubsets = allSubsets + ", " + sh.const__get_subset_name(i);
         if (sh.const__num_subsets()>0) allSubsets = allSubsets.substring(2);
         
-        F_ComputeVolume.invoke(approxSpace, allSubsets);
-        */
+        //F_ComputeVolume.invoke(approxSpace, allSubsets);
         
         // computations for time stepping
         
@@ -487,9 +448,9 @@ public class InstationarySolver implements Serializable
         
         
         // begin simulation loop
-        while (((int)Math.floor(time/dt+0.5))*dt < timeEnd)
+        while (time < timeEnd)
         {
-            F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor((time+dt)/dt+0.5))*dt + "  BEGIN ++++++\n");
+            F_Print.invoke("++++++ POINT IN TIME  " + Math.floor((time+dt)/dt+0.5)*dt + "s  BEGIN ++++++");
 
             //setup time disc for old solutions and timestep
             timeDisc.prepare_step_elem(solTimeSeries, dt);
@@ -498,9 +459,9 @@ public class InstationarySolver implements Serializable
             if (!newtonSolver.prepare(u))
             {
                 F_Print.invoke("Newton solver failed at point in time "
-                        + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
+                        + Math.floor((time+dt)/dt+0.5)*dt + ".");
                 errorExit("Newton solver failed at point in time "
-                        + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
+                        + Math.floor((time+dt)/dt+0.5)*dt + ".");
             }
             
             // apply Newton solver
@@ -508,7 +469,7 @@ public class InstationarySolver implements Serializable
             {
                 // in case of failure:
                 F_Print.invoke("Newton solver failed at point in time "
-                               + ((int)Math.floor((time+dt)/dt+0.5))*dt
+                               + Math.floor((time+dt)/dt+0.5)*dt
                                + " with time step " + dt + ".");
 
                 // correction for Borg-Graham channels: have to set back time
@@ -522,19 +483,13 @@ public class InstationarySolver implements Serializable
                 if (dt < minStepSize)
                 {
                     F_Print.invoke("Time step below minimum. Aborting. Failed at point in time "
-                            + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".\n");
+                            + Math.floor((time+dt)/dt+0.5)*dt + ".");
                     time = timeEnd;
                 }
                 else
                 {    
-                    F_Print.invoke("Trying with half the time step...\n");
+                    F_Print.invoke("Trying with half the time step...");
                     checkbackCounter[lv] = 0;
-                }
-                
-                if (stopSolver)
-                {
-                    F_Print.invoke("\n -------- solver stopped by external stop command --------\n");
-                    break;
                 }
             }
             else
@@ -546,7 +501,7 @@ public class InstationarySolver implements Serializable
                 checkbackCounter[lv]++;
                 while (checkbackCounter[lv] % (2*checkbackInterval) == 0 && lv > 0 && (time >= levelUpDelay || lv > startLv))
                 {
-                    F_Print.invoke("Doubling time due to continuing convergence; now: " + 2*dt + "\n");
+                    F_Print.invoke("Doubling time due to continuing convergence; now: " + 2*dt);
                     dt = 2*dt;
                     lv--;
                     checkbackCounter[lv] = checkbackCounter[lv] + checkbackCounter[lv+1] / 2;
@@ -554,13 +509,13 @@ public class InstationarySolver implements Serializable
                 }
 
                 // plot solution every plotStep seconds
-                if (vtkOut != null)
+                if (generateVTKoutput)
                 {
                     if (Math.abs(time/plotStep - Math.floor(time/plotStep+0.5)) < 1e-5)
                         vtkOut.print(outputPath + "vtk/result", u, (int) Math.floor(time/plotStep+0.5), time);
                 }
 
-                // take measurement every timeStep seconds
+                // take measurement in nucleus every timeStep seconds
                 for (int i=0; i<measFct.size(); i++)
                 {
                     F_TakeMeasurement.invoke(u, time, measSs.get(i),
@@ -579,25 +534,17 @@ public class InstationarySolver implements Serializable
                 // push oldest solutions with new values to front, oldest sol pointer is popped from end
                 solTimeSeries.push_discard_oldest(oldestSol, time);
 
-                F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor(time/dt+0.5))*dt + "  END ++++++++\n");
-                
-                if (stopSolver)
-                {
-                    F_Print.invoke("\n -------- solver stopped by external stop command --------\n");
-                    break;
-                }
+                F_Print.invoke("++++++ POINT IN TIME  " + Math.floor(time/dt+0.5)*dt + "s  END ++++++++");
             }
         }
         
         // end timeseries, produce gathering file
-        if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
+        if (generateVTKoutput) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
         
         if (generateVTKoutput) return new Object[]{new File(outputPath + "vtk/result.pvd")};
-        
         return new Object[]{null};
     }
 
-    @MethodInfo(name=" ", buttonText="stop time stepping", hideCloseIcon=true)
     public void stopSolver()
     {
         stopSolver=true;
@@ -605,7 +552,7 @@ public class InstationarySolver implements Serializable
    
     private void errorExit(String s)
     {
-        eu.mihosoft.vrl.system.VMessage.exception("Setup Error in CalciumDynamicsSolver: ", s);
+        eu.mihosoft.vrl.system.VMessage.exception("Setup Error in KineticSolver: ", s);
     }
 
     @MethodInfo(name="", valueName="Trajectories", valueStyle="default", valueOptions="", interactive = false)

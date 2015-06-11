@@ -1,10 +1,10 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.membrane_transport;
 
 import edu.gcsc.vrl.ug.api.I_CplUserNumber;
 import edu.gcsc.vrl.ug.api.I_MembraneTransportFV1;
-import edu.gcsc.vrl.ug.api.I_PMCA;
+import edu.gcsc.vrl.ug.api.I_NCX;
 import edu.gcsc.vrl.ug.api.MembraneTransportFV1;
-import edu.gcsc.vrl.ug.api.PMCA;
+import edu.gcsc.vrl.ug.api.NCX;
 import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
@@ -18,49 +18,49 @@ import java.io.Serializable;
  * @date 24-10-2014
  */
 
-@ComponentInfo(name="PMCA", category="Neuro")
-public class PMCA_VRL implements Serializable
+@ComponentInfo(name="NCX", category="Neuro")
+public class NCX_VRL implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private transient I_PMCA pmca = null;
-    private transient I_CplUserNumber pmcaDensityFct = null;
-    private transient String[] pmcaSelSs = null;
+    private transient I_NCX ncx = null;
+    private transient I_CplUserNumber ncxDensityFct = null;
+    private transient String[] ncxSelSs = null;
     
     /**
      *
-     * @param pmcaData
+     * @param ncxData
      */
-    @MethodInfo(name="create PMCA",hide=false)
-    public void createPMCA
+    @MethodInfo(name="create NCX",hide=false)
+    public void createNCX
     (
         @ParamInfo(name="", style="default", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; type=\"S2|n:cytosolic calcium, extracellular calcium, density\"")
-        UserDataTuple pmcaData
+        UserDataTuple ncxData
     )
     {
-        String[] pmcaSelFcts = ((UserDependentSubsetModel.FSDataType) pmcaData.getData(0)).getSelFct();
-        if (pmcaSelFcts.length != 2) throw new RuntimeException("PMCA pump mechanism needs exactly two functions, but has "+pmcaSelFcts.length+".");
+        String[] ncxSelFcts = ((UserDependentSubsetModel.FSDataType) ncxData.getData(0)).getSelFct();
+        if (ncxSelFcts.length != 2) throw new RuntimeException("NCX pump mechanism needs exactly two functions, but has "+ncxSelFcts.length+".");
         
-        pmcaSelSs = ((UserDependentSubsetModel.FSDataType) pmcaData.getData(0)).getSelSs();
-        if (pmcaSelSs.length == 0) throw new RuntimeException("No subset definition in PMCA pump definition!");
+        ncxSelSs = ((UserDependentSubsetModel.FSDataType) ncxData.getData(0)).getSelSs();
+        if (ncxSelSs.length == 0) throw new RuntimeException("No subset definition in NCX pump definition!");
         
-        pmcaDensityFct = (I_CplUserNumber) pmcaData.getNumberData(1);
+        ncxDensityFct = (I_CplUserNumber) ncxData.getNumberData(1);
         
-        // construct PMCA object
-        pmca = new PMCA(pmcaSelFcts);
+        // construct NCX object
+        ncx = new NCX(ncxSelFcts);
     }
     
-    @MethodInfo(name="create elemDisc", valueName="PMCA ElemDisc", hide=false)
+    @MethodInfo(name="create elemDisc", valueName="NCX ElemDisc", hide=false)
     public I_MembraneTransportFV1 createElemDisc()
     {
-        // check that createPMCA has been called (<=> PMCA != null)
-        check_pmca();
+        // check that createNCX has been called (<=> NCX != null)
+        check_ncx();
         
         // construct MembraneTransporter object
-        I_MembraneTransportFV1 pmcaDisc = new MembraneTransportFV1(pmcaSelSs, pmca);
-        pmcaDisc.set_density_function(pmcaDensityFct);
+        I_MembraneTransportFV1 ncxDisc = new MembraneTransportFV1(ncxSelSs, ncx);
+        ncxDisc.set_density_function(ncxDensityFct);
         
-        return pmcaDisc;
+        return ncxDisc;
     }
     
     @MethodInfo(name="set constant value", interactive = false)
@@ -70,10 +70,10 @@ public class PMCA_VRL implements Serializable
         @ParamInfo(name="value", style="default") double val
     )
     {
-        check_pmca();
+        check_ncx();
         check_value(val);
         
-        pmca.set_constant(ind, val);
+        ncx.set_constant(ind, val);
     }
     
     public void scale_input
@@ -82,10 +82,10 @@ public class PMCA_VRL implements Serializable
         @ParamInfo(name="value", style="default") double scale
     )
     {
-        check_pmca();
+        check_ncx();
         check_value(scale);
         
-        pmca.set_scale_input(ind, scale);
+        ncx.set_scale_input(ind, scale);
     }
     
     public void scale_flux
@@ -94,10 +94,10 @@ public class PMCA_VRL implements Serializable
         @ParamInfo(name="value", style="default") double scale
     )
     {
-        check_pmca();
+        check_ncx();
         check_value(scale);
         
-        pmca.set_scale_flux(ind, scale);
+        ncx.set_scale_flux(ind, scale);
     }
     
     @MethodInfo(noGUI=true)
@@ -106,19 +106,19 @@ public class PMCA_VRL implements Serializable
         if (val < 0.0)
         {
             eu.mihosoft.vrl.system.VMessage.exception("Invalid value: ",
-                "The value "+val+" is not admissable in PMCA object. Values must not be negative.");
+                "The value "+val+" is not admissable in NCX object. Values must not be negative.");
         }
     }
     
     
     @MethodInfo(noGUI=true)
-    private void check_pmca()
+    private void check_ncx()
     {
-        if (pmca == null)
+        if (ncx == null)
         {
             eu.mihosoft.vrl.system.VMessage.exception("Usage before initialization: ",
-                "No method can be called on PMCA object before it has been initialized"
-                + "using the 'createPMCA()' method.");
+                "No method can be called on NCX object before it has been initialized"
+                + "using the 'createNCX()' method.");
         }
     }
 }

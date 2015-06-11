@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.types;
 
 import edu.gcsc.vrl.ug.api.I_IElemDisc;
 import eu.mihosoft.vrl.annotation.TypeInfo;

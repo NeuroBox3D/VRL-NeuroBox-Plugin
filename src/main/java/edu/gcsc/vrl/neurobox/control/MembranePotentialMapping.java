@@ -7,7 +7,7 @@
 **/
 
 // package name
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.control;
 
 // imports
 import edu.gcsc.vrl.ug.api.*;

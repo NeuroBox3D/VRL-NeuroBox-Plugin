@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.general_elemdisc;
 
 import edu.gcsc.vrl.ug.api.BufferFV1;
 import edu.gcsc.vrl.ug.api.I_BufferFV1;

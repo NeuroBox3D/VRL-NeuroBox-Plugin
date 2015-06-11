@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox;
 
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
@@ -44,7 +44,7 @@ public class SpineGenerator implements Serializable
         doubleVector[10] = spine_head_radius;
         doubleVector[11] = spine_head_length;
         
-        boolean opt_synapse = false;
+        boolean opt_synapse = true;
         boolean opt_ER = true;
         boolean opt_app = true;
         Boolean[] boolVector = new Boolean[3];

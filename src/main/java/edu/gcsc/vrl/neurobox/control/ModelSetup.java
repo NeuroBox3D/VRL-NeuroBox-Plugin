@@ -1,11 +1,19 @@
 /**
- * VRL-CalciumDynamics plugin
+ * Gathering class for IElemDiscs.
  * 
- * @date 2013-12-09
+ * This is a general purpose implementation of a class that can combine an 
+ * arbitrary number of IElemDiscs in one domainDisc.
+ * It depends on the DomainAndFunctionDefinition class and will only work if an
+ * instance of this class is already on the canvas and a geometry chosen as well
+ * as functions defined.
+ * 
+ * The class can also serve as a template for more involved model setups.
+ * 
+ * @date 2014-10-27
  * @author mbreit
 **/
 
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.control;
 
 import edu.gcsc.vrl.ug.api.*;
 import edu.gcsc.vrl.userdata.FunctionDefinition;
@@ -13,7 +21,6 @@ import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.MethodInfo;
-import eu.mihosoft.vrl.annotation.ObjectInfo;
 import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
@@ -23,9 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@ComponentInfo(name="CalciumDynamics", category="Neuro")
-@ObjectInfo(instances = 1)
-public class CalciumDynamics implements Serializable
+@ComponentInfo(name="Model Setup", category="Neuro")
+public class ModelSetup implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
@@ -33,11 +39,7 @@ public class CalciumDynamics implements Serializable
      *
      * @param approxSpace
      * @param functionDefinition
-     * @param diffusionDiscs
-     * @param bufferDiscs
-     * @param ERMDiscs
-     * @param PMDiscs
-     * @param FBDiscs
+     * @param elemDiscs
      * @param startValue
      * @return
      */
@@ -45,42 +47,26 @@ public class CalciumDynamics implements Serializable
     @OutputInfo
     (
         style="multi-out",
-        elemNames = {"Domain Disc", "Approximation Space", "Initial Solution"},
-        elemTypes = {I_DomainDiscretization.class, I_ApproximationSpace.class, UserDataTuple[].class}
+        elemNames = {"Domain Disc", "Initial Solution"},
+        elemTypes = {I_DomainDiscretization.class, UserDataTuple[].class}
     )
-    public Object[] invoke
+    public Object[] setupModel
     (
-        /// Approx space
+        // approx space
         @ParamInfo(name="Approximation Space", style="default")
         I_ApproximationSpace approxSpace,
         
-        /// function definition
+        // function definition
         @ParamInfo(name="Function Definition", style="default")
         edu.gcsc.vrl.userdata.FunctionDefinition[] functionDefinition,
                 
-        /// Problem definition ///
-        @ParamGroupInfo(group="Problem definition|true; Diffusion|false")
-        @ParamInfo(name="Diffusion elem discs", style="array", options="minArraySize=0")
-        I_IElemDisc[] diffusionDiscs,
+        // collect IElemDisc objects by data connections
+        @ParamGroupInfo(group="Problem definition|true")
+        @ParamInfo(name="Connect your elem discs.", style="array", options="minArraySize=1")
+        I_IElemDisc[] elemDiscs,
         
-        @ParamGroupInfo(group="Problem definition|true; Buffering|false")
-        @ParamInfo(name="Buffer elem discs", style="array", options="minArraySize=0")
-        I_IElemDisc[] bufferDiscs,
-        
-        @ParamGroupInfo(group="Problem definition|true; ER Membrane|false")
-        @ParamInfo(name="ERM elem discs", style="array", options="minArraySize=0")
-        I_IElemDisc[] ERMDiscs,
-        
-        @ParamGroupInfo(group="Problem definition|true; Plasma Membrane|false")
-        @ParamInfo(name="PM elem discs", style="array", options="minArraySize=0")
-        I_IElemDisc[] PMDiscs,
-        
-        @ParamGroupInfo(group="Problem definition|true; Boundaries|false")
-        @ParamInfo(name="Flux boundary elem discs", style="array", options="minArraySize=0")
-        I_IElemDisc[] FBDiscs,
-        
-        @ParamGroupInfo(group="Problem definition|true; Start Value|false")
-        @ParamInfo(name="Start Value", style="array", options="ugx_globalTag=\"gridFile\";"
+        @ParamGroupInfo(group="Initial values|true")
+        @ParamInfo(name="Provide initial values for all unknowns.", style="array", options="ugx_globalTag=\"gridFile\";"
             + "fct_tag=\"fctDef\"; minArraySize=1; type=\"S1|n:function & subset, start value\"")
         UserDataTuple[] startValue
     )
@@ -89,30 +75,12 @@ public class CalciumDynamics implements Serializable
         // discretization setup //
         //////////////////////////
         
+        // create a new domain disc
         I_DomainDiscretization domainDisc = new DomainDiscretization(approxSpace);
         
-        // diffusion processes
-        for (I_IElemDisc diffDisc : diffusionDiscs)
-            domainDisc.add(diffDisc);
-        
-        // buffering processes
-        for (I_IElemDisc buffDisc : bufferDiscs)
-            domainDisc.add(buffDisc);
-        
-        /// ER membrane transport mechanisms
-        for (I_IElemDisc elemDisc : ERMDiscs)
-            domainDisc.add(elemDisc);
-        
-        /// PM transport mechanisms
-        for (I_IElemDisc elemDisc : PMDiscs)
-            domainDisc.add(elemDisc);
-        
-        // Neumann boundaries
-        for (I_IElemDisc elemDisc : FBDiscs)
-            domainDisc.add(elemDisc);
-        
-        
-        /// start value
+        // add all connected elem discs to it
+        for (I_IElemDisc disc : elemDiscs)
+            domainDisc.add(disc);
         
         // check that every function has been initialized on each of its subsets
         for (FunctionDefinition fd: functionDefinition)
@@ -156,8 +124,7 @@ public class CalciumDynamics implements Serializable
                 }
             }
         }
-        return new Object[]{domainDisc, approxSpace, startValue};
+        
+        return new Object[]{domainDisc, startValue};
     }
-    
-    
 }

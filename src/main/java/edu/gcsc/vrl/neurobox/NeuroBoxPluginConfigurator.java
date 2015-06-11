@@ -2,8 +2,28 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox;
 
+import edu.gcsc.vrl.neurobox.general_elemdisc.Diffusion;
+import edu.gcsc.vrl.neurobox.general_elemdisc.Buffer;
+import edu.gcsc.vrl.neurobox.general_elemdisc.FluxBoundary;
+import edu.gcsc.vrl.neurobox.control.MembranePotentialMappingSolver;
+import edu.gcsc.vrl.neurobox.control.MembranePotentialMapping;
+import edu.gcsc.vrl.neurobox.types.IntegerIndexSelectionInputType;
+import edu.gcsc.vrl.neurobox.types.IElemDisc_ArrayType;
+import edu.gcsc.vrl.neurobox.types.IElemDisc_Type;
+import edu.gcsc.vrl.neurobox.control.CalciumDynamics;
+import edu.gcsc.vrl.neurobox.control.ModelSetup;
+import edu.gcsc.vrl.neurobox.control.DomainAndFunctionDefiniton;
+import edu.gcsc.vrl.neurobox.control.InstationarySolver;
+import edu.gcsc.vrl.neurobox.membrane_transport.NCX_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.VDCC_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.VDCC_with_Vm2uG;
+import edu.gcsc.vrl.neurobox.membrane_transport.IP3R_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.SERCA_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.PMCA_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.Leak_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
 import eu.mihosoft.vrl.system.InitPluginAPI;
 import eu.mihosoft.vrl.system.PluginAPI;
 import eu.mihosoft.vrl.system.PluginDependency;

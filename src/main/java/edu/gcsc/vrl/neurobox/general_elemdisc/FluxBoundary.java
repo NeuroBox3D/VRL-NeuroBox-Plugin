@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.general_elemdisc;
 
 import edu.gcsc.vrl.ug.api.I_CplUserNumber;
 import edu.gcsc.vrl.ug.api.I_UserFluxBoundaryFV1;

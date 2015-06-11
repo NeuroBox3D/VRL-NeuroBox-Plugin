@@ -1,4 +1,4 @@
-package edu.gcsc.vrl.neuro;
+package edu.gcsc.vrl.neurobox.membrane_transport;
 
 import edu.gcsc.vrl.ug.api.I_ApproximationSpace;
 import edu.gcsc.vrl.ug.api.I_CplUserNumber;
