@@ -60,11 +60,11 @@ public class CalciumDynamics implements Serializable
                 
         /// Problem definition ///
         @ParamGroupInfo(group="Problem definition|true; Diffusion|false")
-        @ParamInfo(name="Diffusion elem discs", style="default")
+        @ParamInfo(name="Diffusion elem discs", style="array", options="minArraySize=0")
         I_IElemDisc[] diffusionDiscs,
         
         @ParamGroupInfo(group="Problem definition|true; Buffering|false")
-        @ParamInfo(name="Buffer elem discs", style="default")
+        @ParamInfo(name="Buffer elem discs", style="array", options="minArraySize=0")
         I_IElemDisc[] bufferDiscs,
         
         @ParamGroupInfo(group="Problem definition|true; ER Membrane|false")
@@ -76,7 +76,7 @@ public class CalciumDynamics implements Serializable
         I_IElemDisc[] PMDiscs,
         
         @ParamGroupInfo(group="Problem definition|true; Boundaries|false")
-        @ParamInfo(name="Flux boundary elem discs", style="default")
+        @ParamInfo(name="Flux boundary elem discs", style="array", options="minArraySize=0")
         I_IElemDisc[] FBDiscs,
         
         @ParamGroupInfo(group="Problem definition|true; Start Value|false")
