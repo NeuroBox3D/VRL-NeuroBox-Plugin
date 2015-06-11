@@ -27,9 +27,9 @@ public class FluxBoundary implements Serializable
      * @return Flux boundary discretization object
      */
     @MethodInfo(name="create flux bnd", valueName="FluxBoundary ElemDisc", hide = false)
-   public I_UserFluxBoundaryFV1 createFluxBoundaries
+   public I_UserFluxBoundaryFV1 createFluxBoundary
     (
-        @ParamInfo(name="Neumann Boundarie", style="array", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; minArraySize=0; type=\"S1|n:function & subset, value\"")
+        @ParamInfo(name="Neumann Boundary", style="array", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; minArraySize=0; type=\"S1|n:function & subset, value\"")
         UserDataTuple bndData
     )
     {

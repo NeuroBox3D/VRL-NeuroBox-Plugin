@@ -437,12 +437,14 @@ public class InstationarySolver implements Serializable
             cntUDT++;
         }
         
+        
+        // create meas subfolder if needed
+        if (measFct.size() > 0)
+            new File(outputPath + "meas/").mkdirs();
+            
         // take first measurement
         for (int i=0; i<measFct.size(); i++)
         {
-            // create meas subfolder if needed
-            new File(outputPath + "meas/").mkdirs();
-            
             F_TakeMeasurement.invoke(u, time, measSs.get(i),
                                      measFct.get(i), outputPath + "meas/data");
         }

@@ -90,7 +90,7 @@ public class IP3R_VRL implements Serializable
     
     public void scale_flux
     (
-        @ParamInfo(name="unknown", style="indexSelection", options="value=[\"ca\"]") Integer ind,
+        @ParamInfo(name="flux", style="indexSelection", options="value=[\"ca\"]") Integer ind,
         @ParamInfo(name="value", style="default") double scale
     )
     {
