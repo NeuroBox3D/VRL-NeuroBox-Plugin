@@ -32,7 +32,7 @@ public class Diffusion implements Serializable
     @MethodInfo(name="create diffusion", valueName="Diffusion ElemDisc", hide=false)
     public I_ConvectionDiffusionFV1 createDiffusion
     (
-        @ParamInfo(name="", style="default", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; minArraySize=1; type=\"S1|mnn:function & subset, diffusion, reaction rate, reaction term\"")
+        @ParamInfo(name="", style="default", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; type=\"S1|mnn:function & subset, diffusion, reaction rate, reaction term\"")
         UserDataTuple diffusionData
     )
     {

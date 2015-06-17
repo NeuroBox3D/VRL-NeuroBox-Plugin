@@ -1,5 +1,6 @@
 /**
- * VRL-CalciumDynamics plugin
+ * A model setup GUI element for calciumDynamics problems in the
+ * VRL-NeuroBox plugin.
  * 
  * @date 2013-12-09
  * @author mbreit

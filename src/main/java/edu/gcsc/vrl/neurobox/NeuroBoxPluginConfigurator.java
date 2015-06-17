@@ -4,6 +4,7 @@
  */
 package edu.gcsc.vrl.neurobox;
 
+import edu.gcsc.vrl.neurobox.control.CableEquation;
 import edu.gcsc.vrl.neurobox.general_elemdisc.Diffusion;
 import edu.gcsc.vrl.neurobox.general_elemdisc.Buffer;
 import edu.gcsc.vrl.neurobox.general_elemdisc.FluxBoundary;
@@ -24,6 +25,8 @@ import edu.gcsc.vrl.neurobox.membrane_transport.SERCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.PMCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.Leak_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
+import edu.gcsc.vrl.neurobox.types.IChannel_ArrayType;
+import edu.gcsc.vrl.neurobox.types.IChannel_Type;
 import eu.mihosoft.vrl.system.InitPluginAPI;
 import eu.mihosoft.vrl.system.PluginAPI;
 import eu.mihosoft.vrl.system.PluginDependency;
@@ -97,9 +100,14 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
            
            vapi.addTypeRepresentation(IElemDisc_Type.class);
            vapi.addTypeRepresentation(IElemDisc_ArrayType.class);
-           vapi.addComponent(DomainAndFunctionDefiniton.class);
+           
+           vapi.addTypeRepresentation(IChannel_Type.class);
+           vapi.addTypeRepresentation(IChannel_ArrayType.class);
+           
+           
            
            // general purpose
+           vapi.addComponent(DomainAndFunctionDefiniton.class);
            vapi.addComponent(ModelSetup.class);
            vapi.addComponent(Diffusion.class);
            vapi.addComponent(Buffer.class);
@@ -117,6 +125,9 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
            vapi.addComponent(NCX_VRL.class);
            vapi.addComponent(VDCC_VRL.class);
            vapi.addComponent(VDCC_with_Vm2uG.class);
+           
+           // cable equation
+           vapi.addComponent(CableEquation.class);
            
            // membrane potential mapping
            vapi.addComponent(MembranePotentialMapping.class);

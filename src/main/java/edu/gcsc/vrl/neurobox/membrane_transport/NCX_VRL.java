@@ -31,7 +31,7 @@ public class NCX_VRL implements Serializable
      *
      * @param ncxData
      */
-    @MethodInfo(name="create NCX",hide=false)
+    @MethodInfo(name="create NCX",hide=false, initializer=true)
     public void createNCX
     (
         @ParamInfo(name="", style="default", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; type=\"S2|n:cytosolic calcium, extracellular calcium, density\"")
