@@ -405,8 +405,9 @@ public class MembranePotentialMappingSolver implements Serializable
         // take first measurement
         for (int i=0; i<measFct.size(); i++)
         {
-            F_TakeMeasurement.invoke(u, time, measSs.get(i),
+            /*F_TakeMeasurement.invoke(u, time, measSs.get(i),
                                      measFct.get(i), outputPath + "meas/data");
+		    */
         }
         
         // create new grid function for old value
@@ -518,8 +519,9 @@ public class MembranePotentialMappingSolver implements Serializable
                 // take measurement in nucleus every timeStep seconds
                 for (int i=0; i<measFct.size(); i++)
                 {
-                    F_TakeMeasurement.invoke(u, time, measSs.get(i),
+                   /* F_TakeMeasurement.invoke(u, time, measSs.get(i),
                                              measFct.get(i), outputPath + "meas/data");
+			   */
                 }
 
                 // export solution of ca on mem_er
