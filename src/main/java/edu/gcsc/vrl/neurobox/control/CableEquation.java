@@ -277,7 +277,7 @@ public class CableEquation implements Serializable
         // for the Kelvin case
         //check_value(temp);
         
-        vmDisc.set_celsius(temp);
+        vmDisc.set_temperature_celsius(temp);
     }
     
     
