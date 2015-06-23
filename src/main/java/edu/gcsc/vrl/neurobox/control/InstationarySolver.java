@@ -13,7 +13,6 @@ import edu.gcsc.vrl.ug.api.CompositeConvCheck;
 import edu.gcsc.vrl.ug.api.ConvCheck;
 import edu.gcsc.vrl.ug.api.F_Interpolate;
 import edu.gcsc.vrl.ug.api.F_Print;
-import edu.gcsc.vrl.ug.api.F_TakeMeasurement;
 import edu.gcsc.vrl.ug.api.F_VecScaleAssign;
 import edu.gcsc.vrl.ug.api.GaussSeidel;
 import edu.gcsc.vrl.ug.api.GeometricMultiGrid;
@@ -445,8 +444,9 @@ public class InstationarySolver implements Serializable
         // take first measurement
         for (int i=0; i<measFct.size(); i++)
         {
-            F_TakeMeasurement.invoke(u, time, measSs.get(i),
+         /*   F_TakeMeasurement.invoke(u, time, measSs.get(i),
                                      measFct.get(i), outputPath + "meas/data");
+		*/
         }
         
         // create new grid function for old value
@@ -565,8 +565,9 @@ public class InstationarySolver implements Serializable
                 // take measurement every timeStep seconds
                 for (int i=0; i<measFct.size(); i++)
                 {
-                    F_TakeMeasurement.invoke(u, time, measSs.get(i),
+                   /* F_TakeMeasurement.invoke(u, time, measSs.get(i),
                                              measFct.get(i), outputPath + "meas/data");
+			   */
                 }
 
                 // export solution of ca on mem_er

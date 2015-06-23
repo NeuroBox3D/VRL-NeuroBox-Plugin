@@ -29,14 +29,19 @@ repositories {
     }
 }
 
+loadProperties('build.properties')
+
 dependencies {
     // TODO: Add dependencies here ...
     // You can read more about how to add dependency here:
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
-    testCompile group: 'junit', name: 'junit', version: '4.10'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
     
     compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.2.8.5-SNAPSHOT')
     compile fileTree (dir: './lib', includes: ['*.jar'])
+    compile files(vrldir+'/plugins/VRL-UG.jar')
+    compile files(vrldir+'/plugins/VRL-UG-API.jar')
+    compile files(vrldir+'/plugins/VRL-UserData.jar')
     //    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.2.8.5-SNAPSHOT', classifier: 'sources')
     //    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.2.8.5-SNAPSHOT', classifier: 'javadoc')
 
@@ -57,19 +62,21 @@ def loadProperties(String sourceFileName) {
 
 // create a fat-jar (class files plus dependencies
 // excludes VRL.jar (plugin jar files must not start with 'vrl-\\d+')
-/*jar {
+jar {
 
     // dependencies except VRL
     from configurations.runtime.asFileTree.
         filter({file->return !file.name.startsWith("vrl-0")}).
+        filter({file->return !file.name.startsWith("VRL-UG.jar")}).
+        filter({file->return !file.name.startsWith("VRL-UG-API.jar")}).
+        filter({file->return !file.name.startsWith("VRL-UserData.jar")}).
         files.collect { zipTree(it) }
 
     // project class files compiled from source
     from files(sourceSets.main.output.classesDir)
-}*/
+}
 
 // loads the property file
-loadProperties('build.properties')
 
 // compiles and installs the vrl plugin to the specified folder
 task installVRLPlugin(dependsOn: [clean,jar]) << {
