@@ -232,7 +232,6 @@ public class CableEquation implements Serializable
         vmDisc.set_eleak(revPotLeak);
     }
     
-    /* not yet avail on ug side
     @MethodInfo(name="set outer concentrations", interactive = false)
     public void set_outer_concentrations
     (
@@ -247,11 +246,10 @@ public class CableEquation implements Serializable
         check_value(concNa);
         check_value(concCa);
         
-        vmDisc.set_(concK);
-        vmDisc.set_(concNa);
-        vmDisc.set_(concCa);
+        vmDisc.set_k_out(concK);
+        vmDisc.set_na_out(concNa);
+        vmDisc.set_ca_out(concCa);
     }
-    */
     
     @MethodInfo(name="set diameter", interactive = false)
     public void set_constant_diameter
