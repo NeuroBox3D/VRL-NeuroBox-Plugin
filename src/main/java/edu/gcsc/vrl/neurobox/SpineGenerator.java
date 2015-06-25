@@ -1,7 +1,10 @@
 package edu.gcsc.vrl.neurobox;
 
 import eu.mihosoft.vrl.annotation.ComponentInfo;
+import eu.mihosoft.vrl.annotation.MethodInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
+import eu.mihosoft.vrl.system.VMessage;
+import java.io.File;
 import java.io.Serializable;
 
 
@@ -11,7 +14,8 @@ public class SpineGenerator implements Serializable
     private static final long serialVersionUID = 1L;
 
     //number cyt_radius = 2.0, number er_radius = 0.5, number dend_length = 10.0, int pos_app = 5, number app_neck_radius = 0.4, number app_neck_length = 1.0, number app_head_radius = 0.3, number app_head_length = 0.3, string fileName = "dendrite"
-    public String build_spine
+    @MethodInfo(name="build spine", valueName="file")
+    public File build_spine
     (
         @ParamInfo(name="Cytosol Radius[µm]", options="value=2.0") double cyt_radius,
         @ParamInfo(name="ER Radius[µm]", options="value=0.5") double er_radius,
@@ -25,7 +29,7 @@ public class SpineGenerator implements Serializable
         @ParamInfo(name="Spine Neck Length[µm]", options="value=0.5") double spine_neck_length,
         @ParamInfo(name="Spine Head Radius[µm]", options="value=0.5") double spine_head_radius,
         @ParamInfo(name="Spine Head Height[µm]", options="value=1.5") double spine_head_length,
-        @ParamInfo(name="File Name", style="save-dialog", options="tag=\"TheFile\"") java.io.File file
+        @ParamInfo(name="File Name", style="save-dialog", options="tag=\"TheFile\"") File file
     )
     {
         String fileName = file.getAbsoluteFile().getAbsolutePath();
@@ -54,6 +58,14 @@ public class SpineGenerator implements Serializable
         
         edu.gcsc.vrl.ug.api.F_BuildDendrite.invoke(doubleVector, boolVector, fileName);
         
-        return fileName;
+        if (!file.exists())
+        {
+            VMessage.exception("SpineGenerator failed",
+                "The geometry supposedly created by the spine generator can not be found.");
+            
+            return null;
+        }
+        
+        return file;
     }
 }

@@ -265,19 +265,27 @@ public class CableEquation implements Serializable
     }
     
     @MethodInfo(name="set temperature", interactive = false)
-    public void set_temperature
+    public void set_temperature_celsius
     (
         @ParamInfo(name="temperature [deg C]", style="default", options="value=37.0") double temp
     )
     {
         check_elemDisc_exists();
         
-        // for the Kelvin case
-        //check_value(temp);
-        
         vmDisc.set_temperature_celsius(temp);
     }
     
+    @MethodInfo(name="set temperature", interactive = false)
+    public void set_temperature
+    (
+        @ParamInfo(name="temperature [K]", style="default", options="value=310.0") double temp
+    )
+    {
+        check_elemDisc_exists();
+        check_value(temp);
+        
+        vmDisc.set_temperature(temp);
+    }
     
     @MethodInfo(noGUI=true)
     private void check_elemDisc_exists()
