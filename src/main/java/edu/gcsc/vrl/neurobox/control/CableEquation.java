@@ -246,9 +246,9 @@ public class CableEquation implements Serializable
         check_value(concNa);
         check_value(concCa);
         
-        vmDisc.set_k_out(concK);
-        vmDisc.set_na_out(concNa);
-        vmDisc.set_ca_out(concCa);
+        ///vmDisc.set_k_out(concK);
+        ///vmDisc.set_na_out(concNa);
+        ///vmDisc.set_ca_out(concCa);
     }
     
     @MethodInfo(name="set diameter", interactive = false)
@@ -284,7 +284,7 @@ public class CableEquation implements Serializable
         check_elemDisc_exists();
         check_value(temp);
         
-        vmDisc.set_temperature(temp);
+        ///vmDisc.set_temperature(temp);
     }
     
     @MethodInfo(noGUI=true)
