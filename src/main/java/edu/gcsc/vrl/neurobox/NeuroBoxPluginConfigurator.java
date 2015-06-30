@@ -27,6 +27,8 @@ import edu.gcsc.vrl.neurobox.membrane_transport.SERCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.PMCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.Leak_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.MCU_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.MNCX_VRL;
 import edu.gcsc.vrl.neurobox.types.IChannel_ArrayType;
 import edu.gcsc.vrl.neurobox.types.IChannel_Type;
 import eu.mihosoft.vrl.io.IOUtil;
@@ -140,6 +142,8 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
             vapi.addComponent(NCX_VRL.class);
             vapi.addComponent(VDCC_VRL.class);
             vapi.addComponent(VDCC_with_Vm2uG.class);
+            vapi.addComponent(MCU_VRL.class);
+            vapi.addComponent(MNCX_VRL.class);
 
             // cable equation
             vapi.addComponent(CableEquation.class);
@@ -155,6 +159,9 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
             
             // bouton generator
             vapi.addComponent(BoutonGenerator.class);
+            
+            // synapse distribution generator
+            vapi.addComponent(SynapseDistributionGenerator.class);
         }
     }
     
