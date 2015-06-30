@@ -18,7 +18,8 @@ import edu.gcsc.vrl.neurobox.control.ModelSetup;
 import edu.gcsc.vrl.neurobox.control.DomainAndFunctionDefiniton;
 import edu.gcsc.vrl.neurobox.control.InstationarySolver;
 import edu.gcsc.vrl.neurobox.control.ResourcePathProvider;
-import edu.gcsc.vrl.neurobox.membrane_transport.Hodgkin_Huxley;
+import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley;
+import edu.gcsc.vrl.neurobox.membrane_transport.cable.Leakage;
 import edu.gcsc.vrl.neurobox.membrane_transport.NCX_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.VDCC_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.VDCC_with_Vm2uG;
@@ -27,6 +28,7 @@ import edu.gcsc.vrl.neurobox.membrane_transport.SERCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.PMCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.Leak_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley_Nernst;
 import edu.gcsc.vrl.neurobox.types.IChannel_ArrayType;
 import edu.gcsc.vrl.neurobox.types.IChannel_Type;
 import eu.mihosoft.vrl.io.IOUtil;
@@ -144,6 +146,8 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
             // cable equation
             vapi.addComponent(CableEquation.class);
             vapi.addComponent(Hodgkin_Huxley.class);
+            vapi.addComponent(Hodgkin_Huxley_Nernst.class);
+            vapi.addComponent(Leakage.class);
             vapi.addComponent(SynapseHandler.class);
 
             // membrane potential mapping
