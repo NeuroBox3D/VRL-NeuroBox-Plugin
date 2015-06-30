@@ -171,6 +171,9 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         new File(iApi.getResourceFolder(), "testNetwork.ugx").delete();
         
         new File(iApi.getResourceFolder(), "calcium_dynamics_spine_template.vrlp").delete();
+        
+        new File(iApi.getResourceFolder(), "calcium_dynamics_bouton_template.vrlp").delete();
+        new File(iApi.getResourceFolder(), "dnmj_bouton_2AZ.ugx").delete();
         ////////////////////////////////////
         // ... add your own data here ... //
         ////////////////////////////////////
@@ -191,6 +194,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
 
         initHHNetworkTemplate(iApi);
         initCDSpineTemplate(iApi);
+        initCDBoutonTemplate(iApi);
         
         //////////////////////////////////////////////////////
         // ... add your own template initializers here ... //
@@ -253,7 +257,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
     }
     
     
-     private void initCDSpineTemplate(InitPluginAPI iApi)
+    private void initCDSpineTemplate(InitPluginAPI iApi)
     {
         // add template project files
         final File templateProjectSrc = new File(iApi.getResourceFolder(),
@@ -289,6 +293,63 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
                     return "template for a calcium dynamics simulation on a "
                             + "configurable geometry with dendrite, spine and "
                             + "spine apparatus";
+                }
+
+                @Override
+                public BufferedImage getIcon()
+                {
+                    return null;
+                }
+            }
+        );        
+    }
+    
+    
+    private void initCDBoutonTemplate(InitPluginAPI iApi)
+    {
+        // add template project files
+        final File templateProjectSrc = new File(iApi.getResourceFolder(),
+            "calcium_dynamics_bouton_template.vrlp");
+        File templateProjectGeom = new File(iApi.getResourceFolder(),
+            "dnmj_bouton_2AZ.ugx");
+        
+        // save if not yet existent
+        if (!templateProjectSrc.exists())
+        {
+            InputStream in = NeuroBoxPluginConfigurator.class.getResourceAsStream(
+                "/edu/gcsc/vrl/neurobox/project_templates/calcium_dynamics_bouton_template.vrlp");
+            
+            saveProjectTemplate(in, templateProjectSrc);
+        }
+        if (!templateProjectGeom.exists())
+        {
+            InputStream in = NeuroBoxPluginConfigurator.class.getResourceAsStream(
+                "/edu/gcsc/vrl/neurobox/geom/dnmj_bouton_2AZ.ugx");
+            
+            saveProjectTemplate(in, templateProjectGeom);
+        }
+       
+        // register as project templates with VRL
+        iApi.addProjectTemplate(new ProjectTemplate()
+            {
+                @Override
+                public String getName()
+                {
+                    return "Calcium dynamics - bouton template";
+                }
+
+                @Override
+                public File getSource()
+                {
+                    return templateProjectSrc;
+                }
+
+                @Override
+                public String getDescription()
+                {
+                    return "template for a calcium dynamics simulation on a "
+                            + "configurable geometry of presynaptic bouton"
+                            + "inside the drosophila NMJ.";
                 }
 
                 @Override
