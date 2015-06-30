@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 22-06-2015
  */
 
-@ComponentInfo(name="Synapse handler", category="Neuro")
+@ComponentInfo(name="Synapse handler", category="Neuro/cable")
 public class SynapseHandler implements Serializable
 {
     private static final long serialVersionUID = 1L;

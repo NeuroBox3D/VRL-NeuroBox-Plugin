@@ -7,6 +7,7 @@
 
 package edu.gcsc.vrl.neurobox;
 
+import edu.gcsc.vrl.ug.api.F_BuildBouton;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.MethodInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 
 
 @ComponentInfo(name="BoutonGenerator", category="Neuro")
-public class BoutonGenerator implements java.io.Serializable{
+public class BoutonGenerator implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @MethodInfo(name="BuildBouton", valueName="file")
@@ -33,15 +34,15 @@ public class BoutonGenerator implements java.io.Serializable{
         
         String fileName = file.getAbsoluteFile().getAbsolutePath();
         
-        edu.gcsc.vrl.ug.api.F_BuildBouton.invoke( bExtSpace,
-                                                  radius, 
-                                                  numRefinements, 
-                                                  numReleaseSites, 
-                                                  TbarHeight, 
-                                                  TbarLegRadius, 
-                                                  TbarTopRadius, 
-                                                  TbarTopHeight,
-                                                  fileName);
+        F_BuildBouton.invoke(   bExtSpace,
+                                radius, 
+                                numRefinements, 
+                                numReleaseSites, 
+                                TbarHeight, 
+                                TbarLegRadius, 
+                                TbarTopRadius, 
+                                TbarTopHeight,
+                                fileName);
         
         if (!file.exists())
         {
