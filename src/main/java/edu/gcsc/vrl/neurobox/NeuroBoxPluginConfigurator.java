@@ -152,6 +152,9 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
 
             // spine generator
             vapi.addComponent(SpineGenerator.class);
+            
+            // bouton generator
+            vapi.addComponent(BoutonGenerator.class);
         }
     }
     

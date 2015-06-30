@@ -20,19 +20,19 @@ public class BoutonGenerator implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
 
     @MethodInfo(name="BuildBouton", valueName="file")
-    public File BuildBouton(@ParamInfo(name="file", style="save-dialog", options="tag=\"TheFile\"") java.io.File file,
-                            @ParamInfo(name="bExtSpace", options="value=true") boolean bExtSpace,
-                            @ParamInfo(name="radius [um]", options="value=1.0") double radius,
-                            @ParamInfo(name="numRefinements", options="value=3") int numRefinements,
-                            @ParamInfo(name="numReleaseSites", options="value=12") int numReleaseSites,
-                            @ParamInfo(name="TbarHeight [um]" , options="value=0.07") double TbarHeight,
-                            @ParamInfo(name="TbarLegRadius [um]", options="value=0.02") double TbarLegRadius,
-                            @ParamInfo(name="TbarTopRadius [um]", options="value=0.15") double TbarTopRadius,
-                            @ParamInfo(name="TbarTopHeight [um]", options="value=0.015") double TbarTopHeight) {
+    public File BuildBouton(@ParamInfo(name="File name", style="save-dialog", options="tag=\"TheFile\"") java.io.File file,
+                            @ParamInfo(name="Create extracellular space", options="value=true") boolean bExtSpace,
+                            @ParamInfo(name="bouton radius [µm]", options="value=1.0") double radius,
+                            @ParamInfo(name="num. refinements", options="value=3") int numRefinements,
+                            @ParamInfo(name="num. release sites", options="value=12") int numReleaseSites,
+                            @ParamInfo(name="T-bar Height [µm]" , options="value=0.07") double TbarHeight,
+                            @ParamInfo(name="T-bar Leg-radius [µm]", options="value=0.02") double TbarLegRadius,
+                            @ParamInfo(name="T-bar Top-radius [µm]", options="value=0.15") double TbarTopRadius,
+                            @ParamInfo(name="T-bar Top-height [µm]", options="value=0.015") double TbarTopHeight) {
                               
         
         String fileName = file.getAbsoluteFile().getAbsolutePath();
-        
+       
         edu.gcsc.vrl.ug.api.F_BuildBouton.invoke( bExtSpace,
                                                   radius, 
                                                   numRefinements, 
