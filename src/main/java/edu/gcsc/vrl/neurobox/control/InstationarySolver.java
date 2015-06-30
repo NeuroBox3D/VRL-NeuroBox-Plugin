@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.gcsc.vrl.neurobox.control;
 
 import edu.gcsc.vrl.ug.api.AssembledOperator;
@@ -494,14 +488,17 @@ public class InstationarySolver implements Serializable
             F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor((time+dt)/dt+0.5))*dt + "  BEGIN ++++++\n");
 
             //setup time disc for old solutions and timestep
-            timeDisc.prepare_step_elem(solTimeSeries, dt);
+            timeDisc.prepare_step(solTimeSeries, dt);
 
             // prepare Newton solver
             if (!newtonSolver.prepare(u))
             {
                 F_Print.invoke("Newton solver failed at point in time "
                         + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
-                errorExit("Newton solver failed at point in time "
+                
+                if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
+                
+                errorExit("Newton solver preparation failed at point in time "
                         + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
             }
             
@@ -513,9 +510,6 @@ public class InstationarySolver implements Serializable
                                + ((int)Math.floor((time+dt)/dt+0.5))*dt
                                + " with time step " + dt + ".");
 
-                // correction for Borg-Graham channels: have to set back time
-                //neumannDiscVGCC:update_gating(time)
-
                 dt = dt/2;
                 lv = lv++;
                 F_VecScaleAssign.invoke(u, 1.0, solTimeSeries.latest());
@@ -525,7 +519,11 @@ public class InstationarySolver implements Serializable
                 {
                     F_Print.invoke("Time step below minimum. Aborting. Failed at point in time "
                             + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".\n");
-                    time = timeEnd;
+                    
+                    if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
+                    
+                    errorExit("Newton solver failed at point in time "
+                        + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
                 }
                 else
                 {    

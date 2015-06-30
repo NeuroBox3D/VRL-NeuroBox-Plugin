@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@ComponentInfo(name="Cable Equation", category="Neuro")
+@ComponentInfo(name="Cable Equation", category="Neuro/cable")
 @ObjectInfo(instances = 1)
 public class CableEquation implements Serializable
 {
@@ -183,8 +183,8 @@ public class CableEquation implements Serializable
     @MethodInfo(name="set material constants", interactive = false)
     public void set_material_constants
     (
-        @ParamInfo(name="specific resistance [uOhm*m]", style="default", options="value=1e6") double specRes,
-        @ParamInfo(name="specific capacity [kF/m^2]", style="default", options="value=1e-5") double specCap
+        @ParamInfo(name="specific resistance [uOhm*m]", style="default", options="value=1.0e6") double specRes,
+        @ParamInfo(name="specific capacity [kF/m^2]", style="default", options="value=1.0e-5") double specCap
     )
     {
         check_elemDisc_exists();
@@ -199,8 +199,8 @@ public class CableEquation implements Serializable
     @MethodInfo(name="set diffusion constants", interactive = false)
     public void set_diffusion_constants
     (
-        @ParamInfo(name="K [m^2/ms]", style="default", options="value=1e-12") double diffK,
-        @ParamInfo(name="Na [m^2/ms]", style="default", options="value=1e-12") double diffNa,
+        @ParamInfo(name="K [m^2/ms]", style="default", options="value=1.0e-12") double diffK,
+        @ParamInfo(name="Na [m^2/ms]", style="default", options="value=1.0e-12") double diffNa,
         @ParamInfo(name="Ca [m^2/ms]", style="default", options="value=2.2e-13") double diffCa
     )
     {
@@ -218,10 +218,9 @@ public class CableEquation implements Serializable
     @MethodInfo(name="set reversal potentials", interactive = false)
     public void set_reversal_potentials
     (
-        @ParamInfo(name="K [mV]", style="default", options="value=50.0") double revPotK,
-        @ParamInfo(name="Na [mV]", style="default", options="value=-77.0") double revPotNa,
-        @ParamInfo(name="Ca [mV]", style="default", options="value=138.0") double revPotCa,
-        @ParamInfo(name="Leak [mV]", style="default", options="value=-54.4") double revPotLeak
+        @ParamInfo(name="K [mV]", style="default", options="value=-77.0") double revPotK,
+        @ParamInfo(name="Na [mV]", style="default", options="value=50.0") double revPotNa,
+        @ParamInfo(name="Ca [mV]", style="default", options="value=138.0") double revPotCa
     )
     {
         check_elemDisc_exists();
@@ -229,7 +228,6 @@ public class CableEquation implements Serializable
         vmDisc.set_ek(revPotK);
         vmDisc.set_ena(revPotNa);
         vmDisc.set_eca(revPotCa);
-        vmDisc.set_eleak(revPotLeak);
     }
     
     @MethodInfo(name="set outer concentrations", interactive = false)
