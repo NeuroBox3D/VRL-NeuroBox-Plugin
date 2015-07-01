@@ -78,7 +78,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
                          "www.g-csc.de", "Proprietary", "Proprietary");
 
         // specify dependencies
-        addDependency(new PluginDependency("VRL", "0.4.3.0.1", "0.4.3.0.1"));
+        addDependency(new PluginDependency("VRL", "0.4.3", "0.4.3"));
         addDependency(new PluginDependency("VRL-UG", "0.2", "0.2"));
         addDependency(new PluginDependency("VRL-UG-API", "0.2", "0.2"));
         addDependency(new PluginDependency("VRL-UserData", "0.2", "0.2"));
