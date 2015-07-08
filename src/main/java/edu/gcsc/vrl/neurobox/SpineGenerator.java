@@ -21,7 +21,7 @@ public class SpineGenerator implements Serializable
         @ParamInfo(name="ER Radius[µm]", options="value=0.5") double er_radius,
         @ParamInfo(name="Dendrite Length[µm]", options="value=10.0") double dend_length,
         @ParamInfo(name="Spine Position[µm]", options="value=5.0") double pos_app,
-        @ParamInfo(name="App Neck Radius[µm]", options="value=0.4") double app_neck_radius,
+        @ParamInfo(name="App Neck Radius[µm]", options="value=0.25") double app_neck_radius,
         @ParamInfo(name="App Neck Length[µm]", options="value=1.0") double app_neck_length,
         @ParamInfo(name="App Head Radius[µm]", options="value=0.3") double app_head_radius,
         @ParamInfo(name="App Head Height[µm]", options="value=0.3") double app_head_length,
