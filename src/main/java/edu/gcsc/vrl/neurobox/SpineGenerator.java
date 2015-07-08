@@ -14,7 +14,7 @@ public class SpineGenerator implements Serializable
     private static final long serialVersionUID = 1L;
 
     //number cyt_radius = 2.0, number er_radius = 0.5, number dend_length = 10.0, int pos_app = 5, number app_neck_radius = 0.4, number app_neck_length = 1.0, number app_head_radius = 0.3, number app_head_length = 0.3, string fileName = "dendrite"
-    @MethodInfo(name="build spine", valueName="file")
+    @MethodInfo(name="build spine", valueName="file", valueStyle = "silent")
     public File build_spine
     (
         @ParamInfo(name="Cytosol Radius[µm]", options="value=2.0") double cyt_radius,

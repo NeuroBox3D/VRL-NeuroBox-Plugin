@@ -31,6 +31,7 @@ import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley_Nernst;
 import edu.gcsc.vrl.neurobox.membrane_transport.MCU_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.MNCX_VRL;
+import edu.gcsc.vrl.neurobox.types.FileSilentType;
 import edu.gcsc.vrl.neurobox.types.IChannel_ArrayType;
 import edu.gcsc.vrl.neurobox.types.IChannel_Type;
 import eu.mihosoft.vrl.io.IOUtil;
@@ -115,6 +116,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
 
             // not necessarily neuro (move this somewhere else maybe)
             vapi.addTypeRepresentation(IntegerIndexSelectionInputType.class);
+            vapi.addTypeRepresentation(FileSilentType.class);
 
             vapi.addTypeRepresentation(IElemDisc_Type.class);
             vapi.addTypeRepresentation(IElemDisc_ArrayType.class);
