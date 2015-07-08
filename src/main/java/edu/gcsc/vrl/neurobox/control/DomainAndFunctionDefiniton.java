@@ -17,6 +17,7 @@ import eu.mihosoft.vrl.annotation.ObjectInfo;
 import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -40,7 +41,7 @@ public class DomainAndFunctionDefiniton implements Serializable
     (
         @ParamGroupInfo(group="Domain")
         @ParamInfo(name="Grid", style="ugx-load-dialog", options="ugx_tag=\"gridFile\"")
-        java.io.File gridFile,
+        File gridFile,
         
         @ParamGroupInfo(group="Domain")
         @ParamInfo(name="refinements", style="default", options="value=0")
