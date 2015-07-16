@@ -91,8 +91,6 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         if (api instanceof VPluginAPI)
         {
             VPluginAPI vapi = (VPluginAPI) api;
-            
-            ResourcePathProvider.path2plugin = getInitAPI().getResourceFolder();
 
             // Register visual components:
             //
@@ -200,6 +198,9 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
     @Override
     public void init(InitPluginAPI iApi)
     {
+        
+         ResourcePathProvider.path2plugin = iApi.getResourceFolder();
+        
         //CompletionUtil.registerClassesFromJar(
         //    VJarUtil.getClassLocation(NeuroBoxPluginConfigurator.class));
 
