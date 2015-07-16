@@ -68,7 +68,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         // you can specify packages that shall be
         // exported by using the exportPackage() method:
         //
-        // exportPackage("com.your.package");
+        exportPackage("edu.gcsc.vrl.neurobox");
 
         // describe the plugin
         setDescription("Plugin for neuro-related simulations with UG4.");
