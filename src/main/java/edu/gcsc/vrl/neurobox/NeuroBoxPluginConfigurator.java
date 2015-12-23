@@ -66,8 +66,13 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         // optionally allow other plugins to use the api of this plugin
         // you can specify packages that shall be
         // exported by using the exportPackage() method:
-        //
+
         exportPackage("edu.gcsc.vrl.neurobox");
+        exportPackage("edu.gcsc.vrl.neurobox.control");
+        exportPackage("edu.gcsc.vrl.neurobox.general_elemdisc");
+        exportPackage("edu.gcsc.vrl.neurobox.membrane_transport");
+        exportPackage("edu.gcsc.vrl.neurobox.membrane_transport.cable");
+        exportPackage("edu.gcsc.vrl.neurobox.types");
 
         // describe the plugin
         setDescription("Plugin for neuro-related simulations with UG4.");
@@ -91,7 +96,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         if (api instanceof VPluginAPI)
         {
             VPluginAPI vapi = (VPluginAPI) api;
-
+            
             // Register visual components:
             //
             // Here you can add additional components,
@@ -198,9 +203,9 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
     @Override
     public void init(InitPluginAPI iApi)
     {
-        
          ResourcePathProvider.path2plugin = iApi.getResourceFolder();
-        
+        //ResourcePathProvider.path2plugin = getInitAPI().getResourceFolder();
+
         //CompletionUtil.registerClassesFromJar(
         //    VJarUtil.getClassLocation(NeuroBoxPluginConfigurator.class));
 
