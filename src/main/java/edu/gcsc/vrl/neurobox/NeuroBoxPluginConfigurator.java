@@ -31,6 +31,7 @@ import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley_Nernst;
 import edu.gcsc.vrl.neurobox.membrane_transport.MCU_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.MNCX_VRL;
+import edu.gcsc.vrl.neurobox.types.FileSilentType;
 import edu.gcsc.vrl.neurobox.types.IChannel_ArrayType;
 import edu.gcsc.vrl.neurobox.types.IChannel_Type;
 import eu.mihosoft.vrl.io.IOUtil;
@@ -66,13 +67,13 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         // optionally allow other plugins to use the api of this plugin
         // you can specify packages that shall be
         // exported by using the exportPackage() method:
-
         exportPackage("edu.gcsc.vrl.neurobox");
         exportPackage("edu.gcsc.vrl.neurobox.control");
         exportPackage("edu.gcsc.vrl.neurobox.general_elemdisc");
         exportPackage("edu.gcsc.vrl.neurobox.membrane_transport");
         exportPackage("edu.gcsc.vrl.neurobox.membrane_transport.cable");
         exportPackage("edu.gcsc.vrl.neurobox.types");
+
 
         // describe the plugin
         setDescription("Plugin for neuro-related simulations with UG4.");
@@ -118,6 +119,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
 
             // not necessarily neuro (move this somewhere else maybe)
             vapi.addTypeRepresentation(IntegerIndexSelectionInputType.class);
+            vapi.addTypeRepresentation(FileSilentType.class);
 
             vapi.addTypeRepresentation(IElemDisc_Type.class);
             vapi.addTypeRepresentation(IElemDisc_ArrayType.class);
