@@ -11,8 +11,6 @@ import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.MethodInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
 import eu.mihosoft.vrl.system.VMessage;
-import java.io.File;
-import java.io.Serializable;
 
 
 @ComponentInfo(name="SynapseDistributionGenerator", category="Neuro")
@@ -27,7 +25,7 @@ public class SynapseDistributionGenerator implements java.io.Serializable{
         
         String fileName = file.getAbsoluteFile().getAbsolutePath();
        
-        edu.gcsc.vrl.ug.api.I_SynapseDistributor sd = new edu.gcsc.vrl.ug.api.SynapseDistributor(fileName, fileName);
+        edu.gcsc.vrl.ug.api.I_SynapseDistributor sd = new edu.gcsc.vrl.ug.api.SynapseDistributor(fileName, fileName, true);
         
         sd.place_synapses(distr, numSynapses);
         sd.export_grid();

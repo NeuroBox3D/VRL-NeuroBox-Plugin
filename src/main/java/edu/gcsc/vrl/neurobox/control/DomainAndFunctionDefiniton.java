@@ -106,6 +106,8 @@ public class DomainAndFunctionDefiniton implements Serializable
         }
 
         approxSpace.init_levels();
+        approxSpace.init_surfaces();
+        approxSpace.init_top_surface();
         approxSpace.const__print_layout_statistic();
         approxSpace.const__print_statistic();
         
