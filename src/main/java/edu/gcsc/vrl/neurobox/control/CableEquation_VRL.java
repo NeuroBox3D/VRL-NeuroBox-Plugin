@@ -26,11 +26,11 @@ import java.util.List;
 
 @ComponentInfo(name="Cable Equation", category="Neuro/cable")
 @ObjectInfo(instances = 1)
-public class CableEquation implements Serializable
+public class CableEquation_VRL implements Serializable
 {
     private static final long serialVersionUID = 1L;
     
-    private transient I_VMDisc vmDisc = null;
+    private transient I_CableEquation cableDisc = null;
     
     /**
      *
@@ -39,7 +39,6 @@ public class CableEquation implements Serializable
      * @param vmDiscSubsetData
      * @param memTransporters
      * @param presynSubsetData
-     * @param biexpSubsetData
      * @param synHandler
      * @param startValue
      * @return
@@ -58,32 +57,28 @@ public class CableEquation implements Serializable
         I_ApproximationSpace approxSpace,
         
         /// function definition
-        @ParamInfo(name="Function Definition", style="default")
-        edu.gcsc.vrl.userdata.FunctionDefinition[] functionDefinition,
+        @ParamInfo(name="Function Definitions", style="default")
+        FunctionDefinition[] functionDefinition,
         
         /// Problem definition ///
         @ParamGroupInfo(group="Problem definition|true")
         @ParamInfo(name="", style="default", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; type=\"S4:V, [K], [Na], [Ca]\"")
         UserDataTuple vmDiscSubsetData,
         
+        @ParamGroupInfo(group="Problem definition|true; Membrane transport|false")
+        @ParamInfo(name=" ", style="array", options="minArraySize=0; elemName=\"transport mechanism\"")
+        I_ICableMembraneTransport[] memTransporters,
+               
+        @ParamGroupInfo(group="Problem definition|true; Membrane transport|false")
+        @ParamInfo(name="synapse handler", style="default", options="", nullIsValid=true)
+        I_NETISynapseHandler synHandler,
+        
         @ParamGroupInfo(group="Problem definition|true")
         @ParamInfo(name="presynapse subset", style="default", options="ugx_globalTag=\"gridFile\"; type=\"s:presynaptic subset\"")
         UserDataTuple presynSubsetData,
         
-        @ParamGroupInfo(group="Problem definition|true")
-        @ParamInfo(name="(interneuronal) synapse subset", style="default", options="ugx_globalTag=\"gridFile\"; type=\"s:bi-exp. synapse subset\"")
-        UserDataTuple biexpSubsetData,
-        
-        @ParamGroupInfo(group="Problem definition|true; Membrane transport|false")
-        @ParamInfo(name="transport mechanisms", style="array", options="minArraySize=0")
-        I_IChannel[] memTransporters,
-               
-        @ParamGroupInfo(group="Problem definition|true; Membrane transport|false")
-        @ParamInfo(name="synapse handler", style="default", options="")
-        I_NETISynapseHandler synHandler,
-        
-        @ParamGroupInfo(group="Problem definition|true; Start Value|false")
-        @ParamInfo(name="Start Value", style="array", options="ugx_globalTag=\"gridFile\";"
+        @ParamGroupInfo(group="Problem definition|true; Initial values|false")
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\";"
             + "fct_tag=\"fctDef\"; minArraySize=1; type=\"S1|n:function & subset, start value\"")
         UserDataTuple[] startValue
     )
@@ -98,6 +93,11 @@ public class CableEquation implements Serializable
         String[] selFcts = ((UserDependentSubsetModel.FSDataType) vmDiscSubsetData.getData(0)).getSelFct();
         if (selFcts.length != 4) throw new RuntimeException("Cable equation discretization needs exactly "
                 + "four functions, but has "+selFcts.length+".");
+        
+        // check whether ions are given or not
+        boolean with_ions = true;
+        if ("".equals(selFcts[1]) || "".equals(selFcts[2]) || "".equals(selFcts[3]))
+            with_ions = false;
 
         String[] selSs = ((UserDependentSubsetModel.FSDataType) vmDiscSubsetData.getData(0)).getSelSs();
         if (selSs.length == 0) throw new RuntimeException("No subset definition in IP3R pump definition!");
@@ -106,30 +106,26 @@ public class CableEquation implements Serializable
         ssString = ssString.substring(2);
         
         // construct VMDisc object
-        vmDisc = new VMDisc(ssString);
+        cableDisc = new CableEquation(ssString, with_ions);
 
         // add channels
-        for (I_IChannel ch : memTransporters)
-            vmDisc.add_channel(ch);
+        for (I_ICableMembraneTransport ch : memTransporters)
+            cableDisc.add(ch);
         
         // get synaptic subset info
         String presynSs = presynSubsetData.getSubset(0);
-        String biExpSs = biexpSubsetData.getSubset(0);
         
         // synapse handler
-        synHandler.set_vmdisc(vmDisc);
-        synHandler.set_presyn_subset(presynSs);
-        vmDisc.set_synapse_handler(synHandler);
-        
-        // Dirichlet bnds on inter-neuronal synapse subset
-        I_DirichletBoundary diri = new DirichletBoundary();
-        for (int i = 0; i < selFcts.length; ++i)
-            diri.add(0.0, selFcts[i], biExpSs);
+        if (synHandler != null)
+        {
+            synHandler.set_vmdisc(cableDisc);
+            synHandler.set_presyn_subset(presynSs);
+            cableDisc.set_synapse_handler(synHandler);
+        }
         
         
         // add to domain disc
-        domainDisc.add(vmDisc);
-        domainDisc.add(diri);
+        domainDisc.add(cableDisc);
         
         
         /// start value
@@ -192,8 +188,8 @@ public class CableEquation implements Serializable
         check_value(specRes);
         check_value(specCap);
         
-        vmDisc.set_spec_res(specRes);
-        vmDisc.set_spec_cap(specCap);
+        cableDisc.set_spec_res(specRes);
+        cableDisc.set_spec_cap(specCap);
     }
     
     @MethodInfo(name="set diffusion constants", interactive = false)
@@ -212,7 +208,7 @@ public class CableEquation implements Serializable
         
         Double[] diffs = new Double[]{diffK, diffNa, diffCa};
         
-        vmDisc.set_diff_coeffs(diffs);
+        cableDisc.set_diff_coeffs(diffs);
     }
     
     @MethodInfo(name="set reversal potentials", interactive = false)
@@ -225,9 +221,9 @@ public class CableEquation implements Serializable
     {
         check_elemDisc_exists();
                 
-        vmDisc.set_ek(revPotK);
-        vmDisc.set_ena(revPotNa);
-        vmDisc.set_eca(revPotCa);
+        cableDisc.set_rev_pot_k(revPotK);
+        cableDisc.set_rev_pot_na(revPotNa);
+        cableDisc.set_rev_pot_ca(revPotCa);
     }
     
     @MethodInfo(name="set outer concentrations", interactive = false)
@@ -259,7 +255,7 @@ public class CableEquation implements Serializable
         
         check_value(diam);
         
-        vmDisc.set_diameter(diam);
+        cableDisc.set_diameter(diam);
     }
     
     @MethodInfo(name="set temperature", interactive = false)
@@ -270,7 +266,7 @@ public class CableEquation implements Serializable
     {
         check_elemDisc_exists();
         
-        vmDisc.set_temperature_celsius(temp);
+        cableDisc.set_temperature_celsius(temp);
     }
     
     @MethodInfo(name="set temperature", interactive = false)
@@ -288,7 +284,7 @@ public class CableEquation implements Serializable
     @MethodInfo(noGUI=true)
     private void check_elemDisc_exists()
     {
-        if (vmDisc == null)
+        if (cableDisc == null)
         {
             eu.mihosoft.vrl.system.VMessage.exception("Usage before initialization: ",
                 "No method can be called on cableEquation object before it has been initialized"

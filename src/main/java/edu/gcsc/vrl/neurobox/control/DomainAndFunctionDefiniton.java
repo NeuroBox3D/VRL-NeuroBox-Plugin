@@ -4,6 +4,7 @@ import edu.gcsc.vrl.ug.api.AlgebraType;
 import edu.gcsc.vrl.ug.api.ApproximationSpace;
 import edu.gcsc.vrl.ug.api.Domain;
 import edu.gcsc.vrl.ug.api.F_GlobalDomainRefiner;
+import edu.gcsc.vrl.ug.api.F_Order_cuthillmckee;
 import edu.gcsc.vrl.ug.api.F_InitUG;
 import edu.gcsc.vrl.ug.api.F_LoadDomain;
 import edu.gcsc.vrl.ug.api.I_ApproximationSpace;
@@ -17,7 +18,6 @@ import eu.mihosoft.vrl.annotation.ObjectInfo;
 import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
-import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -41,7 +41,7 @@ public class DomainAndFunctionDefiniton implements Serializable
     (
         @ParamGroupInfo(group="Domain")
         @ParamInfo(name="Grid", style="ugx-load-dialog", options="ugx_tag=\"gridFile\"")
-        File gridFile,
+        java.io.File gridFile,
         
         @ParamGroupInfo(group="Domain")
         @ParamInfo(name="refinements", style="default", options="value=0")
@@ -84,6 +84,8 @@ public class DomainAndFunctionDefiniton implements Serializable
         System.out.println("Create approximation space");
         I_ApproximationSpace approxSpace = new ApproximationSpace(dom);
         
+        boolean allFctsEverywhere = true;
+        
         // defining approximation space according to function definition
         for (edu.gcsc.vrl.userdata.FunctionDefinition fd: functionDefinition)
         {
@@ -102,7 +104,10 @@ public class DomainAndFunctionDefiniton implements Serializable
             if (fd.getFctData().subsetList.size() == ugxFI.const__num_subsets(0, 0))
                 approxSpace.add_fct(fd.getFctData().fctName, "Lagrange", 1);
             else
+            {
                 approxSpace.add_fct(fd.getFctData().fctName, "Lagrange", 1, subsets);
+                allFctsEverywhere = false;
+            }
         }
 
         approxSpace.init_levels();
@@ -110,6 +115,8 @@ public class DomainAndFunctionDefiniton implements Serializable
         approxSpace.init_top_surface();
         approxSpace.const__print_layout_statistic();
         approxSpace.const__print_statistic();
+        
+        if (allFctsEverywhere) F_Order_cuthillmckee.invoke(approxSpace);
         
         return new Object[]{approxSpace, functionDefinition};
     }

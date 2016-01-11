@@ -4,7 +4,8 @@
  */
 package edu.gcsc.vrl.neurobox;
 
-import edu.gcsc.vrl.neurobox.control.CableEquation;
+import edu.gcsc.vrl.neurobox.control.CableEquation_VRL;
+import edu.gcsc.vrl.neurobox.control.CableSolver;
 import edu.gcsc.vrl.neurobox.general_elemdisc.Diffusion;
 import edu.gcsc.vrl.neurobox.general_elemdisc.Buffer;
 import edu.gcsc.vrl.neurobox.general_elemdisc.FluxBoundary;
@@ -31,9 +32,8 @@ import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley_Nernst;
 import edu.gcsc.vrl.neurobox.membrane_transport.MCU_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.MNCX_VRL;
-import edu.gcsc.vrl.neurobox.types.FileSilentType;
-import edu.gcsc.vrl.neurobox.types.IChannel_ArrayType;
-import edu.gcsc.vrl.neurobox.types.IChannel_Type;
+import edu.gcsc.vrl.neurobox.types.IMembraneTransport_ArrayType;
+import edu.gcsc.vrl.neurobox.types.IMembraneTransport_Type;
 import eu.mihosoft.vrl.io.IOUtil;
 import eu.mihosoft.vrl.system.InitPluginAPI;
 import eu.mihosoft.vrl.system.PluginAPI;
@@ -67,13 +67,13 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         // optionally allow other plugins to use the api of this plugin
         // you can specify packages that shall be
         // exported by using the exportPackage() method:
+
         exportPackage("edu.gcsc.vrl.neurobox");
         exportPackage("edu.gcsc.vrl.neurobox.control");
         exportPackage("edu.gcsc.vrl.neurobox.general_elemdisc");
         exportPackage("edu.gcsc.vrl.neurobox.membrane_transport");
         exportPackage("edu.gcsc.vrl.neurobox.membrane_transport.cable");
         exportPackage("edu.gcsc.vrl.neurobox.types");
-
 
         // describe the plugin
         setDescription("Plugin for neuro-related simulations with UG4.");
@@ -119,13 +119,12 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
 
             // not necessarily neuro (move this somewhere else maybe)
             vapi.addTypeRepresentation(IntegerIndexSelectionInputType.class);
-            vapi.addTypeRepresentation(FileSilentType.class);
 
             vapi.addTypeRepresentation(IElemDisc_Type.class);
             vapi.addTypeRepresentation(IElemDisc_ArrayType.class);
 
-            vapi.addTypeRepresentation(IChannel_Type.class);
-            vapi.addTypeRepresentation(IChannel_ArrayType.class);
+            vapi.addTypeRepresentation(IMembraneTransport_Type.class);
+            vapi.addTypeRepresentation(IMembraneTransport_ArrayType.class);
             
             vapi.addComponent(ResourcePathProvider.class);
 
@@ -153,7 +152,8 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
             vapi.addComponent(MNCX_VRL.class);
 
             // cable equation
-            vapi.addComponent(CableEquation.class);
+            vapi.addComponent(CableEquation_VRL.class);
+            vapi.addComponent(CableSolver.class);
             vapi.addComponent(Hodgkin_Huxley.class);
             vapi.addComponent(Hodgkin_Huxley_Nernst.class);
             vapi.addComponent(Leakage.class);

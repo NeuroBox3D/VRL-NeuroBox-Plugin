@@ -30,7 +30,7 @@ public class ResourcePathProvider implements Serializable
     private static final long serialVersionUID = 1L;
     public static File path2plugin;
     
-    @MethodInfo(name="get resource file", valueName="file", valueStyle="silent")//, callOptions="autoinvoke")
+    @MethodInfo(name="get resource file", valueName="file")//, callOptions="autoinvoke")
     public File getResourceFile
     (
         @ParamInfo(name="file name") String fName
@@ -49,7 +49,7 @@ public class ResourcePathProvider implements Serializable
         return f;
     }
     
-    @MethodInfo(name="create resource file", valueName="file",  valueStyle="silent")//, callOptions="autoinvoke")
+    @MethodInfo(name="create resource file", valueName="file")//, callOptions="autoinvoke")
     public File createResourceFile
     (
         @ParamInfo(name="file name") String fName

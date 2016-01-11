@@ -42,7 +42,6 @@ import eu.mihosoft.vrl.annotation.ObjectInfo;
 import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
-import eu.mihosoft.vrl.math.Trajectory;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,7 +57,6 @@ public class InstationarySolver implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private boolean stopSolver;
-    private Trajectory[] vEvalTrajectory;
     
     /**
      *
@@ -477,6 +475,7 @@ public class InstationarySolver implements Serializable
         
         int checkbackInterval = 10;
         int lv = startLv;
+        if (lv < 0) errorExit("Chosen maximal step size is smaller than initial step size.");
         double levelUpDelay = 0.0; //caEntryDuration + (nSpikes - 1) * 1.0/freq;
         int[] checkbackCounter = new int[LowLv+1];
         for (int i=0; i<checkbackCounter.length; i++) checkbackCounter[i] = 0;
@@ -606,13 +605,7 @@ public class InstationarySolver implements Serializable
    
     private void errorExit(String s)
     {
-        eu.mihosoft.vrl.system.VMessage.exception("Setup Error in CalciumDynamicsSolver: ", s);
-    }
-
-    @MethodInfo(name="", valueName="Trajectories", valueStyle="default", valueOptions="", interactive = false)
-    public Trajectory[] getTrajectories()
-    {
-       return vEvalTrajectory;
+        eu.mihosoft.vrl.system.VMessage.exception("Error in InstationarySolver: ", s);
     }
     
     private double log2(double x)

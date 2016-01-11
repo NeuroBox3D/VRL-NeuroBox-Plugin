@@ -2,6 +2,7 @@ package edu.gcsc.vrl.neurobox.membrane_transport.cable;
 
 import edu.gcsc.vrl.ug.api.ChannelLeak;
 import edu.gcsc.vrl.ug.api.I_ChannelLeak;
+import edu.gcsc.vrl.ug.api.I_ConstUserNumber;
 import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
@@ -48,8 +49,8 @@ public class Leakage implements Serializable
         return leak;
     }
     
-    @MethodInfo(name="set reversal potential", interactive = false)
-    public void set_reversal_potential
+    @MethodInfo(name="set reversal potential global", interactive = false)
+    public void set_reversal_potential_global
     (
         @ParamInfo(name="leak rev pot [mV]", style="default", options="value=-65.0") double revPotLeak
     )
@@ -60,8 +61,30 @@ public class Leakage implements Serializable
     }
     
     
-    @MethodInfo(name="set conductance", interactive = false)
-    public void set_conductance
+    @MethodInfo(name="set reversal potential", interactive = false)
+    public void set_reversal_potential
+    (
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n:subset,rev. pot.\"") UserDataTuple[] revPotData
+    )
+    {
+        check_leak_exists();
+        
+        for (int i = 0; i < revPotData.length; ++i)
+        {
+            String selSs = revPotData[i].getSubset(0);
+            if (! (revPotData[i].getNumberData(1) instanceof I_ConstUserNumber))
+                eu.mihosoft.vrl.system.VMessage.exception("Invalid specification: ",
+                    "Hodgkin-Huxley channel conductance cannot be given as code.");
+            
+            double revPot = ((I_ConstUserNumber) revPotData[i].getNumberData(1)).const__get();
+            
+            leak.set_rev_pot(revPot, selSs);
+        }
+    }
+    
+    
+    @MethodInfo(name="set conductance global", interactive = false)
+    public void set_conductance_global
     (
         @ParamInfo(name="conductance [10^6 S/m^2]", style="default", options="value=3.0E-6") double cond
     )
@@ -70,6 +93,30 @@ public class Leakage implements Serializable
         check_value(cond);
         
         leak.set_cond(cond);
+    }
+    
+    
+    @MethodInfo(name="set conductances", interactive = false)
+    public void set_conductance
+    (
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n:subset,conductance\"") UserDataTuple[] condData
+    )
+    {
+        check_leak_exists();
+        
+        for (int i = 0; i < condData.length; ++i)
+        {
+            String selSs = condData[i].getSubset(0);
+            if (! (condData[i].getNumberData(1) instanceof I_ConstUserNumber))
+                eu.mihosoft.vrl.system.VMessage.exception("Invalid specification: ",
+                    "Hodgkin-Huxley channel conductance cannot be given as code.");
+            
+            double cond = ((I_ConstUserNumber) condData[i].getNumberData(1)).const__get();
+            
+            check_value(cond);
+
+            leak.set_cond(cond, selSs);
+        }
     }
     
     

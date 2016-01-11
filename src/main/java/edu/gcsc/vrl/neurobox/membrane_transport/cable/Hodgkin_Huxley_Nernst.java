@@ -2,6 +2,7 @@ package edu.gcsc.vrl.neurobox.membrane_transport.cable;
 
 import edu.gcsc.vrl.ug.api.ChannelHHNernst;
 import edu.gcsc.vrl.ug.api.I_ChannelHHNernst;
+import edu.gcsc.vrl.ug.api.I_ConstUserNumber;
 import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
@@ -54,8 +55,8 @@ public class Hodgkin_Huxley_Nernst implements Serializable
         return hhChannel;
     }
     
-    @MethodInfo(name="set conductances", interactive = false)
-    public void set_conductances
+    @MethodInfo(name="set conductances global", interactive = false)
+    public void set_conductances_global
     (
         @ParamInfo(name=" K cond [10^6 S/m^2]", style="default", options="value=3.6E-4") double gK,
         @ParamInfo(name="Na cond [10^6 S/m^2]", style="default", options="value=1.2e-3") double gNa
@@ -66,6 +67,35 @@ public class Hodgkin_Huxley_Nernst implements Serializable
         check_value(gNa);
         
         hhChannel.set_conductances(gK, gNa);
+    }
+    
+    @MethodInfo(name="set conductances", interactive = false)
+    public void set_conductances
+    (
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n|n:subset,gK,gNa\"") UserDataTuple[] condData
+    )
+    {
+        check_channel_exists();
+        
+        for (int i = 0; i < condData.length; ++i)
+        {
+            String selSs = condData[i].getSubset(0);
+            if (! (condData[i].getNumberData(1) instanceof I_ConstUserNumber))
+                eu.mihosoft.vrl.system.VMessage.exception("Invalid specification: ",
+                    "Hodgkin-Huxley channel conductance cannot be given as code.");
+            
+            if (! (condData[i].getNumberData(2) instanceof I_ConstUserNumber))
+                eu.mihosoft.vrl.system.VMessage.exception("Invalid specification: ",
+                    "Hodgkin-Huxley channel conductance cannot be given as code.");
+            
+            double gK = ((I_ConstUserNumber) condData[i].getNumberData(1)).const__get();
+            double gNa = ((I_ConstUserNumber) condData[i].getNumberData(2)).const__get();
+            
+            check_value(gK);
+            check_value(gNa);
+
+            hhChannel.set_conductances(gK, gNa, selSs);
+        }
     }
     
     @MethodInfo(name="log hGate", interactive = false)

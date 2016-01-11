@@ -1,6 +1,6 @@
 package edu.gcsc.vrl.neurobox.types;
 
-import edu.gcsc.vrl.ug.api.I_IChannel;
+import edu.gcsc.vrl.ug.api.I_ICableMembraneTransport;
 import eu.mihosoft.vrl.annotation.TypeInfo;
 import eu.mihosoft.vrl.types.ArrayBaseType;
 
@@ -8,12 +8,12 @@ import eu.mihosoft.vrl.types.ArrayBaseType;
  *
  * @author mbreit
  */
-@TypeInfo(type=I_IChannel[].class, input = true, output = true, style="array")
-public class IChannel_ArrayType extends ArrayBaseType
+@TypeInfo(type=I_ICableMembraneTransport[].class, input = true, output = true, style="array")
+public class IMembraneTransport_ArrayType extends ArrayBaseType
 {
     private static final long serialVersionUID = 1L;
     
-    public IChannel_ArrayType()
+    public IMembraneTransport_ArrayType()
     {
         setValueName("IChannel Array");
     }
