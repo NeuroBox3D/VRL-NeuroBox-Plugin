@@ -28,10 +28,10 @@ public class SynapseDistributionGenerator implements java.io.Serializable
 
     @MethodInfo(name="create synapse distributor", initializer=true, hide=false, interactive=true)
     public void create_synapse_distributor(@ParamInfo(name="Input grid", style="ugx-load-dialog", options="ugx_tag=\"gridFile\"") java.io.File file,
-                                           @ParamInfo(name="Output filename (specify with *.ugx)") String outfile,
                                            @ParamInfo(name="Delete existing synapses", options="value=true") boolean bDelSynapses)
+                                           
     {
-    //  Catch bad file spec
+    //  Catch bad file specification
         if (!file.exists())
         {
             VMessage.exception("SynapseDistributionGenerator::constructor failed",
@@ -47,11 +47,11 @@ public class SynapseDistributionGenerator implements java.io.Serializable
         
     //  Grid export file handling        
         outpath = gridFile.substring(0, gridFile.lastIndexOf(file.separator) + 1);                
-        outfile = outpath + outfile;
+        String outfile = outpath + "SynDistGenTmpOut.ugx";
         
-    //
+    ///
     //  MEMBER INITIALIZATION
-    //
+    ///
         
     //  Get number of subsets in grid
         numSubsets = ugxFI.const__num_subsets(0, 0);
@@ -61,7 +61,7 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     }
             
     @MethodInfo(name="place synapses")                                 
-    public void place_synapses(@ParamInfo(name="Specify density of synapses to be distributed on the subset(s) of choice", 
+    public void place_synapses(@ParamInfo(name="Specify density [1/µm] of synapses to be distributed on the subset(s) of choice", 
                                                 style="array", options="ugx_globalTag=\"gridFile\";" 
                                                 + "minArraySize=1; type=\"s|n:,density\"") UserDataTuple[] distrData)
     {   
@@ -105,7 +105,8 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     }
     
     @MethodInfo(name="degenerate synapses")                                 
-    public void degenerate_synapses(@ParamInfo(name="Specify fraction of synapses to be degenerated from the subset(s) of choice", 
+    public void degenerate_synapses(@ParamInfo(name="Specify fraction of synapses to be degenerated from the subset(s) of choice. "
+                                                    + "Fraction means: newNumber = (1-fraction)*oldNumber", 
                                                style="array", options="ugx_globalTag=\"gridFile\";" 
                                                + "minArraySize=1; type=\"s|n:,fraction\"") UserDataTuple[] distrData)
     {   
@@ -152,6 +153,7 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     public void print_num_synapses()
     {   
         VMessage.info("SynapseDistributionGenerator::print_num_synapses info", sd.num_synapses().toString() + " synapses in total.");
+        System.out.println("Done.");
     }
     
     @MethodInfo(name="print number of synapses in specified subset")                                 
@@ -188,5 +190,19 @@ public class SynapseDistributionGenerator implements java.io.Serializable
         }
         else
             VMessage.info("SynapseDistributionGenerator::export_grid info", "Geometry successfully written.");
+    }
+    
+    @MethodInfo(name="export grid to")                                 
+    public void export_grid_to(@ParamInfo(name="File name", style="save-dialog", options="tag=\"TheFile\"") java.io.File file)
+    {   
+        String filename = file.getAbsoluteFile().getAbsolutePath();
+        
+        sd.export_grid(filename);
+        
+        if (!file.exists())
+        {
+            VMessage.exception("SynapseDistributionGenerator::export_grid failed",
+                               "The geometry supposedly created by the synapse distribution generator can not be found.");                        
+        }
     }
 }
