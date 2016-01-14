@@ -216,9 +216,10 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         //    VJarUtil.getClassLocation(NeuroBoxPluginConfigurator.class));
 
         initHHNetworkTemplate(iApi);
+        initHHSingleCellTemplate(iApi);
         initSynapseDistributorTemplate(iApi);
         initCDSpineTemplate(iApi);
-        initCDBoutonTemplate(iApi);
+        initCDBoutonTemplate(iApi);        
         
         //////////////////////////////////////////////////////
         // ... add your own template initializers here ... //
@@ -268,6 +269,62 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
                 public String getDescription()
                 {
                     return "template for a cable equation network simulation "
+                            + "with synapses";
+                }
+
+                @Override
+                public BufferedImage getIcon()
+                {
+                    return null;
+                }
+            }
+        );        
+    }
+    
+    
+    private void initHHSingleCellTemplate(InitPluginAPI iApi)
+    {
+        // add template project files
+        final File templateProjectSrc = new File(iApi.getResourceFolder(),
+            "hh_single_cell_template.vrlp");
+         File templateProjectGeom = new File(iApi.getResourceFolder(),
+            "testCell.ugx");
+        
+        // save if not yet existent
+        if (!templateProjectSrc.exists())
+        {
+            InputStream in = NeuroBoxPluginConfigurator.class.getResourceAsStream(
+                "/edu/gcsc/vrl/neurobox/project_templates/hh_single_cell_template.vrlp");
+            
+            saveProjectTemplate(in, templateProjectSrc);
+        }
+        if (!templateProjectGeom.exists())
+        {
+            InputStream in = NeuroBoxPluginConfigurator.class.getResourceAsStream(
+                "/edu/gcsc/vrl/neurobox/geom/testCell.ugx");
+            
+            saveProjectTemplate(in, templateProjectGeom);
+        }
+        
+        // register as project templates with VRL
+        iApi.addProjectTemplate(new ProjectTemplate()
+            {
+                @Override
+                public String getName()
+                {
+                    return "Cable equation - single cell template";
+                }
+
+                @Override
+                public File getSource()
+                {
+                    return templateProjectSrc;
+                }
+
+                @Override
+                public String getDescription()
+                {
+                    return "template for a cable equation single cell simulation "
                             + "with synapses";
                 }
 
