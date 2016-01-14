@@ -287,7 +287,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         final File templateProjectSrc = new File(iApi.getResourceFolder(),
             "synapse_distributor_template.vrlp");
               File templateProjectGeom = new File(iApi.getResourceFolder(),
-            "testNetwork.ugx");
+            "testCell.ugx");
         
         // save if not yet existent
         if (!templateProjectSrc.exists())
