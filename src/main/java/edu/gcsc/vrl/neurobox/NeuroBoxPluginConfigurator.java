@@ -186,10 +186,14 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         new File(iApi.getResourceFolder(), "hh_network_template.vrlp").delete();
         new File(iApi.getResourceFolder(), "testNetwork.ugx").delete();
         
+        new File(iApi.getResourceFolder(), "synapse_distributor_template.vrlp").delete();
+        new File(iApi.getResourceFolder(), "testCell.ugx").delete();
+        
         new File(iApi.getResourceFolder(), "calcium_dynamics_spine_template.vrlp").delete();
         
         new File(iApi.getResourceFolder(), "calcium_dynamics_bouton_template.vrlp").delete();
         new File(iApi.getResourceFolder(), "dnmj_bouton_2AZ.ugx").delete();
+        
         ////////////////////////////////////
         // ... add your own data here ... //
         ////////////////////////////////////
@@ -212,6 +216,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         //    VJarUtil.getClassLocation(NeuroBoxPluginConfigurator.class));
 
         initHHNetworkTemplate(iApi);
+        initSynapseDistributorTemplate(iApi);
         initCDSpineTemplate(iApi);
         initCDBoutonTemplate(iApi);
         
@@ -264,6 +269,64 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
                 {
                     return "template for a cable equation network simulation "
                             + "with synapses";
+                }
+
+                @Override
+                public BufferedImage getIcon()
+                {
+                    return null;
+                }
+            }
+        );        
+    }
+    
+    
+    private void initSynapseDistributorTemplate(InitPluginAPI iApi)
+    {
+        // add template project files
+        final File templateProjectSrc = new File(iApi.getResourceFolder(),
+            "synapse_distributor_template.vrlp");
+              File templateProjectGeom = new File(iApi.getResourceFolder(),
+            "testNetwork.ugx");
+        
+        // save if not yet existent
+        if (!templateProjectSrc.exists())
+        {
+            InputStream in = NeuroBoxPluginConfigurator.class.getResourceAsStream(
+                "/edu/gcsc/vrl/neurobox/project_templates/synapse_distributor_template.vrlp");
+            
+            saveProjectTemplate(in, templateProjectSrc);
+        }
+        
+        if (!templateProjectGeom.exists())
+        {
+            InputStream in = NeuroBoxPluginConfigurator.class.getResourceAsStream(
+                "/edu/gcsc/vrl/neurobox/geom/testCell.ugx");
+            
+            saveProjectTemplate(in, templateProjectGeom);
+        }
+       
+        // register as project templates with VRL
+        iApi.addProjectTemplate(new ProjectTemplate()
+            {
+                @Override
+                public String getName()
+                {
+                    return "Synapse distributor template";
+                }
+
+                @Override
+                public File getSource()
+                {
+                    return templateProjectSrc;
+                }
+
+                @Override
+                public String getDescription()
+                {
+                    return "template for the use of the SynapseDistributionGenerator "
+                            + "to create and manage synapse distributions on "
+                            + "neuron morphologies.";
                 }
 
                 @Override
