@@ -118,7 +118,7 @@ public class CableEquation_VRL implements Serializable
         // synapse handler
         if (synHandler != null)
         {
-            synHandler.set_vmdisc(cableDisc);
+            synHandler.set_ce_object(cableDisc);
             synHandler.set_presyn_subset(presynSs);
             cableDisc.set_synapse_handler(synHandler);
         }
