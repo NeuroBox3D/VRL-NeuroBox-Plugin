@@ -26,7 +26,7 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     private int numSubsets;
     private String outpath;
 
-    @MethodInfo(name="create synapse distributor", initializer=true, hide=false, interactive=true)
+    @MethodInfo(name="create synapse_distributor", initializer=true, hide=false, interactive=true)
     public void create_synapse_distributor(@ParamInfo(name="Input grid", style="ugx-load-dialog", options="ugx_tag=\"gridFile\"") java.io.File file,
                                            @ParamInfo(name="Delete existing synapses", options="value=true") boolean bDelSynapses)
                                            
@@ -61,10 +61,11 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     }
             
     @MethodInfo(name="place synapses")                                 
-    public void place_synapses(@ParamInfo(name="Specify density [1/µm] of synapses to be distributed on the subset(s) of choice", 
+    public void place_synapses(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed on the subset(s) "
+                                                + "of choice. <br> <br>-> Specify (Subset, density) tuple(s)</html>", 
                                                 style="array", options="ugx_globalTag=\"gridFile\";" 
                                                 + "minArraySize=1; type=\"s|n:,density\"") UserDataTuple[] distrData)
-    {   
+    {                
     //  Setup array for user-specified subsets and corresponding synapse densities
         String[] subsets;
         Double[] densities;
@@ -105,11 +106,12 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     }
     
     @MethodInfo(name="degenerate synapses")                                 
-    public void degenerate_synapses(@ParamInfo(name="Specify fraction of synapses to be degenerated from the subset(s) of choice. "
-                                                    + "Fraction means: newNumber = (1-fraction)*oldNumber", 
+    public void degenerate_synapses(@ParamInfo(name="<html>Set fraction of synapses to be deleted from the subset(s) of choice in the range [0,1]."
+                                                    + "<br> <br>For the new number of synapses <br>fraction means: <br>newNumber = "
+                                                    + "(1-fraction)*oldNumber <br><br>-> Specify (Subset, fraction) tuple(s)</html>", 
                                                style="array", options="ugx_globalTag=\"gridFile\";" 
                                                + "minArraySize=1; type=\"s|n:,fraction\"") UserDataTuple[] distrData)
-    {   
+    {           
     //  Setup array for user-specified subsets and corresponding synapse densities
         String[] subsets;
         Double[] fraction;
@@ -131,9 +133,13 @@ public class SynapseDistributionGenerator implements java.io.Serializable
             if (!(value instanceof I_ConstUserNumber))
                 VMessage.exception("SynapseDistributionGenerator::degenerate_synapses failed",
                                    "Invalid specification: Degeneration fractions cannot be given as code.");
-                        
-            fraction[cnt]       = value.const__get();            
-            subsets[cnt] = udt.getSubset(0);
+           
+            if(value.const__get() < 0 || value.const__get() > 1)
+                VMessage.exception("SynapseDistributionGenerator::degenerate_synapses failed", 
+                                   "Invalid specification: Degeneration fractions out of range [0,1].");
+            
+            fraction[cnt] = value.const__get();            
+            subsets[cnt]  = udt.getSubset(0);
             
             cnt++;
         }    
@@ -150,22 +156,22 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     }
     
     @MethodInfo(name="print total number of synapses")                                 
-    public void print_num_synapses()
+    public void print_total_num_synapses()
     {   
-        VMessage.info("SynapseDistributionGenerator::print_num_synapses info", sd.num_synapses().toString() + " synapses in total.");
+        VMessage.info("SynapseDistributionGenerator::print_total_num_synapses info", sd.num_synapses().toString() + " synapses in total.");
         System.out.println("Done.");
     }
     
     @MethodInfo(name="print number of synapses in specified subset")                                 
-    public void print_num_synapses(@ParamInfo(name="Select subset", 
+    public void print_num_synapses_in_subset(@ParamInfo(name="Select subset", 
                                               style="default", options="ugx_globalTag=\"gridFile\";" 
                                               + "type=\"s:Subset\"") UserDataTuple subset)
     {   
         String subsetName = subset.getSubset(0);
-        VMessage.info("SynapseDistributionGenerator::print_num_synapses info", sd.num_synapses(subsetName).toString() + " synapses in subset " + subsetName + ".");
+        VMessage.info("SynapseDistributionGenerator::print_num_synapses_in_subset info", sd.num_synapses(subsetName).toString() + " synapses in subset " + subsetName + ".");
     }
     
-    @MethodInfo(name="print length of specified subset")                                 
+    @MethodInfo(name="print length in [m] of specified subset")                                 
     public void print_subset_length(@ParamInfo(name="Select subset", 
                                                style="default", options="ugx_globalTag=\"gridFile\";" 
                                                + "type=\"s:Subset\"") UserDataTuple subset)
@@ -174,8 +180,8 @@ public class SynapseDistributionGenerator implements java.io.Serializable
         VMessage.info("SynapseDistributionGenerator::print_subset_length info", "Length of subset " + subsetName + ": " + sd.get_subset_length(subsetName).toString() + " meter.");
     }
     
-    @MethodInfo(name="export grid")                                 
-    public void export_grid(@ParamInfo(name="Output filename (specify with *.ugx)") String outfile)
+    @MethodInfo(name="export grid to input grid path")                                 
+    public void export_grid_to_input_grid_path(@ParamInfo(name="Output filename (specify with *.ugx)") String outfile)
     {   
         outfile = outpath + outfile;
         sd.export_grid(outfile);
