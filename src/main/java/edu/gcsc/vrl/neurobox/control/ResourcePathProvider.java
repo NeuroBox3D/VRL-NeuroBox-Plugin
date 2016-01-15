@@ -41,7 +41,7 @@ public class ResourcePathProvider implements Serializable
         if (!f.exists())
         {
             VMessage.exception("File not found",
-                "The file '"+path2plugin.getAbsolutePath()+"/testNetwork.ugx"+"' can not be found.");
+                "The file '"+path2plugin.getAbsolutePath()+File.separator+fName+"' can not be found.");
             
             return null;
         }
