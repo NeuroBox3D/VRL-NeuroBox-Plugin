@@ -52,7 +52,7 @@ public class Leakage implements Serializable
     @MethodInfo(name="set reversal potential global", interactive = false)
     public void set_reversal_potential_global
     (
-        @ParamInfo(name="leak rev pot [mV]", style="default", options="value=-65.0") double revPotLeak
+        @ParamInfo(name="leak rev pot [V]", style="default", options="value=-0.065") double revPotLeak
     )
     {
         check_leak_exists();
@@ -64,7 +64,7 @@ public class Leakage implements Serializable
     @MethodInfo(name="set reversal potential", interactive = false)
     public void set_reversal_potential
     (
-        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n:subset,rev. pot.\"") UserDataTuple[] revPotData
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n:subset,rev. pot. [V]\"") UserDataTuple[] revPotData
     )
     {
         check_leak_exists();
@@ -86,7 +86,7 @@ public class Leakage implements Serializable
     @MethodInfo(name="set conductance global", interactive = false)
     public void set_conductance_global
     (
-        @ParamInfo(name="conductance [10^6 S/m^2]", style="default", options="value=3.0E-6") double cond
+        @ParamInfo(name="conductance [S/m^2]", style="default", options="value=3.0") double cond
     )
     {
         check_leak_exists();
@@ -99,7 +99,7 @@ public class Leakage implements Serializable
     @MethodInfo(name="set conductances", interactive = false)
     public void set_conductance
     (
-        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n:subset,conductance\"") UserDataTuple[] condData
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n:subset,conductance [S/m^2]\"") UserDataTuple[] condData
     )
     {
         check_leak_exists();

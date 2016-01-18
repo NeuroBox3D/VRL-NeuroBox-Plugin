@@ -58,8 +58,8 @@ public class Hodgkin_Huxley implements Serializable
     @MethodInfo(name="set conductances global", interactive = false)
     public void set_conductances_global
     (
-        @ParamInfo(name=" K cond [10^6 S/m^2]", style="default", options="value=3.6E-4") double gK,
-        @ParamInfo(name="Na cond [10^6 S/m^2]", style="default", options="value=1.2e-3") double gNa
+        @ParamInfo(name=" K cond [S/m^2]", style="default", options="value=360.0") double gK,
+        @ParamInfo(name="Na cond [S/m^2]", style="default", options="value=1200.0") double gNa
     )
     {
         check_channel_exists();
@@ -72,7 +72,7 @@ public class Hodgkin_Huxley implements Serializable
     @MethodInfo(name="set conductances", interactive = false)
     public void set_conductances
     (
-        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n|n:subset,gK,gNa\"") UserDataTuple[] condData
+        @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\"; type=\"s|n|n:subset,gK [S/m^2],gNa [S/m^2]\"") UserDataTuple[] condData
     )
     {
         check_channel_exists();

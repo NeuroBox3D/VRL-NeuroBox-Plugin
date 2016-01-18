@@ -47,8 +47,8 @@ public class CableEquation_VRL implements Serializable
     @OutputInfo
     (
         style="multi-out",
-        elemNames = {"Domain Disc", "Initial Solution"},
-        elemTypes = {I_DomainDiscretization.class, UserDataTuple[].class}
+        elemNames = {"Cable Disc", "Domain Disc", "Initial Solution"},
+        elemTypes = {I_CableEquation.class, I_DomainDiscretization.class, UserDataTuple[].class}
     )
     public Object[] createCableEquation
     (
@@ -173,14 +173,14 @@ public class CableEquation_VRL implements Serializable
             }
         }
         
-        return new Object[]{domainDisc, startValue};
+        return new Object[]{cableDisc, domainDisc, startValue};
     }
     
     @MethodInfo(name="set material constants", interactive = false)
     public void set_material_constants
     (
-        @ParamInfo(name="specific resistance [uOhm*m]", style="default", options="value=1.0e6") double specRes,
-        @ParamInfo(name="specific capacity [kF/m^2]", style="default", options="value=1.0e-5") double specCap
+        @ParamInfo(name="specific resistance [Ohm*m]", style="default", options="value=1.5") double specRes,
+        @ParamInfo(name="specific capacity [F/m^2]", style="default", options="value=1.0e-2") double specCap
     )
     {
         check_elemDisc_exists();
@@ -195,9 +195,9 @@ public class CableEquation_VRL implements Serializable
     @MethodInfo(name="set diffusion constants", interactive = false)
     public void set_diffusion_constants
     (
-        @ParamInfo(name="K [m^2/ms]", style="default", options="value=1.0e-12") double diffK,
-        @ParamInfo(name="Na [m^2/ms]", style="default", options="value=1.0e-12") double diffNa,
-        @ParamInfo(name="Ca [m^2/ms]", style="default", options="value=2.2e-13") double diffCa
+        @ParamInfo(name="K [m^2/s]", style="default", options="value=1.0e-9") double diffK,
+        @ParamInfo(name="Na [m^2/s]", style="default", options="value=1.0e-9") double diffNa,
+        @ParamInfo(name="Ca [m^2/s]", style="default", options="value=2.2e-10") double diffCa
     )
     {
         check_elemDisc_exists();
@@ -214,9 +214,9 @@ public class CableEquation_VRL implements Serializable
     @MethodInfo(name="set reversal potentials", interactive = false)
     public void set_reversal_potentials
     (
-        @ParamInfo(name="K [mV]", style="default", options="value=-77.0") double revPotK,
-        @ParamInfo(name="Na [mV]", style="default", options="value=50.0") double revPotNa,
-        @ParamInfo(name="Ca [mV]", style="default", options="value=138.0") double revPotCa
+        @ParamInfo(name="K [V]", style="default", options="value=-0.09") double revPotK,
+        @ParamInfo(name="Na [V]", style="default", options="value=0.06") double revPotNa,
+        @ParamInfo(name="Ca [V]", style="default", options="value=0.14") double revPotCa
     )
     {
         check_elemDisc_exists();
@@ -229,8 +229,8 @@ public class CableEquation_VRL implements Serializable
     @MethodInfo(name="set outer concentrations", interactive = false)
     public void set_outer_concentrations
     (
-        @ParamInfo(name="K [mM]", style="default", options="value=2.5") double concK,
-        @ParamInfo(name="Na [mM]", style="default", options="value=140.0") double concNa,
+        @ParamInfo(name="K [mM]", style="default", options="value=4.0") double concK,
+        @ParamInfo(name="Na [mM]", style="default", options="value=150.0") double concNa,
         @ParamInfo(name="Ca [mM]", style="default", options="value=1.5") double concCa
     )
     {
@@ -240,9 +240,9 @@ public class CableEquation_VRL implements Serializable
         check_value(concNa);
         check_value(concCa);
         
-        ///vmDisc.set_k_out(concK);
-        ///vmDisc.set_na_out(concNa);
-        ///vmDisc.set_ca_out(concCa);
+        cableDisc.set_k_out(concK);
+        cableDisc.set_na_out(concNa);
+        cableDisc.set_ca_out(concCa);
     }
     
     @MethodInfo(name="set diameter", interactive = false)
@@ -261,7 +261,7 @@ public class CableEquation_VRL implements Serializable
     @MethodInfo(name="set temperature", interactive = false)
     public void set_temperature_celsius
     (
-        @ParamInfo(name="temperature [deg C]", style="default", options="value=37.0") double temp
+        @ParamInfo(name="temperature [°C]", style="default", options="value=37.0") double temp
     )
     {
         check_elemDisc_exists();

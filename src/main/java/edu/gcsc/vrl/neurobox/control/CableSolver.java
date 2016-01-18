@@ -14,6 +14,7 @@ import edu.gcsc.vrl.ug.api.I_ApproximationSpace;
 import edu.gcsc.vrl.ug.api.I_AssTuner;
 import edu.gcsc.vrl.ug.api.I_AssembledLinearOperator;
 import edu.gcsc.vrl.ug.api.I_CableAssTuner;
+import edu.gcsc.vrl.ug.api.I_CableEquation;
 import edu.gcsc.vrl.ug.api.I_CompositeConvCheck;
 import edu.gcsc.vrl.ug.api.I_CplUserNumber;
 import edu.gcsc.vrl.ug.api.I_DomainDiscretization;
@@ -52,6 +53,7 @@ public class CableSolver implements Serializable
     
     /**
      *
+     * @param cableDisc
      * @param domainDisc
      * @param approxSpace
      * @param initValues
@@ -78,6 +80,10 @@ public class CableSolver implements Serializable
     public Object[] invoke
     (
         @ParamGroupInfo(group="Problem Setup|false")
+        @ParamInfo(name="Cable Disc", style="default")
+        I_CableEquation cableDisc,
+            
+        @ParamGroupInfo(group="Problem Setup|false")
         @ParamInfo(name="Domain Disc", style="default")
         I_DomainDiscretization domainDisc,
         
@@ -95,27 +101,27 @@ public class CableSolver implements Serializable
         double timeStart,
         
         @ParamGroupInfo(group="Time stepping|false")
-        @ParamInfo(name="end time", style="default", options="value=1.0D")
+        @ParamInfo(name="end time", style="default", options="value=1e-3")
         double timeEnd,
         
         @ParamGroupInfo(group="Time stepping|false")
-        @ParamInfo(name="start with time step", style="default", options="value=0.01")
+        @ParamInfo(name="start with time step", style="default", options="value=2e-5")
         double timeStepStart,
         
         @ParamGroupInfo(group="Time stepping|false")
-        @ParamInfo(name="time step reduction factor", style="default", options="value=0.5D")
-        double stepReductionFactor,
+        @ParamInfo(name="time step reduction factor", style="default", options="value=2")
+        int stepReductionFactor,
         
         @ParamGroupInfo(group="Time stepping|false")
-        @ParamInfo(name="minimal time step", style="default", options="value=0.00001D")
+        @ParamInfo(name="minimal time step", style="default", options="value=1e-8")
         double minStepSize,
         
         @ParamGroupInfo(group="Solver setup|false")
-        @ParamInfo(name="maximal #iterations", style="default", options="value=20")
+        @ParamInfo(name="maximal #iterations", style="default", options="value=10")
         int maxNumIterLinear,
         
         @ParamGroupInfo(group="Solver setup|false")
-        @ParamInfo(name="minimal defect reduction", style="default", options="value=1E-10")
+        @ParamInfo(name="minimal defect reduction", style="default", options="value=1E-12")
         double minRedLinear,
         
         @ParamGroupInfo(group="Solver setup|false")
@@ -240,28 +246,59 @@ public class CableSolver implements Serializable
         
         
         // computations for time stepping
-        double dt = timeStepStart;
-        
         int LowLv =  (int) Math.ceil(log2(timeStepStart/minStepSize));
         if (LowLv < 0) errorExit("Initial time step is smaller than minimal time step.");
-        double minStepSizeNew = timeStepStart / Math.pow(2, LowLv);
-        minStepSize = minStepSizeNew;
-        
-        int checkbackInterval = 10;
         int lv = 0;
         int[] checkbackCounter = new int[LowLv+1];
         for (int i=0; i<checkbackCounter.length; i++) checkbackCounter[i] = 0;
         
         
         // begin simulation loop
+        double curr_dt = timeStepStart;
         boolean dtChanged = true;
-        while (((int)Math.floor(time/dt+0.5))*dt < timeEnd)
+        while (timeEnd - time > 0.001*curr_dt)
         {
-            F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor((time+dt)/dt+0.5))*dt + "  BEGIN ++++++\n");
+            // setup time Disc for old solutions and timestep
+            timeDisc.prepare_step(solTimeSeries, curr_dt);
+	
+            // reduce time step if cfl < curr_dt
+            // (this needs to be done AFTER prepare_step as channels are updated there)
+            double cfl = cableDisc.estimate_cfl_cond(solTimeSeries.latest());
+            //F_Print.invoke("estimated CFL condition: dt < " + cfl);
+            while (curr_dt > cfl)
+            {
+                if (lv == LowLv)
+                    errorExit("Required time step smaller than specified minimum.");
+                    
+		curr_dt = curr_dt/stepReductionFactor;
+		++lv;
+		checkbackCounter[lv] = 0;
+		//F_Print.invoke("estimated CFL condition: dt < " + cfl
+                //               + " - reducing time step to " + curr_dt);
+		dtChanged = true;
+            }
+	
+            // increase time step if cfl > curr_dt / dtred
+            // (and if time is aligned with new bigger step size)
+            while (curr_dt*stepReductionFactor < cfl
+                   && lv > 0
+                   && checkbackCounter[lv] % stepReductionFactor == 0)
+            {
+		curr_dt = curr_dt*stepReductionFactor;
+		--lv;
+		checkbackCounter[lv] += checkbackCounter[lv+1] / stepReductionFactor;
+		checkbackCounter[lv+1] = 0;
+		//F_Print.invoke("estimated CFL condition: dt < " + cfl
+                //                 + " - increasing time step to " + curr_dt);
+		dtChanged = true;
+            }
+	
+            F_Print.invoke("++++++ POINT IN TIME " + ((int)Math.floor((time+curr_dt)/curr_dt+0.5))*curr_dt + " BEGIN ++++++");
 
-            // setup time disc for old solutions and timestep
-            timeDisc.prepare_step(solTimeSeries, dt);
-
+            // prepare again with new time step size (if needed)
+            if (dtChanged) timeDisc.prepare_step(solTimeSeries, curr_dt);
+            
+            // assemble linear problem
             assTuner.set_matrix_is_const(!dtChanged);
             try {F_AssembleLinearOperatorRhsAndSolution.invoke(op, u, b);} 
             catch (Exception e) {errorExit("Could not assemble operator:" + e.getMessage());}
@@ -269,82 +306,37 @@ public class CableSolver implements Serializable
             // apply Newton solver
             ilu.set_disable_preprocessing(!dtChanged);
             if (!F_ApplyLinearSolver.invoke(op, u, b, ls))
+                errorExit("Could not apply linear solver.");
+            
+            // update new time
+            time = solTimeSeries.const__time(0) + curr_dt;
+            dtChanged = false;
+            
+            // increment check-back counter
+            checkbackCounter[lv]++;
+            
+            // plot solution every plotStep seconds
+            if (vtkOut != null)
             {
-                // in case of failure:
-                F_Print.invoke("Solver failed at point in time "
-                               + ((int)Math.floor((time+dt)/dt+0.5))*dt
-                               + " with time step " + dt + ".");
-
-                dt = dt/2;
-                dtChanged = true;
-                lv = lv++;
-                F_VecScaleAssign.invoke(u, 1.0, solTimeSeries.latest());
-
-                // halve time step and try again unless time step below minimum
-                if (dt < minStepSize)
-                {
-                    F_Print.invoke("Time step below minimum. Aborting. Failed at point in time "
-                            + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".\n");
-                    
-                    if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk" + File.separator + "result", u);
-                    
-                    errorExit("Newton solver failed at point in time "
-                        + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
-                }
-                else
-                {    
-                    F_Print.invoke("Trying with half the time step...\n");
-                    checkbackCounter[lv] = 0;
-                }
-                
-                if (stopSolver)
-                {
-                    F_Print.invoke("\n -------- solver stopped by external stop command --------\n");
-                    break;
-                }
+                if (Math.abs(time/plotStep - Math.floor(time/plotStep+0.5)) < 1e-5)
+                    vtkOut.print(outputPath + "vtk" + File.separator + "result", u, (int) Math.floor(time/plotStep+0.5), time);
             }
-            else
+
+            // get oldest solution
+            I_Vector oldestSol = solTimeSeries.oldest();
+
+            // copy values into oldest solution (we reuse the memory here)
+            F_VecScaleAssign.invoke(oldestSol, 1.0, u);
+
+            // push oldest solutions with new values to front, oldest sol pointer is popped from end
+            solTimeSeries.push_discard_oldest(oldestSol, time);
+
+            F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor(time/curr_dt+0.5))*curr_dt + "  END ++++++++\n");
+
+            if (stopSolver)
             {
-                dtChanged = false;
-                    
-                // update new time
-                time = solTimeSeries.const__time(0) + dt;
-
-                // update checkback counter and if applicable, reset dt
-                checkbackCounter[lv]++;
-                while (checkbackCounter[lv] % (2*checkbackInterval) == 0 && lv > 0)
-                {
-                    F_Print.invoke("Doubling time due to continuing convergence; now: " + 2*dt + "\n");
-                    dt = 2*dt;
-                    dtChanged = true;
-                    lv--;
-                    checkbackCounter[lv] = checkbackCounter[lv] + checkbackCounter[lv+1] / 2;
-                    checkbackCounter[lv+1] = 0;
-                }
-
-                // plot solution every plotStep seconds
-                if (vtkOut != null)
-                {
-                    if (Math.abs(time/plotStep - Math.floor(time/plotStep+0.5)) < 1e-5)
-                        vtkOut.print(outputPath + "vtk" + File.separator + "result", u, (int) Math.floor(time/plotStep+0.5), time);
-                }
-
-                // get oldest solution
-                I_Vector oldestSol = solTimeSeries.oldest();
-
-                // copy values into oldest solution (we reuse the memory here)
-                F_VecScaleAssign.invoke(oldestSol, 1.0, u);
-
-                // push oldest solutions with new values to front, oldest sol pointer is popped from end
-                solTimeSeries.push_discard_oldest(oldestSol, time);
-
-                F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor(time/dt+0.5))*dt + "  END ++++++++\n");
-                
-                if (stopSolver)
-                {
-                    F_Print.invoke("\n -------- solver stopped by external stop command --------\n");
-                    break;
-                }
+                F_Print.invoke("\n -------- solver stopped by external stop command --------\n");
+                break;
             }
         }
         

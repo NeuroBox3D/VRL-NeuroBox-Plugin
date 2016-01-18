@@ -185,6 +185,8 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
         // ensure template projects are updated (by deleting first)
         new File(iApi.getResourceFolder(), "hh_network_template.vrlp").delete();
         new File(iApi.getResourceFolder(), "testNetwork.ugx").delete();
+        new File(iApi.getResourceFolder(), "hh_single_cell_template.vrlp").delete();
+        new File(iApi.getResourceFolder(), "testCell.ugx").delete();
         
         new File(iApi.getResourceFolder(), "synapse_distributor_template.vrlp").delete();
         new File(iApi.getResourceFolder(), "testCell.ugx").delete();
