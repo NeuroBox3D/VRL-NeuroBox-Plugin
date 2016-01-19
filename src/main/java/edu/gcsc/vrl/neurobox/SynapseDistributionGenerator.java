@@ -210,5 +210,7 @@ public class SynapseDistributionGenerator implements java.io.Serializable
             VMessage.exception("SynapseDistributionGenerator::export_grid failed",
                                "The geometry supposedly created by the synapse distribution generator can not be found.");                        
         }
+        else
+            VMessage.info("SynapseDistributionGenerator::export_grid_to info", "Geometry successfully written.");
     }
 }
