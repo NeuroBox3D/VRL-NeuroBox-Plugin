@@ -17,18 +17,18 @@ public class SpineGenerator implements Serializable
     @MethodInfo(name="build spine", valueName="file")
     public File build_spine
     (
-        @ParamInfo(name="Cytosol Radius[µm]", options="value=2.0") double cyt_radius,
-        @ParamInfo(name="ER Radius[µm]", options="value=0.5") double er_radius,
+        @ParamInfo(name="Cytosol Radius[µm]", options="value=0.45") double cyt_radius,
+        @ParamInfo(name="ER Radius[µm]", options="value=0.11") double er_radius,
         @ParamInfo(name="Dendrite Length[µm]", options="value=10.0") double dend_length,
-        @ParamInfo(name="Spine Position[µm]", options="value=5.0") double pos_app,
-        @ParamInfo(name="App Neck Radius[µm]", options="value=0.4") double app_neck_radius,
-        @ParamInfo(name="App Neck Length[µm]", options="value=1.0") double app_neck_length,
-        @ParamInfo(name="App Head Radius[µm]", options="value=0.3") double app_head_radius,
-        @ParamInfo(name="App Head Height[µm]", options="value=0.3") double app_head_length,
-        @ParamInfo(name="Spine Neck Radius[µm]", options="value=1.0") double spine_neck_radius,
-        @ParamInfo(name="Spine Neck Length[µm]", options="value=0.5") double spine_neck_length,
-        @ParamInfo(name="Spine Head Radius[µm]", options="value=0.5") double spine_head_radius,
-        @ParamInfo(name="Spine Head Height[µm]", options="value=1.5") double spine_head_length,
+        @ParamInfo(name="App Position[µm]", options="value=5.0") double pos_app,
+        @ParamInfo(name="App Neck Radius[µm]", options="value=0.028") double app_neck_radius,
+        @ParamInfo(name="App Neck Length[µm]", options="value=0.94") double app_neck_length,
+        @ParamInfo(name="App Head Radius[µm]", options="value=0.03") double app_head_radius,
+        @ParamInfo(name="App Head Height[µm]", options="value=0.12") double app_head_length,
+        @ParamInfo(name="Spine Neck Radius[µm]", options="value=0.074") double spine_neck_radius,
+        @ParamInfo(name="Spine Neck Length[µm]", options="value=0.667") double spine_neck_length,
+        @ParamInfo(name="Spine Head Radius[µm]", options="value=0.186") double spine_head_radius,
+        @ParamInfo(name="Spine Head Height[µm]", options="value=0.519") double spine_head_length,
         @ParamInfo(name="File Name", style="save-dialog", options="tag=\"TheFile\"") File file
     )
     {
@@ -51,10 +51,13 @@ public class SpineGenerator implements Serializable
         boolean opt_synapse = true;
         boolean opt_ER = true;
         boolean opt_app = true;
-        Boolean[] boolVector = new Boolean[3];
+        boolean synapse_pos = false;
+        
+        Boolean[] boolVector = new Boolean[4];
         boolVector[0] = opt_synapse;
         boolVector[1] = opt_ER;
         boolVector[2] = opt_app;
+        boolVector[3] = synapse_pos;
         
         edu.gcsc.vrl.ug.api.F_BuildDendrite.invoke(doubleVector, boolVector, fileName);
         
