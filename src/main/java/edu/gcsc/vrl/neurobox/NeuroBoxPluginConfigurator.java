@@ -1,9 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/// package's name
 package edu.gcsc.vrl.neurobox;
 
+/// imports
 import edu.gcsc.vrl.neurobox.control.CableEquation_VRL;
 import edu.gcsc.vrl.neurobox.control.CableSolver;
 import edu.gcsc.vrl.neurobox.general_elemdisc.Diffusion;
@@ -50,8 +48,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 /**
  *
