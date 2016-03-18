@@ -59,6 +59,40 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     //  construct new synapse distributor object
         sd = new SynapseDistributor(gridFile, outfile, bDelSynapses);                
     }
+
+    /**
+     * @brief place synapses on a ball
+     * @param distrData 
+     */
+    @MethodInfo(name="place synapses within ball")
+    public void place_synapses_ball(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed within ball "
+                                                + "of choice. <br> <br>-> Specify (density) tuple(s)</html>", 
+                                                style="array", options="ugx_globalTag=\"gridFile\";" 
+                                                + "minArraySize=1; type=\"n|n|n|n|n:,density\"") UserDataTuple[] distrData) 
+    {                
+	for(UserDataTuple udt: distrData) {
+ 	       I_ConstUserNumber densVal = (I_ConstUserNumber)udt.getNumberData(1); 
+          	if (!(densVal instanceof I_ConstUserNumber)) {
+                	VMessage.exception("SynapseDistributionGenerator::place_synapses failed",
+                                   "Invalid specification: Synapse densities cannot be given as code.");
+	    	}
+	
+		I_ConstUserNumber xVal = (I_ConstUserNumber) udt.getNumberData(2);	
+		I_ConstUserNumber yVal = (I_ConstUserNumber) udt.getNumberData(3);	
+		I_ConstUserNumber zVal = (I_ConstUserNumber) udt.getNumberData(4);	
+		I_ConstUserNumber rVal = (I_ConstUserNumber) udt.getNumberData(5);	
+		Double x = xVal.const__get();
+		Double y = xVal.const__get();
+		Double z = xVal.const__get();
+		Double r = xVal.const__get();
+		
+	    if (densVal != null) {
+		    /// Note/@†odo: uncomment if you got your new UG API
+		    /// sd.place_synapses_uniform(densVal, x, y, z, r);
+	    }
+	    
+	}
+    }
             
     @MethodInfo(name="place synapses")                                 
     public void place_synapses(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed on the subset(s) "
