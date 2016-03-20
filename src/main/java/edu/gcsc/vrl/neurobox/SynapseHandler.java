@@ -48,6 +48,31 @@ public class SynapseHandler implements Serializable
             duration_dev, peak_cond);
     }
     
+    /**
+     * @brief activates synapses on a ball with a given timing
+     * @param start_time
+     * @param duration
+     * @param start_time_dev
+     * @param duration_dev
+     * @param peak_cond 
+     */
+    @MethodInfo(name="set activation timing ball", interactive=false)
+    public void set_activation_timing_ball
+    (
+        @ParamInfo(name="start time [ms]", style="default", options="") Double start_time,
+        @ParamInfo(name="duration [ms]", style="default", options="") Double duration,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double start_time_dev,
+        @ParamInfo(name="std deviation of duration [ms]", style="default", options="") Double duration_dev,
+        @ParamInfo(name="peak conductance [uS]", style="default", options="") Double peak_cond
+    )
+    {
+        check_syn_handler();
+        
+	/// Note/@todo: uncomment if you got your new UG API
+        /* synHandler.set_activation_timing_ball(start_time, duration, start_time_dev,
+            duration_dev, peak_cond);*/
+    }
+    
     @MethodInfo(noGUI=true)
     private void check_syn_handler()
     {

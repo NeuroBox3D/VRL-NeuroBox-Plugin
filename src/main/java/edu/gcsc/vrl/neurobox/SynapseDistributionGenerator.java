@@ -87,7 +87,7 @@ public class SynapseDistributionGenerator implements java.io.Serializable
 		Double r = xVal.const__get();
 		
 	    if (densVal != null) {
-		    /// Note/@†odo: uncomment if you got your new UG API
+		    /// Note/@todo: uncomment if you got your new UG API
 		    /// sd.place_synapses_uniform(densVal, x, y, z, r);
 	    }
 	    
