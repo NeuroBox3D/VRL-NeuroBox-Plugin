@@ -33,7 +33,7 @@ public class Hodgkin_Huxley_Nernst implements Serializable {
 
 	private transient I_ChannelHHNernst hhChannel = null;
 
-	private final transient ArrayList<String> selectedSubsets = new ArrayList<String>(); /// remember HH Nernst channels
+	private transient ArrayList<String> selectedSubsets; /// remember HH Nernst channels
 
 	/**
 	 *
@@ -57,6 +57,7 @@ public class Hodgkin_Huxley_Nernst implements Serializable {
 		// construct HH object
 		hhChannel = new ChannelHHNernst(selFct, selSs);
 
+                selectedSubsets = new ArrayList<String>();
 		selectedSubsets.addAll(Arrays.asList(selSs));
 
 		return hhChannel;

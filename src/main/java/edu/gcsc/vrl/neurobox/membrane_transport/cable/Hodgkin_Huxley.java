@@ -33,7 +33,7 @@ public class Hodgkin_Huxley implements Serializable {
 
 	private transient I_ChannelHH hhChannel = null;
 
-	private final transient ArrayList<String> selectedSubsets = new ArrayList<String>(); /// remember HH channels
+	private transient ArrayList<String> selectedSubsets; /// remember HH channels
 
 	/**
 	 *
@@ -58,6 +58,7 @@ public class Hodgkin_Huxley implements Serializable {
 		hhChannel = new ChannelHH(selFct, selSs);
 
 		// remember the subsets we installed HH channels on
+                selectedSubsets = new ArrayList<String>();
 		selectedSubsets.addAll(Arrays.asList(selSs));
 
 		return hhChannel;

@@ -29,7 +29,7 @@ public class Leakage implements Serializable {
 
 	private transient I_ChannelLeak leak = null;
 
-	private final transient ArrayList<String> selectedSubsets = new ArrayList<String>(); /// remember leakage channels
+	private transient ArrayList<String> selectedSubsets; /// remember leakage channels
 
 	/**
 	 *
@@ -54,6 +54,7 @@ public class Leakage implements Serializable {
 		leak = new ChannelLeak(selFct, selSs);
 
 		// remember the subsets we installed leakage channels on
+                selectedSubsets = new ArrayList<String>();
 		selectedSubsets.addAll(Arrays.asList(selSs));
 
 		return leak;
