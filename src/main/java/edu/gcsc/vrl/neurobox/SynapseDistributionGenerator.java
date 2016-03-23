@@ -61,41 +61,71 @@ public class SynapseDistributionGenerator implements java.io.Serializable
     }
 
     /**
-     * @brief place synapses on a ball
+     * @brief place alpha synapses on a ball
      * @param distrData 
      */
-    @MethodInfo(name="place synapses within ball")
-    public void place_synapses_ball(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed within ball "
+    @MethodInfo(name="place ALPHA synapses within ball")
+    public void place_alpha_synapses_ball(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed within ball "
                                                 + "of choice. <br> <br>-> Specify (density) tuple(s)</html>", 
                                                 style="array", options="ugx_globalTag=\"gridFile\";" 
-                                                + "minArraySize=1; type=\"n|n|n|n|n:,density\"") UserDataTuple[] distrData) 
+                                                + "minArraySize=1; type=\"n|n|n|n|n:density,x,y,z,radius\"") UserDataTuple[] distrData) 
     {                
 	for(UserDataTuple udt: distrData) {
- 	       I_ConstUserNumber densVal = (I_ConstUserNumber)udt.getNumberData(1); 
+ 	       I_ConstUserNumber densVal = (I_ConstUserNumber)udt.getNumberData(0); 
           	if (!(densVal instanceof I_ConstUserNumber)) {
-                	VMessage.exception("SynapseDistributionGenerator::place_synapses failed",
+                	VMessage.exception("SynapseDistributionGenerator::place_alpha_synapses_ball failed",
                                    "Invalid specification: Synapse densities cannot be given as code.");
 	    	}
+                
+                Double density = densVal.const__get();
 	
-		I_ConstUserNumber xVal = (I_ConstUserNumber) udt.getNumberData(2);	
-		I_ConstUserNumber yVal = (I_ConstUserNumber) udt.getNumberData(3);	
-		I_ConstUserNumber zVal = (I_ConstUserNumber) udt.getNumberData(4);	
-		I_ConstUserNumber rVal = (I_ConstUserNumber) udt.getNumberData(5);	
+		I_ConstUserNumber xVal = (I_ConstUserNumber) udt.getNumberData(1);	
+		I_ConstUserNumber yVal = (I_ConstUserNumber) udt.getNumberData(2);	
+		I_ConstUserNumber zVal = (I_ConstUserNumber) udt.getNumberData(3);	
+		I_ConstUserNumber rVal = (I_ConstUserNumber) udt.getNumberData(4);	
 		Double x = xVal.const__get();
-		Double y = xVal.const__get();
-		Double z = xVal.const__get();
-		Double r = xVal.const__get();
-		
-	    if (densVal != null) {
-		    /// Note/@todo: uncomment if you got your new UG API
-		    /// sd.place_synapses_uniform(densVal, x, y, z, r);
-	    }
-	    
+		Double y = yVal.const__get();
+		Double z = zVal.const__get();
+		Double r = rVal.const__get();
+			    
+            sd.place_synapses_uniform(density, x, y, z, r, 1);
+	}
+    }
+    
+    /**
+     * @brief place exp2 synapses on a ball
+     * @param distrData 
+     */
+    @MethodInfo(name="place EXP2 synapses within ball")
+    public void place_exp2_synapses_ball(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed within ball "
+                                                + "of choice. <br> <br>-> Specify (density) tuple(s)</html>", 
+                                                style="array", options="ugx_globalTag=\"gridFile\";" 
+                                                + "minArraySize=1; type=\"n|n|n|n|n:density,x,y,z,radius\"") UserDataTuple[] distrData) 
+    {                
+	for(UserDataTuple udt: distrData) {
+            I_ConstUserNumber densVal = (I_ConstUserNumber)udt.getNumberData(0); 
+            if (!(densVal instanceof I_ConstUserNumber)) {
+                     VMessage.exception("SynapseDistributionGenerator::place_exp2_synapses_ball failed",
+                                "Invalid specification: Synapse densities cannot be given as code.");
+            }
+
+            Double density = densVal.const__get();
+
+            I_ConstUserNumber xVal = (I_ConstUserNumber) udt.getNumberData(1);	
+            I_ConstUserNumber yVal = (I_ConstUserNumber) udt.getNumberData(2);	
+            I_ConstUserNumber zVal = (I_ConstUserNumber) udt.getNumberData(3);	
+            I_ConstUserNumber rVal = (I_ConstUserNumber) udt.getNumberData(4);	
+            Double x = xVal.const__get();
+            Double y = yVal.const__get();
+            Double z = zVal.const__get();
+            Double r = rVal.const__get();
+			    
+            sd.place_synapses_uniform(density, x, y, z, r, 3);
 	}
     }
             
-    @MethodInfo(name="place synapses")                                 
-    public void place_synapses(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed on the subset(s) "
+    @MethodInfo(name="place ALPHA synapses")                                 
+    public void place_alpha_synapses(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed on the subset(s) "
                                                 + "of choice. <br> <br>-> Specify (Subset, density) tuple(s)</html>", 
                                                 style="array", options="ugx_globalTag=\"gridFile\";" 
                                                 + "minArraySize=1; type=\"s|n:,density\"") UserDataTuple[] distrData)
@@ -132,7 +162,52 @@ public class SynapseDistributionGenerator implements java.io.Serializable
         for (int i = 0; i < numSubsets; i++ ) 
         {
             if(subsets[i] != null && densities[i] != null)
-                sd.place_synapses_uniform(subsets[i], densities[i]);
+                sd.place_synapses_uniform(subsets[i], densities[i], 1);
+        }   
+             
+    //  Export file
+        //sd.export_grid();                   
+    }
+    
+    @MethodInfo(name="place EXP2 synapses")                                 
+    public void place_exp2_synapses(@ParamInfo(name="<html>Set density [1/m] of synapses to be distributed on the subset(s) "
+                                                + "of choice. <br> <br>-> Specify (Subset, density) tuple(s)</html>", 
+                                                style="array", options="ugx_globalTag=\"gridFile\";" 
+                                                + "minArraySize=1; type=\"s|n:,density\"") UserDataTuple[] distrData)
+    {                
+    //  Setup array for user-specified subsets and corresponding synapse densities
+        String[] subsets;
+        Double[] densities;
+        subsets   = new String[numSubsets];
+        densities = new Double[numSubsets];
+        
+    //  Catch density specification for too many subsets
+        if(distrData.length > numSubsets)
+            VMessage.exception("SynapseDistributionGenerator::place_synapses failed", 
+                               "Invalid specification: Density specifiation for more subsets than contained in grid.");
+        
+    //  Read user specified subsets and densities 
+        int cnt = 0;
+        
+        for(UserDataTuple udt: distrData)
+        {                        
+            I_ConstUserNumber value = (I_ConstUserNumber)udt.getNumberData(1); 
+            
+            if (!(value instanceof I_ConstUserNumber))
+                VMessage.exception("SynapseDistributionGenerator::place_synapses failed",
+                                   "Invalid specification: Synapse densities cannot be given as code.");
+                        
+            densities[cnt] = value.const__get();            
+            subsets[cnt]   = udt.getSubset(0);
+            
+            cnt++;
+        }    
+       
+    //  Place synapses according to user input    
+        for (int i = 0; i < numSubsets; i++ ) 
+        {
+            if(subsets[i] != null && densities[i] != null)
+                sd.place_synapses_uniform(subsets[i], densities[i], 3);
         }   
              
     //  Export file
@@ -187,6 +262,94 @@ public class SynapseDistributionGenerator implements java.io.Serializable
         
     //  Export file
         //sd.export_grid();                   
+    }
+    
+    @MethodInfo(name="set activation timing")                                 
+    public void set_activation_timing
+    (
+        @ParamInfo(name="<html>ALPHA synapse timings<br>"
+                         + "<br>average start time [ms]</html>", 
+                   style="default", options="") Double start_time,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double start_time_dev,
+        @ParamInfo(name="duration [ms]", style="default", options="") Double duration,
+        @ParamInfo(name="std deviation of duration [ms]", style="default", options="") Double duration_dev,
+        @ParamInfo(name="peak conductance [uS]", style="default", options="") Double peak_cond,
+        @ParamInfo(name="<html><br>"
+                         + "EXP2 synapse timings<br>"
+                         + "<br> average start time [ms]</html>", 
+                   style="default", options="") Double biexp_onset_time,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double biexp_onset_time_dev,
+        @ParamInfo(name="mean of tau1 [ms]", style="default", options="") Double biexp_tau1_mean,
+        @ParamInfo(name="std deviation of tau1 [ms]", style="default", options="") Double biexp_tau1_dev,
+        @ParamInfo(name="mean of tau2 [ms]", style="default", options="") Double biexp_tau2_mean,
+        @ParamInfo(name="std deviation of tau2 [ms]", style="default", options="") Double biexp_tau2_dev,
+        @ParamInfo(name="peak conductance [uS]", style="default", options="") Double biexp_peak_cond
+    )
+    {   
+        Double[] alpha_syn_params = new Double[5];
+        alpha_syn_params[0] = start_time;
+        alpha_syn_params[1] = start_time_dev;
+        alpha_syn_params[2] = duration;
+        alpha_syn_params[3] = duration_dev;
+        alpha_syn_params[4] = peak_cond;
+        
+        Double[] biexp_syn_params = new Double[7];
+        biexp_syn_params[0] = biexp_onset_time;
+        biexp_syn_params[1] = biexp_onset_time_dev;
+        biexp_syn_params[2] = biexp_tau1_mean;
+        biexp_syn_params[3] = biexp_tau1_dev;
+        biexp_syn_params[4] = biexp_tau2_mean;
+        biexp_syn_params[5] = biexp_tau2_dev;
+        biexp_syn_params[6] = biexp_peak_cond;
+        
+        sd.set_activation_timing(alpha_syn_params, biexp_syn_params);
+    }
+    
+    @MethodInfo(name="set activation timing ball")                                 
+    public void set_activation_timing_ball
+    (
+        @ParamInfo(name="<html>ALPHA synapse timings<br>"
+                         + "<br>average start time [ms]</html>", 
+                   style="default", options="") Double start_time,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double start_time_dev,
+        @ParamInfo(name="duration [ms]", style="default", options="") Double duration,
+        @ParamInfo(name="std deviation of duration [ms]", style="default", options="") Double duration_dev,
+        @ParamInfo(name="peak conductance [uS]", style="default", options="") Double peak_cond,
+        @ParamInfo(name="<html><br>"
+                         + "EXP2 synapse timings<br>"
+                         + "<br> average start time [ms]</html>", 
+                   style="default", options="") Double biexp_onset_time,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double biexp_onset_time_dev,
+        @ParamInfo(name="mean of tau1 [ms]", style="default", options="") Double biexp_tau1_mean,
+        @ParamInfo(name="std deviation of tau1 [ms]", style="default", options="") Double biexp_tau1_dev,
+        @ParamInfo(name="mean of tau2 [ms]", style="default", options="") Double biexp_tau2_mean,
+        @ParamInfo(name="std deviation of tau2 [ms]", style="default", options="") Double biexp_tau2_dev,
+        @ParamInfo(name="peak conductance [uS]", style="default", options="") Double biexp_peak_cond,
+        @ParamInfo(name="<html><br>"
+                         + "Spherical localization parameters<br>"
+                         + "<br> x</html>", style="default", options="") Double x,
+        @ParamInfo(name="y", style="default", options="") Double y,
+        @ParamInfo(name="z", style="default", options="") Double z,
+        @ParamInfo(name="radius", style="default", options="") Double radius
+    )
+    {   
+        Double[] alpha_syn_params = new Double[5];
+        alpha_syn_params[0] = start_time;
+        alpha_syn_params[1] = start_time_dev;
+        alpha_syn_params[2] = duration;
+        alpha_syn_params[3] = duration_dev;
+        alpha_syn_params[4] = peak_cond;
+        
+        Double[] biexp_syn_params = new Double[7];
+        biexp_syn_params[0] = biexp_onset_time;
+        biexp_syn_params[1] = biexp_onset_time_dev;
+        biexp_syn_params[2] = biexp_tau1_mean;
+        biexp_syn_params[3] = biexp_tau1_dev;
+        biexp_syn_params[4] = biexp_tau2_mean;
+        biexp_syn_params[5] = biexp_tau2_dev;
+        biexp_syn_params[6] = biexp_peak_cond;
+        
+        sd.set_activation_timing(alpha_syn_params, biexp_syn_params, x, y, z, radius);
     }
     
     @MethodInfo(name="print total number of synapses")                                 

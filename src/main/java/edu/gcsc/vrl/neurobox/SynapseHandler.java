@@ -32,8 +32,8 @@ public class SynapseHandler implements Serializable
         return synHandler;
     }
     
-    @MethodInfo(name="set activation timing", interactive=false)
-    public void set_activation_timing
+    @MethodInfo(name="set ALPHA synapse activation timing", interactive=false)
+    public void set_alpha_synapse_activation_timing
     (
         @ParamInfo(name="start time [ms]", style="default", options="") Double start_time,
         @ParamInfo(name="duration [ms]", style="default", options="") Double duration,
@@ -44,33 +44,24 @@ public class SynapseHandler implements Serializable
     {
         check_syn_handler();
         
-        synHandler.set_activation_timing(start_time, duration, start_time_dev,
-            duration_dev, peak_cond);
+        synHandler.set_activation_timing(start_time, duration, start_time_dev, duration_dev, peak_cond);
     }
     
-    /**
-     * @brief activates synapses on a ball with a given timing
-     * @param start_time
-     * @param duration
-     * @param start_time_dev
-     * @param duration_dev
-     * @param peak_cond 
-     */
-    @MethodInfo(name="set activation timing ball", interactive=false)
-    public void set_activation_timing_ball
+    @MethodInfo(name="set EXP2 synapse activation timing", interactive=false)
+    public void set_exp2_synapse_activation_timing
     (
-        @ParamInfo(name="start time [ms]", style="default", options="") Double start_time,
-        @ParamInfo(name="duration [ms]", style="default", options="") Double duration,
-        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double start_time_dev,
-        @ParamInfo(name="std deviation of duration [ms]", style="default", options="") Double duration_dev,
+        @ParamInfo(name="average start time [ms]", style="default", options="") Double onset_mean,
+        @ParamInfo(name="mean of tau1 [ms]", style="default", options="") Double tau1_mean,
+        @ParamInfo(name="mean of tau2 [ms]", style="default", options="") Double tau2_mean,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double onset_dev,
+        @ParamInfo(name="std deviation of tau1 [ms]", style="default", options="") Double tau1_dev,
+        @ParamInfo(name="std deviation of tau2 [ms]", style="default", options="") Double tau2_dev,
         @ParamInfo(name="peak conductance [uS]", style="default", options="") Double peak_cond
     )
     {
         check_syn_handler();
         
-	/// Note/@todo: uncomment if you got your new UG API
-        /* synHandler.set_activation_timing_ball(start_time, duration, start_time_dev,
-            duration_dev, peak_cond);*/
+        synHandler.set_activation_timing_biexp(onset_mean, tau1_mean, tau2_mean, onset_dev, tau1_dev, tau2_dev, peak_cond);
     }
     
     @MethodInfo(noGUI=true)
