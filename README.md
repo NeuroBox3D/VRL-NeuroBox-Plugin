@@ -7,6 +7,9 @@ See also http://www.neurobox.eu for further details.
 ## VersionEye
 * [![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
 
+## Code metrics
+* [![Codacy Badge](https://api.codacy.com/project/badge/grade/24ca78102c7b48d2912ab069a2b73e2e)](https://www.codacy.com/app/stephan_5/VRL-NeuroBox-Plugin)
+
 ## Issues
 * [![Stories in Backlog](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=backlog&title=Backlog)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
 [![Stories in Ready](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=ready&title=Ready)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
