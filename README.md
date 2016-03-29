@@ -2,6 +2,8 @@ NeuroBox
 ========
 See also http://www.neurobox.eu for further details.
 
+Support chat on Gitter: https://gitter.im/NeuroBox3D
+
 # Development
 
 ## VersionEye
