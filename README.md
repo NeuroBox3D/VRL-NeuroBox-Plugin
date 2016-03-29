@@ -2,7 +2,7 @@ NeuroBox
 ========
 See also http://www.neurobox.eu for further details.
 
-Support chat on Gitter: https://gitter.im/NeuroBox3D
+Support chat on Gitter: [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
 
 # Development
 
