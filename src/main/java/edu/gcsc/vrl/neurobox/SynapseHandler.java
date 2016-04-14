@@ -82,7 +82,7 @@ public class SynapseHandler implements Serializable
 	/// tau1
         @ParamInfo(name="mean of tau1 [ms]", 
 		   style="default",
-		   options="value=0.7; description=\"5-8 ms for AMPA\"") 
+		   options="value=0.7; description=\"0.7-1 ms for AMPA\"") 
 		   Double tau1_mean,
 
 	/// tau2
