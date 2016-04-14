@@ -35,11 +35,11 @@ public class SynapseHandler implements Serializable
     @MethodInfo(name="set ALPHA synapse activation timing", interactive=false)
     public void set_alpha_synapse_activation_timing
     (
-        @ParamInfo(name="start time [ms]", style="default", options="") Double start_time,
-        @ParamInfo(name="duration [ms]", style="default", options="") Double duration,
-        @ParamInfo(name="std deviation of start time [ms]", style="default", options="") Double start_time_dev,
-        @ParamInfo(name="std deviation of duration [ms]", style="default", options="") Double duration_dev,
-        @ParamInfo(name="peak conductance [uS]", style="default", options="") Double peak_cond
+        @ParamInfo(name="start time [ms]", style="default", options="value=10") Double start_time,
+        @ParamInfo(name="duration [ms]", style="default", options="value=2") Double duration,
+        @ParamInfo(name="std deviation of start time [ms]", style="default", options="value=3") Double start_time_dev,
+        @ParamInfo(name="std deviation of duration [ms]", style="default", options="value=1") Double duration_dev,
+        @ParamInfo(name="peak conductance [uS]", style="default", options="value=0.000121") Double peak_cond
     )
     {
         check_syn_handler();
