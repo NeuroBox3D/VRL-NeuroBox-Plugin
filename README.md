@@ -2,8 +2,6 @@ NeuroBox
 ========
 See also http://www.neurobox.eu for further details.
 
-Support chat on Gitter: [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
-
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
 [![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
  [![Codacy Badge](https://api.codacy.com/project/badge/grade/24ca78102c7b48d2912ab069a2b73e2e)](https://www.codacy.com/app/stephan_5/VRL-NeuroBox-Plugin)
