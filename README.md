@@ -4,19 +4,11 @@ See also http://www.neurobox.eu for further details.
 
 Support chat on Gitter: [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
 
+[![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
+[![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
+ [![Codacy Badge](https://api.codacy.com/project/badge/grade/24ca78102c7b48d2912ab069a2b73e2e)](https://www.codacy.com/app/stephan_5/VRL-NeuroBox-Plugin)
+
 # Development
-
-## VersionEye
-* [![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
-
-## Code metrics
-* [![Codacy Badge](https://api.codacy.com/project/badge/grade/24ca78102c7b48d2912ab069a2b73e2e)](https://www.codacy.com/app/stephan_5/VRL-NeuroBox-Plugin)
-
-## Issues
-* [![Stories in Backlog](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=backlog&title=Backlog)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
-[![Stories in Ready](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=ready&title=Ready)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
-[![Stories in In Progress](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=in progress&title=In Progress)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
-[![Stories in Done](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=done&title=Done)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
 
 ## How To Build The Project
 
@@ -62,3 +54,10 @@ task to build and install the plugin.
     gradlew installVRLPlugin
 
 Finally, restart VRL-Studio
+
+## Issues
+* [![Stories in Backlog](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=backlog&title=Backlog)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
+[![Stories in Ready](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=ready&title=Ready)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
+[![Stories in In Progress](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=in progress&title=In Progress)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
+[![Stories in Done](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=done&title=Done)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
+
