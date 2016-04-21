@@ -1,4 +1,4 @@
-NeuroBox
+VRL-NeuroBox-Plugin
 ========
 See also http://www.neurobox.eu for further details.
 
