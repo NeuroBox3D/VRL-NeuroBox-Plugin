@@ -23,21 +23,17 @@ import edu.gcsc.vrl.ug.api.I_ILU;
 import edu.gcsc.vrl.ug.api.I_LinearSolver;
 import edu.gcsc.vrl.ug.api.I_SolutionTimeSeries;
 import edu.gcsc.vrl.ug.api.I_ThetaTimeStep;
-import edu.gcsc.vrl.ug.api.I_VTKOutput;
 import edu.gcsc.vrl.ug.api.I_Vector;
 import edu.gcsc.vrl.ug.api.LinearSolver;
 import edu.gcsc.vrl.ug.api.SolutionTimeSeries;
 import edu.gcsc.vrl.ug.api.ThetaTimeStep;
-import edu.gcsc.vrl.ug.api.VTKOutput;
 import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.MethodInfo;
 import eu.mihosoft.vrl.annotation.ObjectInfo;
-import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
-import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -65,19 +61,10 @@ public class CableSolver implements Serializable
      * @param maxNumIterLinear
      * @param minRedLinear
      * @param absTolLinear
-     * @param outputPath
-     * @param generateVTKoutput
-     * @param plotStep
-     * @return
+     * @param outputCtrl
      */
-    @MethodInfo(valueStyle="multi-out", interactive = false)
-    @OutputInfo
-    (
-      style="multi-out",
-      elemNames = {"PVD File"},
-      elemTypes = {File.class}
-    )
-    public Object[] invoke
+    @MethodInfo(interactive = false)
+    public void invoke
     (
         @ParamGroupInfo(group="Problem Setup|false")
         @ParamInfo(name="Cable Disc", style="default")
@@ -130,17 +117,8 @@ public class CableSolver implements Serializable
         
         // OUTPUT
         @ParamGroupInfo(group="Output|false")
-        @ParamInfo(name="Output path", style="save-folder-dialog")
-        String outputPath,
-        
-        // plotting
-        @ParamGroupInfo(group="Output|false; VTK|false")
-        @ParamInfo(name="do plot")
-        boolean generateVTKoutput,
-        
-        @ParamGroupInfo(group="Output|false; VTK|false")
-        @ParamInfo(name="plotting step", style="default", options="value=0.01")
-        double plotStep
+        @ParamInfo(name="Output controller", style="default", nullIsValid=true)
+        OutputController outputCtrl
     )
     {
         // set abortion flag to false initially (can be changed using stopSolver-Method)
@@ -177,18 +155,6 @@ public class CableSolver implements Serializable
         I_LinearSolver ls = new LinearSolver();
         ls.set_preconditioner(ilu);
         ls.set_convergence_check(convCheckLinear);
-        
-        
-        
-        //// I/O ////
-        
-        // append path separator to output path
-        outputPath = outputPath + File.separator;
-        
-        // VTK output
-        I_VTKOutput vtkOut = null;
-        if (generateVTKoutput) vtkOut = new VTKOutput();
-        
         
         
         //// simulation ////
@@ -228,14 +194,9 @@ public class CableSolver implements Serializable
         }
         
         // write initial solution to vtk file
-        if (vtkOut != null)
-        {
-            // create vtk subfolder if needed
-            new File(outputPath + "vtk" + File.separator).mkdirs();
-            
-            // output
-            vtkOut.print(outputPath + "vtk" + File.separator + "result", u, (int) Math.floor(time/plotStep+0.5), time);
-        }
+        if (outputCtrl != null)
+            outputCtrl.initiate(u, time);
+        
         
         // create new grid function for old value
         I_GridFunction uOld = u.const__clone();
@@ -246,7 +207,8 @@ public class CableSolver implements Serializable
         
         
         // computations for time stepping
-        int LowLv =  (int) Math.ceil(log2(timeStepStart/minStepSize));
+        int LowLv =  (int) Math.ceil(Math.log(timeStepStart/minStepSize)
+                                     / Math.log(stepReductionFactor));
         if (LowLv < 0) errorExit("Initial time step is smaller than minimal time step.");
         int lv = 0;
         int[] checkbackCounter = new int[LowLv+1];
@@ -301,12 +263,23 @@ public class CableSolver implements Serializable
             // assemble linear problem
             assTuner.set_matrix_is_const(!dtChanged);
             try {F_AssembleLinearOperatorRhsAndSolution.invoke(op, u, b);} 
-            catch (Exception e) {errorExit("Could not assemble operator:" + e.getMessage());}
+            catch (Exception e)
+            {
+                if (outputCtrl != null)
+                    outputCtrl.terminate(u, time);
+                
+                errorExit("Could not assemble operator:" + e.getMessage());
+            }
             
             // apply Newton solver
             ilu.set_disable_preprocessing(!dtChanged);
             if (!F_ApplyLinearSolver.invoke(op, u, b, ls))
+            {
+                if (outputCtrl != null)
+                    outputCtrl.terminate(u, time);
+                
                 errorExit("Could not apply linear solver.");
+            }
             
             // update new time
             time = solTimeSeries.const__time(0) + curr_dt;
@@ -315,12 +288,9 @@ public class CableSolver implements Serializable
             // increment check-back counter
             checkbackCounter[lv]++;
             
-            // plot solution every plotStep seconds
-            if (vtkOut != null)
-            {
-                if (Math.abs(time/plotStep - Math.floor(time/plotStep+0.5)) < 1e-5)
-                    vtkOut.print(outputPath + "vtk" + File.separator + "result", u, (int) Math.floor(time/plotStep+0.5), time);
-            }
+            // output
+            if (outputCtrl != null)
+                outputCtrl.step(u, time);
 
             // get oldest solution
             I_Vector oldestSol = solTimeSeries.oldest();
@@ -340,12 +310,8 @@ public class CableSolver implements Serializable
             }
         }
         
-        // end timeseries, produce gathering file
-        if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
-        
-        if (generateVTKoutput) return new Object[]{new File(outputPath + "vtk/result.pvd")};
-        
-        return new Object[]{null};
+         if (outputCtrl != null)
+            outputCtrl.terminate(u, time);
     }
 
     @MethodInfo(name=" ", buttonText="stop time stepping", hideCloseIcon=true)
@@ -357,12 +323,6 @@ public class CableSolver implements Serializable
     private void errorExit(String s)
     {
         eu.mihosoft.vrl.system.VMessage.exception("Error in CableSolver: ", s);
-    }
-
-    private double log2(double x)
-    {
-	return Math.log(x)/Math.log(2.0);
-    }
-    
+    }    
 
 }

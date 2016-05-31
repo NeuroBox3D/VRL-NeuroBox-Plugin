@@ -16,6 +16,7 @@ import edu.gcsc.vrl.neurobox.control.CalciumDynamics;
 import edu.gcsc.vrl.neurobox.control.ModelSetup;
 import edu.gcsc.vrl.neurobox.control.DomainAndFunctionDefiniton;
 import edu.gcsc.vrl.neurobox.control.InstationarySolver;
+import edu.gcsc.vrl.neurobox.control.OutputController;
 import edu.gcsc.vrl.neurobox.control.ResourcePathProvider;
 import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley;
 import edu.gcsc.vrl.neurobox.membrane_transport.cable.Leakage;
@@ -131,10 +132,11 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
             vapi.addComponent(Diffusion.class);
             vapi.addComponent(Buffer.class);
             vapi.addComponent(FluxBoundary.class);
+            vapi.addComponent(OutputController.class);
+            vapi.addComponent(InstationarySolver.class);
 
             // calcium dynamics
             vapi.addComponent(CalciumDynamics.class);
-            vapi.addComponent(InstationarySolver.class);
 
             vapi.addComponent(IP3R_VRL.class);
             vapi.addComponent(RyR_VRL.class);

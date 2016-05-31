@@ -25,7 +25,6 @@ import edu.gcsc.vrl.ug.api.I_IPreconditionedLinearOperatorInverse;
 import edu.gcsc.vrl.ug.api.I_NewtonSolver;
 import edu.gcsc.vrl.ug.api.I_SolutionTimeSeries;
 import edu.gcsc.vrl.ug.api.I_ThetaTimeStep;
-import edu.gcsc.vrl.ug.api.I_VTKOutput;
 import edu.gcsc.vrl.ug.api.I_Vector;
 import edu.gcsc.vrl.ug.api.Jacobi;
 import edu.gcsc.vrl.ug.api.LU;
@@ -33,19 +32,14 @@ import edu.gcsc.vrl.ug.api.LinearSolver;
 import edu.gcsc.vrl.ug.api.NewtonSolver;
 import edu.gcsc.vrl.ug.api.SolutionTimeSeries;
 import edu.gcsc.vrl.ug.api.ThetaTimeStep;
-import edu.gcsc.vrl.ug.api.VTKOutput;
 import edu.gcsc.vrl.userdata.UserDataTuple;
 import edu.gcsc.vrl.userdata.UserDependentSubsetModel;
 import eu.mihosoft.vrl.annotation.ComponentInfo;
 import eu.mihosoft.vrl.annotation.MethodInfo;
 import eu.mihosoft.vrl.annotation.ObjectInfo;
-import eu.mihosoft.vrl.annotation.OutputInfo;
 import eu.mihosoft.vrl.annotation.ParamGroupInfo;
 import eu.mihosoft.vrl.annotation.ParamInfo;
-import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -87,20 +81,10 @@ public class InstationarySolver implements Serializable
      * @param maxNumIterLinear
      * @param absTolLinear
      * @param absTolNonLinear
-     * @param meas
-     * @param outputPath
-     * @param generateVTKoutput
-     * @param plotStep
-     * @return
+     * @param outputCtrl
      */
-    @MethodInfo(valueStyle="multi-out", interactive = false)
-    @OutputInfo
-    (
-      style="multi-out",
-      elemNames = {"PVD File"},
-      elemTypes = {File.class}
-    )
-    public Object[] invoke
+    @MethodInfo(interactive = false)
+    public void invoke
     (
         @ParamGroupInfo(group="Problem Setup|false")
         @ParamInfo(name="Domain Disc", style="default")
@@ -215,22 +199,8 @@ public class InstationarySolver implements Serializable
         
         // OUTPUT
         @ParamGroupInfo(group="Output|false")
-        @ParamInfo(name="Output path", style="save-folder-dialog")
-        String outputPath,
-        
-        // measurements
-        @ParamGroupInfo(group="Output|false; Measurements|false")
-        @ParamInfo(name="Integration Subset", style="array", options="fct_tag=\"fctDef\"; minArraySize=0; type=\"S1:function & subset\"")
-        UserDataTuple[] meas,
-        
-        // plotting
-        @ParamGroupInfo(group="Output|false; VTK|false")
-        @ParamInfo(name="do plot")
-        boolean generateVTKoutput,
-        
-        @ParamGroupInfo(group="Output|false; VTK|false")
-        @ParamInfo(name="plotting step", style="default", options="value=0.01")
-        double plotStep
+        @ParamInfo(name="Output controller", style="default", nullIsValid=true)
+        OutputController outputCtrl
     )
     {
         // set abortion flag to false initially (can be changed using stopSolver-Method)
@@ -350,17 +320,6 @@ public class InstationarySolver implements Serializable
         newtonSolver.init(op);
       
         
-        /////////
-        // I/O //
-        /////////
-        
-        // append / to output path
-        outputPath = outputPath + "/";
-        
-        // VTK output
-        I_VTKOutput vtkOut = null;
-        if (generateVTKoutput) vtkOut = new VTKOutput();
-        
         ////////////////
         // Simulation //
         ////////////////
@@ -398,48 +357,9 @@ public class InstationarySolver implements Serializable
         }
         
         // write initial solution to vtk file
-        if (vtkOut != null)
-        {
-            // create vtk subfolder if needed
-            new File(outputPath + "vtk/").mkdirs();
-            
-            // output
-            vtkOut.print(outputPath + "vtk/result", u, (int) Math.floor(time/plotStep+0.5), time);
-        }
+        if (outputCtrl != null)
+            outputCtrl.initiate(u, time);
         
-        // prepare measurements
-        List<String> measFct = new ArrayList<String>();
-        List<String> measSs = new ArrayList<String>();
-        cntUDT = 0;
-        for (UserDataTuple udt: meas)
-        {
-            // get function to interpolate for
-            String[] selFct = ((UserDependentSubsetModel.FSDataType) udt.getData(0)).getSelFct();
-            if (selFct.length != 1) throw new RuntimeException("Measurement definition needs exactly one function at a time, but has "+selFct.length+".");
-            measFct.add(selFct[0]);
-
-            // get subsets to interpolate for
-            String[] selSs = ((UserDependentSubsetModel.FSDataType) udt.getData(0)).getSelSs();
-            String ssString = "";
-            if (selSs.length == 0) throw new RuntimeException("No subset selection in measurement definition "+cntUDT+".");
-            for (String s: selSs) ssString = ssString + ", " + s;
-            measSs.add(ssString.substring(2));
-            
-            cntUDT++;
-        }
-        
-        
-        // create meas subfolder if needed
-        if (measFct.size() > 0)
-            new File(outputPath + "meas/").mkdirs();
-            
-        // take first measurement
-        for (int i=0; i<measFct.size(); i++)
-        {
-         /*   F_TakeMeasurement.invoke(u, time, measSs.get(i),
-                                     measFct.get(i), outputPath + "meas/data");
-		*/
-        }
         
         // create new grid function for old value
         I_GridFunction uOld = u.const__clone();
@@ -463,17 +383,19 @@ public class InstationarySolver implements Serializable
         
         // choose length of time step at the beginning
         // if not timeStepStart = 2^(-n)*timeStep, take nearest lower number of that form
-        int startLv =  (int) Math.ceil(log2(maxStepSize/timeStepStart));
-        double timeStepStartNew = maxStepSize / Math.pow(2, startLv);
+        int startLv =  (int) Math.ceil(Math.log(timeStepStart/maxStepSize)
+                                       / Math.log(stepReductionFactor));
+        double timeStepStartNew = maxStepSize * Math.pow(stepReductionFactor, startLv);
         timeStepStart = timeStepStartNew;
         double dt = timeStepStart;
         
         // same for minStepSize
-        int LowLv =  (int) Math.ceil(log2(maxStepSize/minStepSize));
-        double minStepSizeNew = maxStepSize / Math.pow(2, LowLv);
+        int LowLv =  (int) Math.ceil(Math.log(minStepSize/maxStepSize) 
+                                     / Math.log(stepReductionFactor));
+        double minStepSizeNew = maxStepSize * Math.pow(stepReductionFactor, LowLv);
         minStepSize = minStepSizeNew;
         
-        int checkbackInterval = 10;
+        int checkbackInterval = 1;
         int lv = startLv;
         if (lv < 0) errorExit("Chosen maximal step size is smaller than initial step size.");
         double levelUpDelay = 0.0; //caEntryDuration + (nSpikes - 1) * 1.0/freq;
@@ -486,7 +408,7 @@ public class InstationarySolver implements Serializable
         {
             F_Print.invoke("++++++ POINT IN TIME  " + ((int)Math.floor((time+dt)/dt+0.5))*dt + "  BEGIN ++++++\n");
 
-            //setup time disc for old solutions and timestep
+            // setup time disc for old solutions and timestep
             timeDisc.prepare_step(solTimeSeries, dt);
 
             // prepare Newton solver
@@ -495,7 +417,8 @@ public class InstationarySolver implements Serializable
                 F_Print.invoke("Newton solver failed at point in time "
                         + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
                 
-                if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
+                if (outputCtrl != null)
+                    outputCtrl.terminate(u, time);
                 
                 errorExit("Newton solver preparation failed at point in time "
                         + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
@@ -509,24 +432,25 @@ public class InstationarySolver implements Serializable
                                + ((int)Math.floor((time+dt)/dt+0.5))*dt
                                + " with time step " + dt + ".");
 
-                dt = dt/2;
+                dt = dt*stepReductionFactor;
                 lv = lv++;
                 F_VecScaleAssign.invoke(u, 1.0, solTimeSeries.latest());
 
                 // halve time step and try again unless time step below minimum
-                if (dt < minStepSize)
+                if (dt < minStepSize*(1-1e-6))
                 {
                     F_Print.invoke("Time step below minimum. Aborting. Failed at point in time "
                             + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".\n");
                     
-                    if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
-                    
+                    if (outputCtrl != null)
+                        outputCtrl.terminate(u, time);
+                
                     errorExit("Newton solver failed at point in time "
                         + ((int)Math.floor((time+dt)/dt+0.5))*dt + ".");
                 }
                 else
                 {    
-                    F_Print.invoke("Trying with half the time step...\n");
+                    F_Print.invoke("Trying with reduced time step...\n");
                     checkbackCounter[lv] = 0;
                 }
                 
@@ -543,33 +467,19 @@ public class InstationarySolver implements Serializable
 
                 // update checkback counter and if applicable, reset dt
                 checkbackCounter[lv]++;
-                while (checkbackCounter[lv] % (2*checkbackInterval) == 0 && lv > 0 && (time >= levelUpDelay || lv > startLv))
+                while (checkbackCounter[lv] % Math.round(checkbackInterval/stepReductionFactor) == 0 && lv > 0 && (time >= levelUpDelay || lv > startLv))
                 {
-                    F_Print.invoke("Doubling time due to continuing convergence; now: " + 2*dt + "\n");
-                    dt = 2*dt;
+                    F_Print.invoke("Increasing time step due to continuing convergence; now: " + dt/stepReductionFactor + "\n");
+                    dt = dt/stepReductionFactor;
                     lv--;
-                    checkbackCounter[lv] = checkbackCounter[lv] + checkbackCounter[lv+1] / 2;
+                    checkbackCounter[lv] = checkbackCounter[lv] + (int) Math.round(checkbackCounter[lv+1] * stepReductionFactor);
                     checkbackCounter[lv+1] = 0;
                 }
 
-                // plot solution every plotStep seconds
-                if (vtkOut != null)
-                {
-                    if (Math.abs(time/plotStep - Math.floor(time/plotStep+0.5)) < 1e-5)
-                        vtkOut.print(outputPath + "vtk/result", u, (int) Math.floor(time/plotStep+0.5), time);
-                }
-
-                // take measurement every timeStep seconds
-                for (int i=0; i<measFct.size(); i++)
-                {
-                   /* F_TakeMeasurement.invoke(u, time, measSs.get(i),
-                                             measFct.get(i), outputPath + "meas/data");
-			   */
-                }
-
-                // export solution of ca on mem_er
-                //F_ExportSolution.invoke(u, approxSpace, time, "mem_cyt", "ca_cyt", outputPath + "sol/sol");
-
+                // output
+                if (outputCtrl != null)
+                    outputCtrl.step(u, time);
+                
                 // get oldest solution
                 I_Vector oldestSol = solTimeSeries.oldest();
 
@@ -589,12 +499,8 @@ public class InstationarySolver implements Serializable
             }
         }
         
-        // end timeseries, produce gathering file
-        if (vtkOut != null) vtkOut.write_time_pvd(outputPath + "vtk/result", u);
-        
-        if (generateVTKoutput) return new Object[]{new File(outputPath + "vtk/result.pvd")};
-        
-        return new Object[]{null};
+         if (outputCtrl != null)
+            outputCtrl.terminate(u, time);
     }
 
     @MethodInfo(name=" ", buttonText="stop time stepping", hideCloseIcon=true)
@@ -607,11 +513,5 @@ public class InstationarySolver implements Serializable
     {
         eu.mihosoft.vrl.system.VMessage.exception("Error in InstationarySolver: ", s);
     }
-    
-    private double log2(double x)
-    {
-	return Math.log(x)/Math.log(2.0);
-    }
-    
 
 }
