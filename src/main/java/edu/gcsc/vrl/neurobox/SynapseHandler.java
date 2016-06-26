@@ -70,6 +70,50 @@ public class SynapseHandler implements Serializable
         synHandler.set_activation_timing(start_time, duration, start_time_dev, duration_dev, peak_cond);
     }
     
+    @MethodInfo(name="set ALPHA synapse activation timing", interactive=false)
+    public void set_alpha_synapse_activation_timing
+    (
+	/// start time
+        @ParamInfo(name="start time [ms]", 
+		   style="default", 
+		   options="value=10; description=\"default: 10 ms\"") 
+		   Double start_time,
+	    
+	/// duration
+        @ParamInfo(name="duration [ms]", 
+ 		   style="default", 
+		   options="value=2; description=\"default: 2 ms\"")
+		   Double duration,
+	
+	/// peak conductance
+        @ParamInfo(name="peak conductance [uS]", 
+		   style="default", 
+		   options="value=0.000121; description=\"default: 1.2e-4 uS\"")
+		   Double peak_cond,
+	
+	/// std deviation of start time
+        @ParamInfo(name="std deviation of start time [ms]", 
+		   style="default", 
+		   options="value=3; description=\"default: 3 ms\"") 
+		   Double start_time_dev,
+	
+	/// std deviation of duration 
+        @ParamInfo(name="std deviation of duration [ms]", 
+		   style="default", 
+		   options="value=1; description=\"default: 1 ms\"")
+		   Double duration_dev,
+	
+	/// std deviation of peak conductance
+        @ParamInfo(name="std deviation of peak conductance [uS]", 
+		   style="default", 
+		   options="value=1e-5; description=\"default: 1e-5 uS\"")
+		   Double peak_cond_dev
+    )
+    {
+        check_syn_handler();
+        synHandler.set_activation_timing(start_time, duration, peak_cond, start_time_dev, duration_dev, peak_cond_dev, true);
+    }
+    
     @MethodInfo(name="set EXP2 synapse activation timing", interactive=false)
     public void set_exp2_synapse_activation_timing
     (
@@ -118,6 +162,63 @@ public class SynapseHandler implements Serializable
     {
         check_syn_handler();
         synHandler.set_activation_timing_biexp(onset_mean, tau1_mean, tau2_mean, onset_dev, tau1_dev, tau2_dev, peak_cond);
+    }
+    
+    
+    @MethodInfo(name="set EXP2 synapse activation timing", interactive=false)
+    public void set_exp2_synapse_activation_timing
+    (
+	/// average start time
+        @ParamInfo(name="average start time [ms]", 
+		   style="default", 
+		   options="value=10; description=\"default: 10 ms\"") 
+		   Double onset_mean,
+	    
+	/// tau1
+        @ParamInfo(name="mean of tau1 [ms]", 
+		   style="default",
+		   options="value=0.7; description=\"0.7-1 ms for AMPA\"") 
+		   Double tau1_mean,
+
+	/// tau2
+        @ParamInfo(name="mean of tau2 [ms]", 
+		   style="default", 
+		   options="value=5; description=\"5-8 ms for AMPA\"") 
+		   Double tau2_mean,
+	    
+	/// peak conductance
+        @ParamInfo(name="peak conductance [uS]", 
+		   style="default", 
+		   options="value=0.000121; description=\"default: 1.2e-4 uS\"")
+		   Double peak_cond_mean,
+	
+	/// std deviation of start time 
+        @ParamInfo(name="std deviation of start time [ms]", 
+		   style="default", 
+		   options="value=3; description=\"default: 3 ms\"") 
+		   Double onset_dev,
+
+	/// std deviation of tau1
+        @ParamInfo(name="std deviation of tau1 [ms]", 
+		   style="default", 
+		   options="value=0.0; description=\"default 0\"") 
+		   Double tau1_dev,
+	
+	/// std deviation of tau2
+        @ParamInfo(name="std deviation of tau2 [ms]", 
+		   style="default", 
+		   options="value=0.0; description=\"default 0\"") 
+		   Double tau2_dev,
+	
+	/// std deviation of peak conductance
+        @ParamInfo(name="std deviation of peak conductance [uS]", 
+		   style="default", 
+		   options="value=1e-5; description=\"default: 1e-5 uS\"")
+		   Double peak_cond_dev
+    )
+    {
+        check_syn_handler();
+        synHandler.set_activation_timing_biexp(onset_mean, tau1_mean, tau2_mean, peak_cond_mean, onset_dev, tau1_dev, tau2_dev, peak_cond_dev, true);
     }
     
     @MethodInfo(noGUI=true)
