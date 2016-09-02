@@ -6,7 +6,7 @@ zip -r "${ZIP_NAME}" *.so
 mkdir -p vrl_natives/linux/x86
 
 mkdir vrl-ug
-git clone https://github.com/VRL-Studio/VRL-UG
+git clone https://github.com/VRL-Studio/VRL-UG/VRL-UG/
 
 ant clean
 
