@@ -35,11 +35,11 @@ chmod +x run.sh;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
 
 rm -rf /home/travis/.vrl/0.4.2/default/plugins/VRL-UG*;
-rm -rf .application/property-folder/plugins/VRL-UG*;
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/VRL-UG.jar .application/property-folder/plugin-updates/
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/VRL-UG.jar /home/travis/.vrl/0.4.2/default/plugins
+rm -rf .application/property-folder/plugins/unzipped/VRL-UG*;
+cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugin-updates/
+cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar /home/travis/.vrl/0.4.2/default/plugins/
 
 # install vrl-ug
 ./run.sh; 
 # build vrl-ug-api
-./run.sh;
+# ./run.sh;
