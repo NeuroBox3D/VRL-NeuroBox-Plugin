@@ -41,6 +41,8 @@ rm -rf .application/property-folder/plugins/VRL-UG*.xml;
 rm -rf .application/property-folder/plugins/VRL-UG*.jar;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.jar;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.xml;
+rm -rf .application/property-folder/plugins/unzipped/
+rm -rf .application/property-folder/property-folder/*;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugin-updates/VRL-UG.jar
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugins/VRL-UG.jar
 #jar tf /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
