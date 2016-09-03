@@ -20,7 +20,7 @@ cd ../../;
 
 cd VRL-UG/VRL-UG/
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
-ant clean; ant compile
+ant clean; ant compile; ant jar
 
 cd ../../;
 mkdir console-app;
@@ -31,4 +31,5 @@ cd vrl-app-for-github/.application/property-folder/plugins;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .
 cd -;
 cd vrl-app-for-github/;
-sh run.sh;
+chmod +x run.sh;
+./run.sh;
