@@ -1,3 +1,5 @@
+# TODO add build matrix for osx and linux 
+# (windows not supported yet - needs to be build elsewhere)
 sudo: required
 dist: trusty
 
@@ -6,12 +8,13 @@ before_script:
   - ughub/ughub init
   - ughub/ughub install ugcore LuaShell
   - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="3" -DCOMPILE_INFO=OFF
- # - travis_wait 640 make
+  - travis_wait 640 make
   - cd ..
   - "export DISPLAY=:99.0"
   - "export TERM=dumb"
   - "sh -e /etc/init.d/xvfb start"
-  - ./build_vrl_ug.sh 
+  - ./build_vrl_ug_and_api.sh 
 
 script:
+  - ./build_neurobox.sh
   - ./deploy_neurobox.sh
