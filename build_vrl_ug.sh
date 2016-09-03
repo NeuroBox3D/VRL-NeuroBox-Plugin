@@ -30,7 +30,6 @@ mkdir console-app;
 cd console-app;
 wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
 unzip vrl-app-for-github.zip &> /dev/null
-cd ugInit-consolApp/.application;
+cd ugInit-consolApp/;
 chmod +x run.sh;
 ./run.sh;
-
