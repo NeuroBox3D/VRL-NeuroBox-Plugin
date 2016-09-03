@@ -13,5 +13,5 @@ ant clean; ant
 cd ../../;
 
 cd VRL-UG/VRL-UG/
-cp ../../VRL/dist/VRL.jar 
+cp ../../VRL/VRL/dist/VRL.jar 
 ant clean; ant compile
