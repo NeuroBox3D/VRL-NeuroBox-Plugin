@@ -1,8 +1,10 @@
 #!/bin/bash
+# 0. build UG (in .travis.yml)
 # 1. build VRL
 # 2. build VRL-UG with natives
 # 3. build VRL-UG-API (todo - get therefore project template from external website)
-# 4. build VRL-NeuroBox-Plugin (todo)
+# 4. build VRL-UserData (todo)
+# 5. build VRL-NeuroBox-Plugin (todo)
 
 ZIP_NAME="natives.zip"
 cd lib/
@@ -14,7 +16,6 @@ git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 cd VRL/VRL/;
 ant clean; ant test; ant jar
-ls -l *;
 cd ../../;
 
 cd VRL-UG/VRL-UG/
