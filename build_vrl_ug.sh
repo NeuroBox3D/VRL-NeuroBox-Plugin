@@ -1,4 +1,8 @@
 #!/bin/bash
+# 1. build VRL
+# 2. build VRL-UG with natives
+# 3. build VRL-UG-API (todo - get therefore project template from external website)
+# 4. build VRL-NeuroBox-Plugin (todo)
 
 ZIP_NAME="natives.zip"
 cd lib/
@@ -16,5 +20,3 @@ cd ../../;
 cd VRL-UG/VRL-UG/
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
 ant clean; ant compile
-
-
