@@ -44,3 +44,5 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-
 ./run.sh; 
 # build vrl-ug-api
 # ./run.sh;
+
+file /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/VRL-UG.jar
