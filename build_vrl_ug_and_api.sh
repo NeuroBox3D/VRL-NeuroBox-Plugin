@@ -32,15 +32,19 @@ wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
 unzip vrl-app-for-github.zip &> /dev/null
 cd ugInit-consolApp/;
 chmod +x run.sh;
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist-single/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
+cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
 
 rm -rf /home/travis/.vrl/0.4.2/default/plugins/VRL-UG*;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*;
 rm -rf .application/property-folder/plugins/VRL-UG*;
+rm -rf .application/property-folder/plugins/VRL-UG*.xml;
+rm -rf .application/property-folder/plugins/VRL-UG*.jar;
+rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.jar;
+rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.xml;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugin-updates/VRL-UG.jar
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugins/VRL-UG.jar
 #jar tf /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
-du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar$
+#du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
 
 # install vrl-ug plugin
 ./run.sh; 
