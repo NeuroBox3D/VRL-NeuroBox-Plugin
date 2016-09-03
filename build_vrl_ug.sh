@@ -9,7 +9,7 @@ mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 cd VRL/VRL/;
-ant clean; ant singleJar
+ant clean; ant test
 ls -l *;
 cd ../../;
 
