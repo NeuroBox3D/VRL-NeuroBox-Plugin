@@ -6,12 +6,11 @@ zip -r "${ZIP_NAME}" *.so
 mkdir -p vrl_natives/linux/x86
 
 mkdir vrl-ug
-git clone https://github.com/VRL-Studio/VRL-UG/
-cd VRL-UG/VRL-UG
+git clone https://github.com/VRL-Studio/VRL-UG
+git clone https://github.com/VRL-Studio/VRL
+cd VRL/
+ant clean; ant 
 
-ant clean
-git checkout master
-git pull
-ant compile
-
-
+cd VRL-UG/VRL-UG/
+cp ../../VRL/dist/VRL.jar 
+ant clean; ant compile
