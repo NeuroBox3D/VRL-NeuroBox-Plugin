@@ -29,7 +29,7 @@ cd ../../;
 mkdir console-app;
 cd console-app;
 wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
-unzip vrl-app-for-github.zip
+unzip vrl-app-for-github.zip &> /dev/null
 cd vrl-app-for-github/.application/property-folder/plugins;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/VRL-UG.jar .
 cd -;
