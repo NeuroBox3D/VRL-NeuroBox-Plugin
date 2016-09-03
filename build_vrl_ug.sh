@@ -32,7 +32,4 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-sing
 cd -;
 cd vrl-app-for-github/;
 chmod +x run.sh;
-cd .application;
-jar cvf project.jar project-template-folder;
-cd ..;
 ./run.sh;
