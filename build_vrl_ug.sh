@@ -22,6 +22,8 @@ cd VRL-UG/VRL-UG/
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
 ant clean; ant compile; ant jar
 
+mkdir -p /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/lib/
+
 cd ../../;
 mkdir console-app;
 cd console-app;
