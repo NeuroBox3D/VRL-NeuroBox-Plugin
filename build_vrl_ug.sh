@@ -33,3 +33,8 @@ unzip vrl-app-for-github.zip &> /dev/null
 cd ugInit-consolApp/;
 chmod +x run.sh;
 ./run.sh;
+
+rm -rf /home/travis/.vrl/0.4.2/default/plugins/VRL-UG*;
+cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar /home/travis/.vrl/0.4.2/default/plugin-updates/;
+./run.sh;
+
