@@ -13,5 +13,5 @@ ant clean; ant
 cd ../../;
 
 cd VRL-UG/VRL-UG/
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/VRL.jar jars/
+cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL.jar jars/
 ant clean; ant compile
