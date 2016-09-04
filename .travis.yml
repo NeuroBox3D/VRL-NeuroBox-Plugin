@@ -18,3 +18,4 @@ before_script:
 script:
   - ./build_neurobox.sh
   - ./deploy_neurobox.sh
+  - ./run.sh
