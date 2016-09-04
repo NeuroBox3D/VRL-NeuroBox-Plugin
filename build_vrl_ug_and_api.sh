@@ -21,12 +21,10 @@ cd ../../;
 VRL_UG_PACKAGE_NATIVES=eu/mihosoft/vrl/plugin/content/natives/
 COMMON_PART_NATIVES=src/${VRL_UG_PACKAGE_NATIVES}
 cd VRL-UG/VRL-UG/
-mkdir -p ${COMMON_PART_NATIVES}osx/
 mkdir -p ${COMMON_PART_NATIVES}linux/x86
 mkdir -p ${COMMON_PART_NATIVES}linux/x64
-mkdir -p ${COMMON_PART_NATIVES}windows/x86
-mkdir -p ${COMMON_PART_NATIVES}windows/x64
-cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}osx/${ZIP_NAME}
+cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}linux/x86/${ZIP_NAME}
+cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}linux/x64/${ZIP_NAME}
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
 ant clean; ant compile; 
 ant jar
