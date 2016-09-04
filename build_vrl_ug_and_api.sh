@@ -57,6 +57,15 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-
 ./run.sh;
 # test
 
+
+BASEPATH=home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars
+
+cp $BASEPATH/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar .application/lib/
+cp $BASEPATH/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar .application/lib/
+cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar .application/lib
+cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar .application/lib
+cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar .application/lib
+
 echo "TEST TEST";
 
 CALL_PATH=$(pwd)
