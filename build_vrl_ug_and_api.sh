@@ -9,7 +9,7 @@
 ZIP_NAME="natives.zip"
 cd lib/
 zip -r "${ZIP_NAME}" *.so
-mkdir -p vrl_natives/linux/x86
+ZIP_FILE_FOLDER=$(pwd)
 
 mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
@@ -18,7 +18,15 @@ cd VRL/VRL/;
 ant clean; ant test; ant jar
 cd ../../;
 
+VRL_UG_PACKAGE_NATIVES=eu/mihosoft/vrl/plugin/content/natives/
+COMMON_PART_NATIVES=src/${VRL_UG_PACKAGE_NATIVES}
 cd VRL-UG/VRL-UG/
+mkdir -p ${COMMON_PART_NATIVES}osx/
+mkdir -p ${COMMON_PART_NATIVES}linux/x86
+mkdir -p ${COMMON_PART_NATIVES}linux/x64
+mkdir -p ${COMMON_PART_NATIVES}windows/x86
+mkdir -p ${COMMON_PART_NATIVES}windows/x64
+cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}osx/${ZIP_NAME}
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
 ant clean; ant compile; 
 ant jar
