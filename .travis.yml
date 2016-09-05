@@ -17,5 +17,6 @@ before_script:
   - ./build_vrl_ug_and_api.sh 
 
 script:
+  - ./build_vrl_userdata.sh
   - ./build_neurobox.sh
   # - ./deploy_neurobox.sh
