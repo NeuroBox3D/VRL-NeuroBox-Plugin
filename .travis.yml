@@ -13,7 +13,7 @@ before_script:
   - "export DISPLAY=:99.0"
   - "export TERM=dumb"
   - "sh -e /etc/init.d/xvfb start"
-  - travis_wait 640 ./build_vrl_ug_and_api.sh 
+  - travis_wait 740 ./build_vrl_ug_and_api.sh 
 
 script:
   - ./build_neurobox.sh
