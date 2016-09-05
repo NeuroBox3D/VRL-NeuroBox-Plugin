@@ -63,7 +63,6 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-
 ./run.sh;
 # test
 
-
 BASEPATH=/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars
 
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar .application/lib/
@@ -141,7 +140,10 @@ fi
   
 # optimized for jre 7 (19.04.2012)
 $JAVAEXE -Xms128m -Xmx4096m -XX:MaxPermSize=256m -Djava.library.path="$LIBDIR:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar:/Users/markus/Developing/VRL/VRL/VRL/jars/groovy/groovy-all.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar"  -jar "$PROJECT_FILE" $CONF
--
+
+$JAVAEXE -Xms128m -Xmx4096m -XX:MaxPermSize=256m -Djava.library.path="$LIBDIR:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar:/Users/markus/Developing/VRL/VRL/VRL/jars/groovy/groovy-all.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar"  -jar "$PROJECT_FILE" $CONF
+
 echo "VRL-UG-API information:"
 file .application/property-folder/plugins/VRL-UG-API.jar
 du -sh .application/property-folder/plugins/VRL-UG-API.jar
+ls -l .application/property-folder/plugins/*
