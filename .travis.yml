@@ -1,10 +1,8 @@
 # TODO add build matrix for osx and linux 
 # (windows not supported yet - needs to be build elsewhere)
-sudo: required
-#sudo: false
-#dist: trusty
-dist: precise
-language: cpp
+sudo: false # required
+dist: trusty
+# language: cpp
 
 before_script: 
   - git clone https://www.github.com/UG4/ughub
