@@ -5,6 +5,7 @@ dist: trusty
 language: cpp
 
 before_script: 
+  - jdk_switcher use oraclejdk8
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub install ugcore 

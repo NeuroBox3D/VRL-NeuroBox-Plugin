@@ -6,7 +6,6 @@
 # 4. build VRL-UserData (todo)
 # 5. build VRL-NeuroBox-Plugin (todo)
 
-jdk_switcher use oraclejdk8
 cd lib/
 zip -r "${ZIP_NAME}" *.so
 ZIP_FILE_FOLDER=$(pwd)
