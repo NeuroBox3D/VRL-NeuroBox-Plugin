@@ -58,7 +58,7 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-
 #du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
 
 # install vrl-ug plugin
-./run.sh; 
+ ./run.sh; 
 # build vrl-ug-api
 ./run.sh;
 # test
@@ -151,7 +151,7 @@ cd /home/travis/build/NeuroBox3D/;
 mkdir "final-jars/"; cd "final-jars"/;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar .
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
+cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar .
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar .
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar .
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar .
