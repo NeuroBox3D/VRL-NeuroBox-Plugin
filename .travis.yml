@@ -15,7 +15,7 @@ before_script:
   - "export DISPLAY=:99.0"
   - "export TERM=dumb"
   - "sh -e /etc/init.d/xvfb start"
-  - ./build_vrl_ug_and_api.sh 
+  - travis_wait 640 ./build_vrl_ug_and_api.sh 
 
 script:
   - ./build_vrl_userdata.sh
