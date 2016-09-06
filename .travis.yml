@@ -2,7 +2,8 @@
 # (windows not supported yet - needs to be build elsewhere)
 sudo: required
 #sudo: false
-dist: trusty
+#dist: trusty
+dist: precise
 language: cpp
 
 before_script: 
