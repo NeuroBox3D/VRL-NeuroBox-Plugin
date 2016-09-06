@@ -2,10 +2,7 @@
 # (windows not supported yet - needs to be build elsewhere)
 sudo: false # required
 dist: trusty
-# language: cpp
-language: java
-jdk:
-   - oraclejdk8
+language: cpp
 
 before_script: 
   - git clone https://www.github.com/UG4/ughub
