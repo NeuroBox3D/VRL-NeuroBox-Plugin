@@ -7,6 +7,7 @@
 # 5. build VRL-NeuroBox-Plugin (todo)
 
 cd lib/
+ZIP_NAME=natives.zip
 zip -r "${ZIP_NAME}" *.so
 ZIP_FILE_FOLDER=$(pwd)
 
