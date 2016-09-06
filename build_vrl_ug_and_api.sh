@@ -15,7 +15,7 @@ mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 cd VRL/VRL/;
-ant clean; ant test; ant jar
+ant clean; ant compile; ant jar
 cd ../../;
 
 VRL_UG_PACKAGE_NATIVES=eu/mihosoft/vrl/plugin/content/natives/
