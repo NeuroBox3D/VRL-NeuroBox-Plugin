@@ -1,7 +1,7 @@
 # TODO add build matrix for osx and linux 
 # (windows not supported yet - needs to be build elsewhere)
-sudo: required
-#sudo: false
+#sudo: required
+sudo: false
 dist: trusty
 
 before_script: 
