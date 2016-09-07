@@ -9,6 +9,16 @@ See also http://www.neurobox.eu for further details.
 
 # Development
 
+## CI
+Note that this project (with all required dependencies) will be build by Travis
+and deployed to the NeuroBox website. You can also try to build all dependencies
+manually, which are:
+- ugcore and all ug plugins required by NeuroBox
+- VRL-Studio/VRL-UG 
+- VRL-Studio/UserData
+- compile the VRL-UG-API
+- then build the VRL-NeuroBox-Plugin
+
 ## How To Build The Project
 
 ### 1. Dependencies
