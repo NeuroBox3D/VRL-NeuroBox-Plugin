@@ -4,7 +4,6 @@ sudo: false # required
 # distribution
 dist: trusty
 
-
 # language
 language: cpp
 
