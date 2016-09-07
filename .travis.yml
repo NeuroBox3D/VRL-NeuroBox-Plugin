@@ -1,15 +1,27 @@
-# TODO add build matrix for osx and linux 
-# (windows not supported yet - needs to be build elsewhere)
+# use root privileges
 sudo: false # required
+
+# distribution
 dist: trusty
+
+# language
 language: cpp
+
+## TODO add build matrix (windows not yet supported on travis)
+## maybe it's better to build VRL-NeuroBox-Plugin for Linux and OSX separate
+## it might be necessary to split into VRL-NeuroBox-Plugin-linux and
+## VRL-NeuroBox-Plugin-osx then deploy the compiled binaries and
+## build the VRL-UG-APi in a project termed VRL-NeuroBox-Plugin-universal
+# os: 
+  ##- linux
+  ##- osx
 
 before_script: 
   - jdk_switcher use oraclejdk8
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
-  - ughub/ughub install ugcore 
-  - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF
+  - ughub/ughub install ugcore ConvectionDiffusion
+  - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON
   - travis_wait 800 make
   - cd ..
   - "export DISPLAY=:99.0"
