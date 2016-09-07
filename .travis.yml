@@ -41,6 +41,7 @@ before_script:
 
 script:
   - ./build_vrl_userdata.sh
+
  #  - ./build_neurobox.sh
  #  - ./deploy_neurobox.sh
  #  - ./build_neurolucida.sh
