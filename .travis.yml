@@ -20,7 +20,7 @@ before_script:
   - jdk_switcher use oraclejdk8
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
-  - ughub/ughub addsource quadruped gitolite@quadruped.gcsc.uni-frankfurt.de:ug4-packages
+  - ughub/ughub addsource quadruped gitolite@quadruped.gcsc.uni-frankfurt.de:ug4-packages 
   - ughub/ughub install ugcore ConvectionDiffusion LuaShell
   - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON
   - travis_wait 800 make
