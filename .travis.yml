@@ -8,10 +8,7 @@ dist: trusty
 language: cpp
 
 ## TODO add build matrix (windows not yet supported on travis)
-## maybe it's better to build VRL-NeuroBox-Plugin for Linux and OSX separate
-## it might be necessary to split into VRL-NeuroBox-Plugin-linux and
-## VRL-NeuroBox-Plugin-osx then deploy the compiled binaries and
-## build the VRL-UG-APi in a project termed VRL-NeuroBox-Plugin-universal
+## TODO deploy linux and osx separately
 # os: 
   ##- linux
   ##- osx
