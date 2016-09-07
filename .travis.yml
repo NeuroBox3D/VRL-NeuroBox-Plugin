@@ -20,8 +20,8 @@ before_script:
   - jdk_switcher use oraclejdk8
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
-  - ughub/ughub install ugcore ConvectionDiffusion
-  - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON
+  - ughub/ughub install ugcore ConvectionDiffusion Neurolucida LuaShell
+  - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON
   - travis_wait 800 make
   - cd ..
   - "export DISPLAY=:99.0"
@@ -31,5 +31,7 @@ before_script:
 
 script:
   - ./build_vrl_userdata.sh
-  - ./build_neurobox.sh
-   -./deploy_neurobox.sh
+ #  - ./build_neurobox.sh
+ #  - ./deploy_neurobox.sh
+ #  - ./build_neurolucida.sh
+ #  - ./deploy_neurolucida.sh
