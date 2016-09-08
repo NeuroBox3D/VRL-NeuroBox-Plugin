@@ -70,7 +70,7 @@ Finally, restart VRL-Studio
 ## TODOs
 - Move scripts to separate scripts/ folder
 - Buildmatrix for OSX and Linux to be tested
-- Add trigger mechanism to dependencies to trigger build of this project
+- Add trigger after_success in all the prerequisites for building the VRL-NeuroBox-Plugin
 
 ## Issues
 [![Stories in Backlog](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=backlog&title=Backlog)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
