@@ -8,4 +8,7 @@ cd VRL-Neurolucida-Project;
 mkdir lib/;
 cp /home/travis/build/NeuroBox3D/final-jars/* lib/;
 ./gradlew build
+./gradlew jar
+du -sh /home/travis/build/NeuroBox3D/final-jars/VRL-Neurolucida-Project.jar
+
 # [[ $? -eq 0 ]] && ./gradlew installVRLPlugin

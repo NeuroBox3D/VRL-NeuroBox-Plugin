@@ -25,6 +25,6 @@ before_script:
 script:
   - ./build_vrl_userdata.sh
   - ./build_neurolucida.sh
-  - .deploy_neurolucida.sh
+  - /.deploy_neurolucida.sh
  #  - ./build_neurobox.sh
  #  - ./deploy_neurobox.sh
