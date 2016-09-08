@@ -13,6 +13,7 @@ language: cpp
   ##- linux
   ##- osx
 
+# before 
 before_script: 
   - jdk_switcher use oraclejdk8
   - git clone https://www.github.com/UG4/ughub
