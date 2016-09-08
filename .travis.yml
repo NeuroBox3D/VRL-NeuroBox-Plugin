@@ -1,10 +1,5 @@
-# use root privileges
 sudo: false 
-
-# distribution
 dist: trusty
-
-# language
 language: cpp
 
 ## TODO add build matrix (windows not yet supported on travis)
