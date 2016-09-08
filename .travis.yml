@@ -5,8 +5,11 @@ os:
   - linux
   - osx
 
+osx_image:
+  - xcode8
+
 before_script: 
-  - jdk_switcher use oraclejdk8
+  - [[ $TRAVIS_OS_NAME == "linux"]] && jdk_switcher use oraclejdk8
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
