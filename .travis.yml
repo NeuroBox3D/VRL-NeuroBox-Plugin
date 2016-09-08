@@ -3,10 +3,10 @@ dist: trusty
 language: cpp
 os: 
   - linux
-  - osx
+#  - osx
 
-osx_image:
-  - xcode8
+#osx_image:
+ # - xcode8
 
 before_script: 
   - jdk_switcher use oraclejdk8
