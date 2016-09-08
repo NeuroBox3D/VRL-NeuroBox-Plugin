@@ -4,14 +4,12 @@ language: cpp
 os: 
   - linux
   - osx
-    osx_image:
-      - xcode8
 
 osx_image:
   - xcode8
 
 before_script: 
-  - test $TRAVIS_OS_NAME = "linux" && jdk_switcher oraclejdk8
+  - ./check_os.sh
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
