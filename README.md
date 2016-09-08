@@ -19,6 +19,9 @@ manually, which are:
 - compile the VRL-UG-API
 - then build the VRL-NeuroBox-Plugin
 
+Note that if either of the above dependencies change, then
+we trigger a rebuild of the VRL-NeuroBox-Plugin.
+
 ## How To Build The Project
 
 ### 1. Dependencies
@@ -63,6 +66,11 @@ task to build and install the plugin.
     gradlew installVRLPlugin
 
 Finally, restart VRL-Studio
+
+## TODOs
+- Move scripts to separate scripts/ folder
+- Buildmatrix for OSX and Linux to be tested
+- Add trigger mechanism to dependencies to trigger build of this project
 
 ## Issues
 [![Stories in Backlog](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=backlog&title=Backlog)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
