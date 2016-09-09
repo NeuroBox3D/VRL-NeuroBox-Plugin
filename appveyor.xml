@@ -4,10 +4,11 @@ platform:
 os: Visual Studio 2015
 
 build_script:
+  - mkdir build_ug
+  - cd build_ug;
   - git config --global core.autocrlf true
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
   - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida
-  - mkdir build_ug; cd build_ug;
   - cmake -G "Visual Studio 12" -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON ../
