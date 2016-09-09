@@ -1,3 +1,0 @@
-init:
-  - git config --global core.autocrlf input
-  - git clone foo
