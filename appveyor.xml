@@ -2,7 +2,7 @@ init:
   - git config --global core.autocrlf true
   - git clone foo
 
-platforms:
+platform:
   - x86
 
 os: Visual Studio 2015
