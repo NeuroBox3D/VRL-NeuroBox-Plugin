@@ -1,6 +1,9 @@
 platform:
   - x86
 
+install:
+  - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64'
+
 build_script:
   - git config --global core.autocrlf true
   - git clone https://www.github.com/UG4/ughub
