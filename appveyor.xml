@@ -13,4 +13,4 @@ build_script:
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
   - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida
   - cmake -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON -DCMAKE_CXX_FLAGS="/MD /O2 /Ob2 /D NDEBUG /bigobj" -G"MinGW Makefiles"
-  - nmake
+  - mingw32-make
