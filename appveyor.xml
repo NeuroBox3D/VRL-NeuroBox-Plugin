@@ -8,4 +8,4 @@ build_script:
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
   - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida
   - cmake -G "Visual Studio 12" -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON 
-  - make 
+  - nmake 
