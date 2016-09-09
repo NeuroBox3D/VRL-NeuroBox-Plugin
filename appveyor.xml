@@ -6,3 +6,5 @@ platforms:
 
 build_script:
   - git clone https://www.github.com/UG4/ughub
+
+build: off
