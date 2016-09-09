@@ -8,6 +8,7 @@ os: Visual Studio 2015
 
 build_script:
   - git clone https://www.github.com/UG4/ughub
+  - build\premake5.exe
 
 install:
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
