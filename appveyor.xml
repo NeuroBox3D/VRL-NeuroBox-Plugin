@@ -1,6 +1,9 @@
 init:
   - git config --global core.autocrlf true
-  - git clone foo
+  - git clone https://www.github.com/UG4/ughub
+  - ughub/ughub init
+  - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
+  - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida
 
 platform:
   - x86
