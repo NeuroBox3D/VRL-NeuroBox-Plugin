@@ -1,5 +1,6 @@
 init:
   - git config --global core.autocrlf true
+  - git clone foo
 
 platforms:
   - x86
