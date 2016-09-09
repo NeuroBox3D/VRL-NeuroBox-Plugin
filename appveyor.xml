@@ -1,0 +1,8 @@
+init:
+  - git config --global core.autocrlf true
+
+platforms:
+  - x86
+
+build_script:
+  - git clone https://www.github.com/UG4/ughub
