@@ -2,11 +2,11 @@ sudo: false
 dist: trusty
 language: cpp
 os: 
- # - linux
-  - osx
+  - linux
+ # - osx
 
-ox_image:
-  - xcode8
+#ox_image:
+ # - xcode8
 
 before_script: 
   - jdk_switcher use oraclejdk8
