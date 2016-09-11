@@ -3,13 +3,13 @@ dist: trusty
 language: cpp
 os: 
   - linux
- # - osx
+  - osx
 
-#ox_image:
- # - xcode8
+ox_image:
+  - xcode8
 
 before_script: 
-  - jdk_switcher use oraclejdk8
+  - ./check_os.sh $TRAVIS_OS_NAME
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
