@@ -9,7 +9,7 @@ ox_image:
   - xcode8
 
 before_script: 
-  - ./check_os.sh $TRAVIS_OS_NAME
+  - ./check_os.sh && jdk_switcher oraclejdk8
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
