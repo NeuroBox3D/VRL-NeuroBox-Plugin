@@ -3,6 +3,7 @@
 cd lib/
 ZIP_NAME=natives.zip
 zip -r "${ZIP_NAME}" *.so
+zip -r "${ZIP_NAME}" *.dylib
 ZIP_FILE_FOLDER=$(pwd)
 
 mkdir vrl-ug

@@ -10,6 +10,7 @@ ox_image:
 
 before_script: 
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use oraclejdk8; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
