@@ -10,8 +10,8 @@ language: cpp
    #   osx_image: xcode8
 
 os:
-  - osx
- # - linux
+ # - osx
+  - linux
 
 before_script: 
 #  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then wget --no-cookies --no-check-certificate --header \"Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie\" http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-macosx-x64.dmg"; fi
@@ -37,3 +37,9 @@ script:
 
  #  - ./build_neurobox.sh
  #  - ./deploy_neurobox.sh
+ #
+deploy:
+  provider: releases
+  api_key: $TRAVIS_ACCESS_TOKEN
+  file: VRL-Neurolucida-Project.jar
+  skip_cleanup: true
