@@ -1,8 +1,6 @@
-#!/bin/bash
-
 cd lib/
 set ZIP_NAME="natives.zip"
-zip -r "%ZIP_NAME%" *.dll
+7za a -zip "%ZIP_NAMES%" *.dll
 set ZIP_FILE_FOLDER="%cd%
 
 mkdir vrl-ug
@@ -12,8 +10,8 @@ cd VRL/VRL/;
 ant clean; ant compile; ant jar
 cd ../../;
 
-VRL_UG_PACKAGE_NATIVES=eu/mihosoft/vrl/plugin/content/natives/
-COMMON_PART_NATIVES=src/${VRL_UG_PACKAGE_NATIVES}
+set VRL_UG_PACKAGE_NATIVES="eu/mihosoft/vrl/plugin/content/natives/"
+set COMMON_PART_NATIVES="src/%VRL_UG_PACKAGE_NATIVES%"
 cd VRL-UG/VRL-UG/
 mkdir -p ${COMMON_PART_NATIVES}linux/x86
 mkdir -p ${COMMON_PART_NATIVES}linux/x64
