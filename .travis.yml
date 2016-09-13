@@ -1,6 +1,7 @@
 sudo: false 
 dist: trusty
 language: cpp
+
 matrix:
   include:
     - os: linux
@@ -18,14 +19,13 @@ before_script:
   - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON
   - travis_wait 800 make
   - cd ..
-#  - "export DISPLAY=:99.0"
   - "export TERM=dumb"
-#  - "sh -e /etc/init.d/xvfb start"
   - travis_wait 640 ./build_vrl_ug_and_api.sh 
 
 script:
   - ./build_vrl_userdata.sh
   - ./build_neurolucida.sh
   - ./deploy_neurolucida.sh
+
  #  - ./build_neurobox.sh
  #  - ./deploy_neurobox.sh
