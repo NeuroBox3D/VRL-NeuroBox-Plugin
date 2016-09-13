@@ -1,6 +1,6 @@
 cd lib/
 set ZIP_NAME="natives.zip"
-7za a -zip "%ZIP_NAMES%" *.dll
+7z a -zip "%ZIP_NAMES%" *.dll
 set ZIP_FILE_FOLDER="%cd%
 
 mkdir vrl-ug
