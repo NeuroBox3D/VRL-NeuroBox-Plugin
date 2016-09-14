@@ -31,11 +31,9 @@ cd ..\
 cd ..\
 md console-app;
 cd console-app;
-echo "BEFORE DOWNLOAD FILE"
-appveyor DownloadFile http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
+xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
 7z e vrl-app-for-github.zip
 echo "DEBUGGED UNTIL HERE"
-
 
 
 cd ugInit-consolApp/;
