@@ -31,6 +31,7 @@ cd ..\
 cd ..\
 md console-app;
 cd console-app;
+echo "BEFORE DOWNLOAD FILE"
 appveyor DownloadFile http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
 7z e vrl-app-for-github.zip
 echo "DEBUGGED UNTIL HERE"
