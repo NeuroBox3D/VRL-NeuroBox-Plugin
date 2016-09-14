@@ -36,20 +36,21 @@ call 7z e vrl-app-for-github.zip -y
 echo "DEBUGGED UNTIL HERE"
 cd ugInit-consolApp\
 echo "BEFORE RUNNING APP FIRST TIME"
-xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib/
+xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib\
 echo "DEBUG FROM HERE"
 
-rm -rf /home/travis/.vrl/0.4.2/default/plugins/VRL-UG*;
-rm -rf .application/property-folder/plugins/unzipped/VRL-UG*;
-rm -rf .application/property-folder/plugins/VRL-UG*;
-rm -rf .application/property-folder/plugins/VRL-UG*.xml;
-rm -rf .application/property-folder/plugins/VRL-UG*.jar;
-rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.jar;
-rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.xml;
-rm -rf .application/property-folder/plugins/unzipped/
-rm -rf .application/property-folder/property-folder/*;
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugin-updates/VRL-UG.jar
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugins/VRL-UG.jar
+rmdir \home\travis\.vrl\0.4.2\default\plugins\VRL-UG* /q /s
+rmdir .application\property-folder\plugins\unzipped\VRL-UG* /q /s
+rmdir .application\property-folder\plugins\VRL-UG* /q /s
+rmdir .application\property-folder\plugins\VRL-UG*.xml /q /s
+rmdir .application\property-folder\plugins\VRL-UG*.jar /q /s
+rmdir .application\property-folder\plugins\unzipped\VRL-UG*.jar /q /s
+rmdir .application\property-folder\plugins\unzipped\VRL-UG*.xml /q /s
+rmdir .application\property-folder\plugins\unzipped\ /q /s
+rmdir .application\property-folder\property-folder\* /q /s
+
+xcopy /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugin-updates/VRL-UG.jar
+xcopy /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugins/VRL-UG.jar
 
 # install vrl-ug plugin
 call run.bat
