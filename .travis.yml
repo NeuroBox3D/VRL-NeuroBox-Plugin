@@ -1,16 +1,12 @@
 sudo: false 
 dist: trusty
-language: cpp
+language: java
 
 matrix:
   include:
-#    - os: linux
+  #  - os: linux
     - os: osx
-
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
+      osx_image: xcode8
 
 before_script: 
   - java -version
