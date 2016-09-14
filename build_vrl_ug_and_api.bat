@@ -22,7 +22,7 @@ md "%COMMON_PART_NATIVES%\windows\x86"
 md "%COMMON_PART_NATIVES%\windows\x64"
 xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x86\%ZIP_NAME%"
 xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x64\%ZIP_NAME%"
-xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars/
+xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars\
 call ant clean
 call ant compile; 
 ant jar
