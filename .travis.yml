@@ -17,7 +17,7 @@ before_script:
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
   - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida
   - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON
-  #- travis_wait 800 make
+  - travis_wait 800 make
   - cd ..
   - "export TERM=dumb"
  # - travis_wait 640 ./build_vrl_ug_and_api.sh 
