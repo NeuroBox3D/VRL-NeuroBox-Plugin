@@ -11,20 +11,23 @@ cd C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\
 call ant clean
 call ant compile
 call ant jar
-cd ../../;
+cd ..\
+cd ..\
 
-set VRL_UG_PACKAGE_NATIVES="eu/mihosoft/vrl/plugin/content/natives/"
-set COMMON_PART_NATIVES="src/%VRL_UG_PACKAGE_NATIVES%"
-cd VRL-UG/VRL-UG/
-mkdir -p ${COMMON_PART_NATIVES}linux/x86
-mkdir -p ${COMMON_PART_NATIVES}linux/x64
-cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}linux/x86/${ZIP_NAME}
-cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}linux/x64/${ZIP_NAME}
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
-ant clean; ant compile; 
+set VRL_UG_PACKAGE_NATIVES="eu\mihosoft\vrl\plugin\content\natives\"
+set COMMON_PART_NATIVES="src\%VRL_UG_PACKAGE_NATIVES%"
+
+cd C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG
+md "%COMMON_PART_NATIVES%\windows\x86"
+md "%COMMON_PART_NATIVES%\windows\x64"
+xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES\windows\x86/%ZIP_NAME%"
+xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES\windows\x64/%ZIP_NAME%"
+xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL-jar C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars/
+call ant clean
+call ant compile; 
 ant jar
 
-
+### debugged until here
 
 cd ../../;
 mkdir console-app;
