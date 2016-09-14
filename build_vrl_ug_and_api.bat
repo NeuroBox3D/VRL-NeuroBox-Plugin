@@ -7,10 +7,10 @@ mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 echo "%cd%";
-dir /s /b /o:gn
 cd C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\
-echo "before ant"
-ant clean; ant compile; ant jar
+ant clean
+ant compile
+ant jar
 cd ../../;
 
 set VRL_UG_PACKAGE_NATIVES="eu/mihosoft/vrl/plugin/content/natives/"
