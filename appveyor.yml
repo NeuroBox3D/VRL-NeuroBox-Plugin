@@ -9,7 +9,7 @@ install:
 build_script:
   - appveyor DownloadFile http://mirror.olnevhost.net/pub/apache//ant/binaries/apache-ant-1.9.7-bin.zip
   - 7z x apache-ant-1.9.7-bin.zip
-  - set PATH="%cd%\\apache-ant-1.9.7\\bin;%PATH%"
+  - set PATH=%PATH%;C:\projects\vrl-neurobox-plugin\apache-ant-1.9.7\bin;
   - echo "%cd%"
   - ant 
   - git config --global core.autocrlf true
