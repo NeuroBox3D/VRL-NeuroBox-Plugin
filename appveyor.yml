@@ -7,6 +7,8 @@ install:
   - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64'
 
 build_script:
+  - appveyor DownloadFile http://mirror.olnevhost.net/pub/apache//ant/binaries/apache-ant-1.9.7-bin.zip
+  - 7z x apache-ant-1.9.7-bin.zip
   - git config --global core.autocrlf true
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
