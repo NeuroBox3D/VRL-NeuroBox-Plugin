@@ -6,7 +6,6 @@ matrix:
   include:
     - os: linux
     - os: osx
-      osx_image: xcode8
 
 before_script: 
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use oraclejdk8; fi
