@@ -8,8 +8,8 @@ git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 echo "%cd%";
 dir /s /b /o:gn
-cd VRL\
-
+cd C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\
+echo "before ant"
 ant clean; ant compile; ant jar
 cd ../../;
 
