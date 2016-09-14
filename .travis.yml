@@ -7,6 +7,11 @@ matrix:
     - os: linux
     - os: osx
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 before_script: 
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use oraclejdk8; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi
