@@ -6,7 +6,8 @@ set ZIP_FILE_FOLDER="%cd%
 mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
-cd VRL/VRL/;
+echo "%cd%";
+cd VRL; cd VRL;
 ant clean; ant compile; ant jar
 cd ../../;
 
