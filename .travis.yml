@@ -13,6 +13,7 @@ addons:
       - oracle-java8-installer
 
 before_script: 
+  - java -version
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use oraclejdk8; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ant; fi
   - git clone https://www.github.com/UG4/ughub
