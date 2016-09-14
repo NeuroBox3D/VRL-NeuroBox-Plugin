@@ -8,9 +8,9 @@ git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 echo "%cd%";
 cd C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\
-ant clean
-ant compile
-ant jar
+call ant clean
+call ant compile
+call ant jar
 cd ../../;
 
 set VRL_UG_PACKAGE_NATIVES="eu/mihosoft/vrl/plugin/content/natives/"
