@@ -4,8 +4,8 @@ language: cpp
 
 matrix:
   include:
-  #  - os: linux
-    - os: osx
+    - os: linux
+    - os: os
       osx_image: xcode8
 
 before_script: 
@@ -20,8 +20,7 @@ before_script:
   - travis_wait 800 make
   - cd ..
   - "export TERM=dumb"
- # - travis_wait 640 ./build_vrl_ug_and_api.sh 
-  - ./build_vrl_ug_and_api.sh 
+  - travis_wait 640 ./build_vrl_ug_and_api.sh 
 
 script:
   - ./build_vrl_userdata.sh
