@@ -10,8 +10,6 @@ build_script:
   - appveyor DownloadFile http://mirror.olnevhost.net/pub/apache//ant/binaries/apache-ant-1.9.7-bin.zip
   - 7z x apache-ant-1.9.7-bin.zip
   - set PATH=%PATH%;C:\projects\vrl-neurobox-plugin\apache-ant-1.9.7\bin;
-  - echo "%cd%"
-  - ant 
   - git config --global core.autocrlf true
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
