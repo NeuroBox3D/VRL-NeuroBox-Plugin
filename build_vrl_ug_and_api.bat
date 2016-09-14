@@ -7,6 +7,7 @@ mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
 git clone https://github.com/VRL-Studio/VRL
 echo "%cd%";
+dir /s /b /o:gn
 cd VRL; cd VRL;
 ant clean; ant compile; ant jar
 cd ../../;
