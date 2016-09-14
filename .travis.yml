@@ -5,7 +5,7 @@ language: cpp
 matrix:
   include:
     - os: linux
-    - os: os
+    - os: osx
       osx_image: xcode8
 
 before_script: 
