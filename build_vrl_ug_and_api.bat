@@ -32,11 +32,11 @@ cd ..\
 md console-app;
 cd console-app;
 xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
-7z e vrl-app-for-github.zip
+call 7z e vrl-app-for-github.zip -y
 echo "DEBUGGED UNTIL HERE"
-
-
 cd ugInit-consolApp/;
+
+echo "BEFORE RUNNING APP FIRST TIME"
 chmod +x run.sh;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
 
