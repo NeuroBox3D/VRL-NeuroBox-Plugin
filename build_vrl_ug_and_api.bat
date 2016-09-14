@@ -36,8 +36,8 @@ call 7z e vrl-app-for-github.zip -y
 echo "DEBUGGED UNTIL HERE"
 cd ugInit-consolApp\
 echo "BEFORE RUNNING APP FIRST TIME"
-chmod +x run.sh;
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
+xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib/
+echo "DEBUG FROM HERE"
 
 rm -rf /home/travis/.vrl/0.4.2/default/plugins/VRL-UG*;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*;
@@ -52,9 +52,9 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugins/VRL-UG.jar
 
 # install vrl-ug plugin
- ./run.sh; 
+call run.bat
 # build vrl-ug-api
-./run.sh;
+call run.bat
 # test
 
 BASEPATH=/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars
