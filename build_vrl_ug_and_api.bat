@@ -24,17 +24,19 @@ xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x86\%ZIP_NAM
 xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x64\%ZIP_NAME%"
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars\
 call ant clean
-call ant compile; 
-ant jar
-
-### debugged until here
+call ant compile
+call ant jar
 
 cd ..\
 cd ..\
 md console-app;
 cd console-app;
-wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
-unzip vrl-app-for-github.zip &> /dev/null
+appveyor DownloadFile http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
+7z e vrl-app-for-github.zip
+echo "DEBUGGED UNTIL HERE"
+
+
+
 cd ugInit-consolApp/;
 chmod +x run.sh;
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
@@ -48,13 +50,8 @@ rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.jar;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.xml;
 rm -rf .application/property-folder/plugins/unzipped/
 rm -rf .application/property-folder/property-folder/*;
-# cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugin-updates/VRL-UG.jar
-# cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugins/VRL-UG.jar
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugin-updates/VRL-UG.jar
 cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugins/VRL-UG.jar
-
-#jar tf /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
-#du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
 
 # install vrl-ug plugin
  ./run.sh; 
