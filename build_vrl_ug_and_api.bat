@@ -36,9 +36,20 @@ call 7z x vrl-app-for-github.zip -y
 dir /a:d /b
 echo "WHERE IS PROJECT FILE"
 
-xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib\
-xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
-xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
+xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib\
+xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
+xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
+
+cd ugInit-consolApp;
+del .application\property-folder\plugins\unzipped\VRL-UG*;
+del .application\property-folder\plugins\VRL-UG*;
+del .application\property-folder\plugins\VRL-UG*.xml;
+del .application\property-folder\plugins\VRL-UG*.jar;
+del .application\property-folder\plugins\unzipped\VRL-UG*.jar;
+del .application\property-folder\plugins\unzipped\VRL-UG*.xml;
+del .application\property-folder\plugins\unzipped\
+del .application\property-folder\property-folder\*;
+
 echo "%cd%"
 
 echo "BEFORE RUN BAT"
