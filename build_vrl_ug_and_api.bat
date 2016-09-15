@@ -35,6 +35,7 @@ xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
 call 7z e vrl-app-for-github.zip -y
 dir
 cd ugInit-consolApp\
+dir /a-d /b /s
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
