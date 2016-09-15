@@ -32,7 +32,7 @@ cd ..\
 md console-app;
 cd console-app;
 xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
-call 7z e vrl-app-for-github.zip -y
+call 7z x vrl-app-for-github.zip -y
 dir /a:d /b
 echo "WHERE IS PROJECT FILE"
 
