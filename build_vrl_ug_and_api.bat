@@ -38,8 +38,8 @@ xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
 
-call C:\project\vrl-neurobox-plugin\run.bat
-call C:\project\vrl-neurobox-plugin\run.bat
+call C:\projects\vrl-neurobox-plugin\run.bat
+call C:\projects\vrl-neurobox-plugin\run.bat
 set BASEPATH=C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars
 
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar ugInit-consolApp\.application\lib\
@@ -47,7 +47,7 @@ xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar ugInit-consol
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar ugInit-consolApp\.application\lib
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar ugInit-consolApp\.application\lib
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar ugInit-consolApp\.application\lib
-call C:\project\vrl-neurobox-plugin\run.bat
+call C:\projects\vrl-neurobox-plugin\run.bat
 
 echo "ADAPT / DEBUG BELOW FOR WINDOWS"
 
