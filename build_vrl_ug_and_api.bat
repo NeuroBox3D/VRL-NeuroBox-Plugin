@@ -38,19 +38,18 @@ xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
 
-echo "DEBUG FROM HERE 1"
-call run.bat
-call run.bat
+call C:\project\vrl-neurobox-plugin\run.bat
+call C:\project\vrl-neurobox-plugin\run.bat
 set BASEPATH=C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars
 
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar ugInit-consolApp\.application\lib\
-echo "DEBUG FROM HERE 2"
-cp $BASEPATH/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar .application/lib/
-cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar .application/lib
-cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar .application/lib
-cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar .application/lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar ugInit-consolApp\.application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar ugInit-consolApp\.application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar ugInit-consolApp\.application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar ugInit-consolApp\.application\lib
+call C:\project\vrl-neurobox-plugin\run.bat
 
-call run.bat
+echo "ADAPT / DEBUG BELOW FOR WINDOWS"
 
 echo "VRL-UG-API information:"
 file /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
