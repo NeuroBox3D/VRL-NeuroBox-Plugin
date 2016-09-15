@@ -54,17 +54,16 @@ del .application\property-folder\plugins\unzipped\VRL-UG-API.jar
 del .application\property-folder\plugins\unzipped\VRL-UG-API.xml
 del /q .application\property-folder\plugins\unzipped\*
 del /q .application\property-folder\property-folder\*
-
 echo "%cd%"
 call C:\projects\vrl-neurobox-plugin\run.bat
 call C:\projects\vrl-neurobox-plugin\run.bat
 
 set BASEPATH=C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars
-xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar ugInit-consolApp\.application\lib\
-xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar ugInit-consolApp\.application\lib
-xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar ugInit-consolApp\.application\lib
-xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar ugInit-consolApp\.application\lib
-xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar ugInit-consolApp\.application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar .application\lib\
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar .application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar .application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar .application\lib
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar .application\lib
 call C:\projects\vrl-neurobox-plugin\run.bat
 
 cd C:\projects\vrl-neurobox-plugin;
@@ -73,7 +72,7 @@ cd final-jars
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar .
 xcopy C:\projects\vrl-neurobox-plugin\lib\ugInit-consolApp\.application\property-folder\plugins\VRL-UG-API.jar .
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar .
-xcopy %BASEPATH%apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar .
+xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar .
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar .
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar .
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar .
