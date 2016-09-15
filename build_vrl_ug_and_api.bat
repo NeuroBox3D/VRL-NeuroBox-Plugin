@@ -35,15 +35,6 @@ xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
 call 7z e vrl-app-for-github.zip -y
 cd ugInit-consolApp\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib\
-rmdir .application\property-folder\plugins\unzipped\VRL-UG* /q /s
-rmdir .application\property-folder\plugins\VRL-UG* /q /s
-rmdir .application\property-folder\plugins\VRL-UG*.xml /q /s
-rmdir .application\property-folder\plugins\VRL-UG*.jar /q /s
-rmdir .application\property-folder\plugins\unzipped\VRL-UG*.jar /q /s
-rmdir .application\property-folder\plugins\unzipped\VRL-UG*.xml /q /s
-rmdir .application\property-folder\plugins\unzipped\ /q /s
-rmdir .application\property-folder\property-folder\* /q /s
-
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar .application\property-folder\plugin-updates\VRL-UG.jar
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar .application\property-folder\plugins\VRL-UG.jar
 
