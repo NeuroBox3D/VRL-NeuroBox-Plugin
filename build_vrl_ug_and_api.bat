@@ -33,30 +33,32 @@ md console-app;
 cd console-app;
 xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
 call 7z x vrl-app-for-github.zip -y
-dir /a:d /b
-echo "WHERE IS PROJECT FILE"
 
 xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolApp\.application\lib\
 xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
 xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
 
 cd ugInit-consolApp;
-del .application\property-folder\plugins\unzipped\VRL-UG*;
-del .application\property-folder\plugins\VRL-UG*;
-del .application\property-folder\plugins\VRL-UG*.xml;
-del .application\property-folder\plugins\VRL-UG*.jar;
-del .application\property-folder\plugins\unzipped\VRL-UG*.jar;
-del .application\property-folder\plugins\unzipped\VRL-UG*.xml;
-del .application\property-folder\plugins\unzipped\
-del .application\property-folder\property-folder\*;
+del .application\property-folder\plugins\unzipped\VRL-UG.jar
+del .application\property-folder\plugins\unzipped\VRL-UG.xml
+del .application\property-folder\plugins\unzipped\VRL-UG-API.jar
+del .application\property-folder\plugins\unzipped\VRL-UG-API.xml
+del .application\property-folder\plugins\VRL-UG.jar
+del .application\property-folder\plugins\VRL-UG.xml
+del .application\property-folder\plugins\VRL-UG-API.jar
+del .application\property-folder\plugins\VRL-UG-API.xml
+del .application\property-folder\plugins\unzipped\VRL-UG.jar
+del .application\property-folder\plugins\unzipped\VRL-UG.xml
+del .application\property-folder\plugins\unzipped\VRL-UG-API.jar
+del .application\property-folder\plugins\unzipped\VRL-UG-API.xml
+del /q .application\property-folder\plugins\unzipped\*
+del /q .application\property-folder\property-folder\*
 
 echo "%cd%"
+call C:\projects\vrl-neurobox-plugin\run.bat
+call C:\projects\vrl-neurobox-plugin\run.bat
 
-echo "BEFORE RUN BAT"
-call C:\projects\vrl-neurobox-plugin\run.bat
-call C:\projects\vrl-neurobox-plugin\run.bat
 set BASEPATH=C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars
-
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\commons-logging-1.1.jar ugInit-consolApp\.application\lib\
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar ugInit-consolApp\.application\lib
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar ugInit-consolApp\.application\lib
@@ -65,7 +67,6 @@ xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar ugInit-consolAp
 call C:\projects\vrl-neurobox-plugin\run.bat
 
 echo "ADAPT / DEBUG BELOW FOR WINDOWS"
-
 echo "VRL-UG-API information:"
 file /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
 du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
