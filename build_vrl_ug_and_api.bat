@@ -38,7 +38,8 @@ xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar ugInit-consolA
 xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugin-updates\
 xcopy /y C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar ugInit-consolApp\.application\property-folder\plugins\
 
-cd ugInit-consolApp;
+echo "%cd%
+cd ugInit-consolApp
 del .application\property-folder\plugins\unzipped\VRL-UG.jar
 del .application\property-folder\plugins\unzipped\VRL-UG.xml
 del .application\property-folder\plugins\unzipped\VRL-UG-API.jar
