@@ -1,6 +1,6 @@
 cd lib/
 set ZIP_NAME="natives.zip"
-xcopy ..\bin\ug4.dll ..\bin\libug4.dll /y
+copy ..\bin\ug4.dll ..\bin\libug4.dll
 7z a "%ZIP_NAME%" ..\bin\libug4.dll
 set ZIP_FILE_FOLDER="%cd%
 
