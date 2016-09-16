@@ -23,8 +23,8 @@ cd C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG
 echo "CREATE DIRECTORIES"
 md "%COMMON_PART_NATIVES%\windows\x86\"
 md "%COMMON_PART_NATIVES%\windows\x64\"
-xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x86\%ZIP_NAME%"
-xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x64\%ZIP_NAME%"
+xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x86\"
+xcopy "%ZIP_FILE_FOLDER%\%ZIP_NAME%" "%COMMON_PART_NATIVES%\windows\x64\"
 echo "COPIED natives into folder."
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\jars\
 call ant clean
