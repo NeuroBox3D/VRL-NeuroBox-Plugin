@@ -1,6 +1,7 @@
 cd lib/
 set ZIP_NAME="natives.zip"
-copy bin\ug4.dll libug4.dll
+echo "%cd%"
+copy C:\projects\vrl-neurobox-plugin\bin\ug4.dll libug4.dll
 7z a "%ZIP_NAME%" libug4.dll
 set ZIP_FILE_FOLDER="%cd%
 

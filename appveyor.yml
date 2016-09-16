@@ -18,7 +18,9 @@ build_script:
   - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida
   - call ugcore\scripts\shell\vcinit12-64
   - cmake -DCMAKE_BUILD_TYPE=Release -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON -DCMAKE_CXX_FLAGS="/MD /O2 /Ob2 /D NDEBUG /bigobj" -DCMAKE_EXE_LINKER_FLAGS="/INCREMENTAL:NO" -DCMAKE_MODULE_LINKER_FLAGS_DEBUG="/INCREMENTAL:NO" -G"NMake Makefiles"
+  - echo "%cd%"
   - nmake
+  - echo "%cd%"
   - CALL build_vrl_ug_and_api.bat
   # - CALL build_vrl_userdata.bat
   # - CALL build_neurolucida.bat
