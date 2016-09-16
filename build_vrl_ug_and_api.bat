@@ -3,7 +3,7 @@ set ZIP_NAME="natives.zip"
 echo "%cd%"
 copy C:\projects\vrl-neurobox-plugin\bin\ug4.dll libug4.dll
 7z a "%ZIP_NAME%" libug4.dll
-set ZIP_FILE_FOLDER="%cd%
+set ZIP_FILE_FOLDER="%cd%"
 
 mkdir vrl-ug
 git clone https://github.com/VRL-Studio/VRL-UG
