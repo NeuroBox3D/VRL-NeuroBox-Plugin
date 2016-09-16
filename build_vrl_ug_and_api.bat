@@ -66,6 +66,7 @@ xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar .application\li
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar .application\lib
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar .application\lib
 
+type C:\projects\vrl-neurobox-plugin\run.bat
 call C:\projects\vrl-neurobox-plugin\run.bat
 call C:\projects\vrl-neurobox-plugin\run.bat
 call C:\projects\vrl-neurobox-plugin\run.bat
