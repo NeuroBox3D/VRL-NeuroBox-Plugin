@@ -4,5 +4,5 @@ mkdir lib\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL\VRL\dist\VRL.jar lib\
 xcopy C:\projects\vrl-neurobox-plugin\lib\VRL-UG\VRL-UG\dist\VRL-UG.jar lib\
 xcopy C:\projects\vrl-neurobox-plugin\lib\ugInit-consolApp\.application\property-folder\plugins\VRL-UG-API.jar lib\
-CALL gradlew.bat build
-CALL gradlew.bat jar
+CALL %cd%\gradlew.bat build
+CALL %cd%\gradlew.bat jar
