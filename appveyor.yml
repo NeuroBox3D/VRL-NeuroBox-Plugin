@@ -23,5 +23,5 @@ build_script:
   - echo "%cd%"
   - CALL build_vrl_ug_and_api.bat
   - CALL C:\projects\vrl-neurobox-plugin\build_vrl_userdata.bat
-  # - CALL build_neurolucida.bat
-  # - CALL deploy_neurolucida.bat
+  - CALL C:\projects\vrl-neurobox-plugin\build_neurolucida.bat
+  - CALL C:\projects\vrl-neurobox-plugin\deploy_neurolucida.bat
