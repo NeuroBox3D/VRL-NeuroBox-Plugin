@@ -22,6 +22,6 @@ build_script:
   - nmake
   - echo "%cd%"
   - CALL build_vrl_ug_and_api.bat
-  # - CALL build_vrl_userdata.bat
+  - CALL build_vrl_userdata.bat
   # - CALL build_neurolucida.bat
   # - CALL deploy_neurolucida.bat
