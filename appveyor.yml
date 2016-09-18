@@ -32,7 +32,7 @@ deploy:
     secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
   artifacts: 
     - path: lib\VRL-UG\VRL-UG\dist\VRL-UG.jar
-    - name: Plugin
+       name: Plugin
   draft: false
   prerelease: false
   on:
