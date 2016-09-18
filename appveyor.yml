@@ -24,4 +24,15 @@ build_script:
   - CALL build_vrl_ug_and_api.bat
   - CALL C:\projects\vrl-neurobox-plugin\build_vrl_userdata.bat
   - CALL C:\projects\vrl-neurobox-plugin\build_neurolucida.bat
-  - CALL C:\projects\vrl-neurobox-plugin\deploy_neurolucida.bat
+
+deploy:
+  description: 'development'
+  provider: GitHub
+  auth_token:
+    secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
+  artifact: /.*\.nupkg/            # upload all NuGet packages to release assets
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only
