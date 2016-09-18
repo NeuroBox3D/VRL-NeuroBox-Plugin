@@ -10,9 +10,6 @@ xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\ws-commons-util-1.0.2.jar .application\
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-client-3.1.3.jar .application\lib
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-common-3.1.3.jar .application\lib
 xcopy %BASEPATH%\apache-xmlrpc-3.1.3\lib\xmlrpc-server-3.1.3.jar .application\lib
-echo "NEUROLUCID PROJECT PATH"
-echo "%cd%
 
-echo "TODO Build with gradle"
-
-echo "TODO artifacts to be deployed from jar folder?"
+call C:\projects\vrl-neurobox-plugin\lib\ugInit-consolApp\.application\final-jars\VRL-UserData\VRL-Neurolucida-Project\gradlew.bat build
+call C:\projects\vrl-neurobox-plugin\lib\ugInit-consolApp\.application\final-jars\VRL-UserData\VRL-Neurolucida-Project\gradlew.bat jar
