@@ -30,9 +30,11 @@ deploy:
   provider: GitHub
   auth_token:
     secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
-  artifact: lib\ugInit-consolApp\.application\final-jars\VRL-UserData\VRL-Neurolucida-Project\build\libs\VRL-Neurolucida-Project.jar
+  artifacts: 
+    - path: lib\VRL-UG\VRL-UG\dist\VRL-UG.jar
+    - name: Plugin
   draft: false
   prerelease: false
   on:
-    branch: ci              
-    appveyor_repo_tag: true    
+    branch: ci
+    appveyor_repo_tag: true
