@@ -25,13 +25,16 @@ build_script:
   - CALL C:\projects\vrl-neurobox-plugin\build_vrl_userdata.bat
   - CALL C:\projects\vrl-neurobox-plugin\build_neurolucida.bat
 
+artifacts:
+  - path: lib\VRL-UG\VRL-UG\dist\VRL-UG.jar
+    name: mypackage
 deploy:
   description: 'development'
   provider: GitHub
   auth_token:
     secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
-  artifact: lib\VRL-UG\VRL-UG\dist\VRL-UG.jar
   draft: false
   prerelease: false
+  artifact: mypackage
   on:
     appveyor_repo_tag: true
