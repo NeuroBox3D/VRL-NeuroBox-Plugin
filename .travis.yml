@@ -28,7 +28,7 @@ script:
  
 deploy:
   provider: releases
-  api_key: "$TRAVIS_ACCESS_TOKEN"
+  api_key: $NEUROBOX_ACCESS_TOKEN
   file: /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/VRL-Neurolucida-Project/build/libs/VRL-Neurolucida-Plugin.jar
   skip_cleanup: true
   on:
