@@ -33,7 +33,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
-  draft: false
+  draft: true
   prerelease: false
   artifact: mypackage
   on:
