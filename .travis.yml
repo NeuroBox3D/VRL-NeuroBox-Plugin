@@ -1,13 +1,16 @@
+# settings
 sudo: false 
 dist: trusty
 language: cpp
 
+# builds matrix
 matrix:
   include:
     - os: linux
     - os: osx
       osx_image: xcode8
 
+# perform before tests
 before_script: 
   - java -version
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use oraclejdk8; fi
@@ -22,10 +25,12 @@ before_script:
   - "export TERM=dumb"
   - travis_wait 640 ./build_vrl_ug_and_api.sh 
 
+# tests
 script:
   - ./build_vrl_userdata.sh
   - ./build_neurolucida.sh
  
+# deploy
 deploy:
   provider: releases
   api_key: $NEUROBOX_ACCESS_TOKEN
