@@ -20,7 +20,7 @@ mkdir -p ${COMMON_PART_NATIVES}linux/x86
 mkdir -p ${COMMON_PART_NATIVES}linux/x64
 cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}linux/x86/${ZIP_NAME}
 cp $ZIP_FILE_FOLDER/$ZIP_NAME ${COMMON_PART_NATIVES}linux/x64/${ZIP_NAME}
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar jars/
 ant clean; ant compile; 
 ant jar
 
@@ -33,9 +33,9 @@ wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
 unzip vrl-app-for-github.zip &> /dev/null
 cd ugInit-consolApp/;
 chmod +x run.sh;
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
 
-rm -rf /home/travis/.vrl/0.4.2/default/plugins/VRL-UG*;
+rm -rf $HOME/.vrl/0.4.2/default/plugins/VRL-UG*;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*;
 rm -rf .application/property-folder/plugins/VRL-UG*;
 rm -rf .application/property-folder/plugins/VRL-UG*.xml;
@@ -44,13 +44,13 @@ rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.jar;
 rm -rf .application/property-folder/plugins/unzipped/VRL-UG*.xml;
 rm -rf .application/property-folder/plugins/unzipped/
 rm -rf .application/property-folder/property-folder/*;
-# cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugin-updates/VRL-UG.jar
-# cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugins/VRL-UG.jar
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugin-updates/VRL-UG.jar
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugins/VRL-UG.jar
+# cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugin-updates/VRL-UG.jar
+# cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar .application/property-folder/plugins/VRL-UG.jar
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugin-updates/VRL-UG.jar
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .application/property-folder/plugins/VRL-UG.jar
 
-#jar tf /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
-#du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
+#jar tf $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
+#du -sh $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist-single/temp_final.jar
 
 # install vrl-ug plugin
  ./run.sh; 
@@ -58,7 +58,7 @@ cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-
 ./run.sh;
 # test
 
-BASEPATH=/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars
+BASEPATH=$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars
 
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar .application/lib/
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar .application/lib/
@@ -125,28 +125,28 @@ then
   JAVAEXE="java"
 fi
 
-if [[ $OS == *Darwin* ]]
-then
-  # ugly hack to enable vtk on osx
-  export DYLD_LIBRARY_PATH="$PROPERTY_FOLDER/plugins/VRL-VTK/natives/osx/:$DYLD_LIBRARY_PATH"
-  # force java 6 on mac os
-  JAVAEXE=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin/java
-fi
+#if [[ $OS == *Darwin* ]]
+#then
+ # # ugly hack to enable vtk on osx
+ # export DYLD_LIBRARY_PATH="$PROPERTY_FOLDER/plugins/VRL-VTK/natives/osx/:$DYLD_LIBRARY_PATH"
+ # # force java 6 on mac os
+ # JAVAEXE=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin/java
+#fi
   
 # optimized for jre 7 (19.04.2012)
-$JAVAEXE -Xms128m -Xmx4096m -XX:MaxPermSize=256m -Djava.library.path="$LIBDIR:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar:/Users/markus/Developing/VRL/VRL/VRL/jars/groovy/groovy-all.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar"  -jar "$PROJECT_FILE" $CONF
+$JAVAEXE -Xms128m -Xmx4096m -XX:MaxPermSize=256m -Djava.library.path="$LIBDIR:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar:/Users/markus/Developing/VRL/VRL/VRL/jars/groovy/groovy-all.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar"  -jar "$PROJECT_FILE" $CONF
 
-$JAVAEXE -Xms128m -Xmx4096m -XX:MaxPermSize=256m -Djava.library.path="$LIBDIR:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar:/Users/markus/Developing/VRL/VRL/VRL/jars/groovy/groovy-all.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar:/home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar"  -jar "$PROJECT_FILE" $CONF
+$JAVAEXE -Xms128m -Xmx4096m -XX:MaxPermSize=256m -Djava.library.path="$LIBDIR:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar:/Users/markus/Developing/VRL/VRL/VRL/jars/groovy/groovy-all.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-common-3.1.3.jar:$HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/jars/apache-xmlrpc-3.1.3/lib/xmlrpc-server-3.1.3.jar"  -jar "$PROJECT_FILE" $CONF
 
 echo "VRL-UG-API information:"
-file /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
-du -sh /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
+file $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
+du -sh $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar
 
-cd /home/travis/build/NeuroBox3D/;
+cd $HOME/build/NeuroBox3D/;
 mkdir "final-jars/"; cd "final-jars"/;
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar .
-cp /home/travis/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar .
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL-UG/VRL-UG/dist/VRL-UG.jar .
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/property-folder/plugins/VRL-UG-API.jar .
+cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar .
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/commons-logging-1.1.jar .
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/ws-commons-util-1.0.2.jar .
 cp $BASEPATH/apache-xmlrpc-3.1.3/lib/xmlrpc-client-3.1.3.jar .
