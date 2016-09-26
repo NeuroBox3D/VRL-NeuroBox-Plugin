@@ -3,12 +3,14 @@ sudo: false
 dist: trusty
 language: cpp
 
+
 # builds matrix
 matrix:
   include:
     - os: linux
     - os: osx
       osx_image: xcode8
+
 
 # perform before tests
 before_script: 
