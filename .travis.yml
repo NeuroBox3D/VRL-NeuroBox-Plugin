@@ -27,6 +27,7 @@ before_script:
   - "export TERM=dumb"
   - travis_wait 640 ./build_vrl_ug_and_api.sh 
 
+
 # tests
 script:
   - ./build_vrl_userdata.sh
