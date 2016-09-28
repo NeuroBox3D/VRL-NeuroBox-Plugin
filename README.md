@@ -8,7 +8,7 @@ See also http://www.neurobox.eu for further details.
 [![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
 [![Linux/OSX Build Status](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin.svg?branch=ci)](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/03r2i9tp7rlu2spr/branch/ci?svg=true)](https://ci.appveyor.com/project/stephanmg/vrl-neurobox-plugin/branch/ci)
-
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
 # Development
 
