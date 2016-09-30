@@ -21,9 +21,9 @@ build_script:
   - echo "%cd%"
   - nmake
   - echo "%cd%"
-  - CALL build_vrl_ug_and_api.bat
-  - CALL C:\projects\vrl-neurobox-plugin\build_vrl_userdata.bat
-  - CALL C:\projects\vrl-neurobox-plugin\build_neurolucida.bat
+  - CALL scripts\build_vrl_ug_and_api.bat
+  - CALL C:\projects\vrl-neurobox-plugin\scripts\build_vrl_userdata.bat
+  - CALL C:\projects\vrl-neurobox-plugin\scripts\build_neurolucida.bat
 
 artifacts:
   - path: lib\ugInit-consolApp\.application\final-jars\VRL-UserData\VRL-Neurolucida-Project\build\libs\VRL-Neurolucida-Plugin.jar

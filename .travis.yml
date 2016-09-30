@@ -23,12 +23,12 @@ before_script:
   - travis_wait 800 make
   - cd ..
   - "export TERM=dumb"
-  - travis_wait 640 ./build_vrl_ug_and_api.sh 
+  - travis_wait 640 ./scripts/build_vrl_ug_and_api.sh 
 
 # tests
 script:
-  - ./build_vrl_userdata.sh
-  - ./build_neurolucida.sh
+  - ./scripts/build_vrl_userdata.sh
+  - ./scripts/build_neurolucida.sh
  
 # deploy
 deploy:
