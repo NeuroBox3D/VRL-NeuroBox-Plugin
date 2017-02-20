@@ -155,7 +155,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
             vapi.addComponent(Hodgkin_Huxley.class);
             vapi.addComponent(Hodgkin_Huxley_Nernst.class);
             vapi.addComponent(Leakage.class);
-            vapi.addComponent(SynapseHandler.class);
+            vapi.addComponent(SynapseHandler_VRL.class);
 
             // membrane potential mapping
             vapi.addComponent(MembranePotentialMapping.class);

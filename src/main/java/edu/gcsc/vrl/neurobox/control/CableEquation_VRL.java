@@ -38,7 +38,6 @@ public class CableEquation_VRL implements Serializable
      * @param functionDefinition
      * @param vmDiscSubsetData
      * @param memTransporters
-     * @param presynSubsetData
      * @param synHandler
      * @param startValue
      * @return
@@ -71,11 +70,7 @@ public class CableEquation_VRL implements Serializable
                
         @ParamGroupInfo(group="Problem definition|true; Membrane transport|false")
         @ParamInfo(name="synapse handler", style="default", options="", nullIsValid=true)
-        I_NETISynapseHandler synHandler,
-        
-        @ParamGroupInfo(group="Problem definition|true")
-        @ParamInfo(name="presynapse subset", style="default", options="ugx_globalTag=\"gridFile\"; type=\"s:presynaptic subset\"")
-        UserDataTuple presynSubsetData,
+        I_SynapseHandler synHandler,
         
         @ParamGroupInfo(group="Problem definition|true; Initial values|false")
         @ParamInfo(name=" ", style="array", options="ugx_globalTag=\"gridFile\";"
@@ -111,15 +106,11 @@ public class CableEquation_VRL implements Serializable
         // add channels
         for (I_ICableMembraneTransport ch : memTransporters)
             cableDisc.add(ch);
-        
-        // get synaptic subset info
-        String presynSs = presynSubsetData.getSubset(0);
-        
+                
         // synapse handler
         if (synHandler != null)
         {
             synHandler.set_ce_object(cableDisc);
-            synHandler.set_presyn_subset(presynSs);
             cableDisc.set_synapse_handler(synHandler);
         }
         
