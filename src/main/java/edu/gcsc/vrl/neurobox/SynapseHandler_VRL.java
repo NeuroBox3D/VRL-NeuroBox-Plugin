@@ -76,6 +76,79 @@ public class SynapseHandler_VRL implements Serializable
         check_syn_handler();
         synHandler.set_activation_timing_alpha(onset, tau, peak_cond, onset_dev, tau_dev, peak_cond_dev, true);
     }
+	
+	
+    
+	
+    @MethodInfo(name="ALPHA synapse activation timing ball", interactive=false)
+    public void add_alpha_synapse_activation_timing_ball
+    (
+	/// start time
+        @ParamInfo(name="mean onset [s]", 
+		   style="default", 
+		   options="value=0.01; description=\"default: 10 ms\"") 
+		   Double onset,
+	    
+	/// duration
+        @ParamInfo(name="mean tau [s]", 
+ 		   style="default", 
+		   options="value=2e-3; description=\"default: 2 ms\"")
+		   Double tau,
+	
+	/// peak conductance
+        @ParamInfo(name="mean peak conductance [S]", 
+		   style="default", 
+		   options="value=1.2e-9; description=\"default: 1.2 nS\"")
+		   Double peak_cond,
+	
+	/// std deviation of start time
+        @ParamInfo(name="std deviation onset [s]", 
+		   style="default", 
+		   options="value=0.003; description=\"default: 3 ms\"") 
+		   Double onset_dev,
+	
+	/// std deviation of duration 
+        @ParamInfo(name="std deviation tau [s]", 
+		   style="default", 
+		   options="value=2e-4; description=\"default: 200 us\"")
+		   Double tau_dev,
+	
+	/// std deviation of peak conductance
+        @ParamInfo(name="std deviation peak conductance [S]", 
+		   style="default", 
+		   options="value=1e-10; description=\"default: 100 pS\"")
+		   Double peak_cond_dev,
+	
+	/// ball center x coordinate
+        @ParamInfo(name="ball center x [m]", 
+		   style="default", 
+		   options="value=0")
+		   Double x,
+	
+	/// ball center y coordinate
+        @ParamInfo(name="ball center y [m]", 
+		   style="default", 
+		   options="value=0")
+		   Double y,
+	
+	/// ball center z coordinate
+        @ParamInfo(name="ball center z [m]", 
+		   style="default", 
+		   options="value=0")
+		   Double z,
+	
+	/// ball center radius
+        @ParamInfo(name="ball radius [m]", 
+		   style="default", 
+		   options="value=1e-6;")
+		   Double r
+    )
+    {
+        check_syn_handler();
+        synHandler.add_activation_timing_alpha_ball
+		(new Double[]{onset, onset_dev, tau, tau_dev, peak_cond, peak_cond_dev},
+		 new Double[]{x, y, z, r});
+    }
     
 	
     @MethodInfo(name="set EXP2 synapse activation timing", interactive=false)
