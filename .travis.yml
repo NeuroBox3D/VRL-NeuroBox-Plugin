@@ -18,8 +18,8 @@ before_script:
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
-  - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida SkinLayerGenerator
-  - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON -DSkinLayerGenerator=ON
+  - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida SkinLayerGenerator ProMesh
+  - mkdir build && cd build && cmake ../ -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON -DSkinLayerGenerator=ON -DProMesh=ON
   - travis_wait 800 make
   - cd ..
   - "export TERM=dumb"
