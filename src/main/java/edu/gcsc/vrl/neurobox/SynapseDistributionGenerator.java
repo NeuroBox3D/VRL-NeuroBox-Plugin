@@ -105,9 +105,9 @@ public class SynapseDistributionGenerator implements java.io.Serializable
 			Double r = rVal.const__get();
 
 			if ("alpha synapse".equals(syn_type))
-				sd.place_synapses_uniform(density, x, y, z, r, "AlphaPostSynapse");
+				sd.place_synapses_uniform_density(density, x, y, z, r, "AlphaPostSynapse");
 			else if ("biexp synapse".equals(syn_type))
-				sd.place_synapses_uniform(density, x, y, z, r, "Exp2PostSynapse");
+				sd.place_synapses_uniform_density(density, x, y, z, r, "Exp2PostSynapse");
 			else
 			{
 				VMessage.exception("SynapseDistributionGenerator::place_synapses_ball failed",
