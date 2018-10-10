@@ -4,7 +4,7 @@ sourceCompatibility = '1.6'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 	
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.9'
+    gradleVersion = '4.10'
 }
 
 // NetBeans will automatically add "run" and "debug" tasks relying on the
@@ -29,7 +29,20 @@ repositories {
     }
 }
 
+// loads the property file
 loadProperties('build.properties')
+
+buildscript {
+    
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    
+    dependencies {
+        classpath (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.3.2.3')
+    }
+}
 
 dependencies {
     // TODO: Add dependencies here ...
@@ -37,7 +50,7 @@ dependencies {
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
     testCompile group: 'junit', name: 'junit', version: '4.12'
     
-    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.2.8.5-SNAPSHOT')
+    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.3.2.3')
     compile fileTree (dir: './lib', includes: ['*.jar'])
     compile files(vrldir+'/plugins/VRL-UG.jar')
     compile files(vrldir+'/plugins/VRL-UG-API.jar')
@@ -76,14 +89,28 @@ jar {
     from files(sourceSets.main.output.classesDir)
 }
 
-// loads the property file
+String getVRLDir() {
+    
+    String result
+    
+    if (vrldir.isEmpty()) {
+        result = System.getProperty("user.home");
+        result+= "/.vrl/"
+        result+= eu.mihosoft.vrl.system.Constants.VERSION_MAJOR
+        result+= "/default"
+    } else {
+        result = vrldir
+    }
+    
+    return result
+}
 
 // compiles and installs the vrl plugin to the specified folder
 task installVRLPlugin(dependsOn: [clean,jar]) << {
-    println(">> copying vrl plugin to: " + vrldir+"/plugin-updates")
+    println(">> copying vrl plugin to: " + getVRLDir()+"/plugin-updates")
     copy {
-        from buildDir.getPath()+"/libs/"+rootProject.name + ".jar"
-        into vrldir+"/plugin-updates"
+        from buildDir.getPath() + "/libs/"+rootProject.name + ".jar"
+        into getVRLDir() + "/plugin-updates"
         include '**/*.jar'
     }
 }
