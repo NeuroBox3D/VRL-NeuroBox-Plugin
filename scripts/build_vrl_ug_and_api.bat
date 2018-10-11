@@ -34,6 +34,10 @@ call ant jar
 cd ..\
 cd ..\
 md console-app;
+git clone https://github.com/NeuroBox3D/build_tools.git build_tools
+cd build_tools;
+ren consoleApp ugInit-consolApp
+move ugInit-consolApp ..\console-app;
 cd console-app;
 xcopy C:\projects\vrl-neurobox-plugin\vrl-app-for-github.zip "%cd%"
 call 7z x vrl-app-for-github.zip -y
