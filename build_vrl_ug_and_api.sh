@@ -31,10 +31,14 @@ ant jar
 
 cd ../../;
 mkdir console-app;
+git clone https://github.com/NeuroBox3D/build_tools.git build_tools
+cd build_tools;
+mv consoleApp ugInit-consolApp
+mv ugInit-consolApp ../console-app;
 cd console-app;
-wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
-unzip vrl-app-for-github.zip &> /dev/null
-cd ugInit-consolApp/;
+# wget http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
+# unzip vrl-app-for-github.zip &> /dev/null
+# cd ugInit-consolApp/;
 chmod +x run.sh;
 cp $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/VRL/VRL/dist/VRL.jar $HOME/build/NeuroBox3D/VRL-NeuroBox-Plugin/lib/console-app/ugInit-consolApp/.application/lib/
 
