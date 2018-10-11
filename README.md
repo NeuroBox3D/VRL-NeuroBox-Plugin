@@ -3,9 +3,7 @@ VRL-NeuroBox-Plugin
 See also http://www.neurobox.eu for further details.
 
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
-[![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
  [![Codacy Badge](https://api.codacy.com/project/badge/grade/24ca78102c7b48d2912ab069a2b73e2e)](https://www.codacy.com/app/stephan_5/VRL-NeuroBox-Plugin)
-[![Dependency Status](https://www.versioneye.com/user/projects/55828a5f386664001a000727/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/55828a5f386664001a000727)
 [![Linux/OSX Build Status](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin.svg?branch=ci)](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/03r2i9tp7rlu2spr/branch/ci?svg=true)](https://ci.appveyor.com/project/stephanmg/vrl-neurobox-plugin/branch/ci)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
@@ -74,9 +72,3 @@ Finally, restart VRL-Studio
 - Move scripts to separate scripts/ folder
 - Buildmatrix for OSX and Linux to be tested
 - Add trigger after_success in all the prerequisites for building the VRL-NeuroBox-Plugin
-
-## Issues
-[![Stories in Backlog](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=backlog&title=Backlog)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
-[![Stories in Ready](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=ready&title=Ready)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
-[![Stories in In Progress](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=in progress&title=In Progress)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
-[![Stories in Done](https://badge.waffle.io/NeuroBox3D/vrl-neurobox-plugin.png?label=done&title=Done)](http://waffle.io/NeuroBox3D/vrl-neurobox-plugin)
