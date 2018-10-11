@@ -1,39 +1,42 @@
+image: Visual Studio 2017
+
 platform:
   - x64
 
-os: Visual Studio 2015
+configuration:
+  - Release
 
-install:
-  - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64'
+environment:
+  MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
 
 build_script:
   - appveyor DownloadFile https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.9-bin.zip
+  # - appveyor DownloadFile path/to/console/app/on/hidrive
   - 7z x apache-ant-1.9.9-bin.zip
   - set PATH=%PATH%;C:\projects\vrl-neurobox-plugin\apache-ant-1.9.9\bin;
   - git config --global core.autocrlf true
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
-  - ughub/ughub install ugcore ConvectionDiffusion LuaShell Neurolucida SkinLayerGenerator ProMesh
-  - call ugcore\scripts\shell\vcinit12-64
-  - cmake -DCMAKE_BUILD_TYPE=Release -DTARGET=vrl -DLAPACK=OFF -DBLAS=OFF -DDIM="1;2;3" -DCOMPILE_INFO=OFF -DConvectionDiffusion=ON -DLuaShell=ON -DNeurolucida=ON -DSkinLayerGenerator=ON -DSLGTestsuite=OFF -DProMesh=ON -DCMAKE_CXX_FLAGS="/MD /O2 /Ob2 /D NDEBUG /bigobj" -DCMAKE_EXE_LINKER_FLAGS="/INCREMENTAL:NO" -DCMAKE_MODULE_LINKER_FLAGS_DEBUG="/INCREMENTAL:NO" -G"NMake Makefiles"
-  - echo "%cd%"
-  - nmake
+  - ughub/ughub install ugcore Neurolucida SkinLayerGenerator ProMesh
+  - cmake -DCMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE=x64 -DTARGET=ugshell -DLAPACK=OFF -DBLAS=OFF -DDIM="3" -DNeurolucida=ON -DSkinLayerGenerator=ON -DProMesh=ON  -DCOMPILE_INFO=OFF -DEMBEDDED_PLUGINS=ON  -G"Visual Studio 15 2017 Win64"
+  - MSBuild .\ug4.sln  /property:Configuration=Release /property:Platform=x64
   - echo "%cd%"
   - CALL scripts\build_vrl_ug_and_api.bat
   - CALL C:\projects\vrl-neurobox-plugin\scripts\build_vrl_userdata.bat
   - CALL C:\projects\vrl-neurobox-plugin\scripts\build_neurolucida.bat
 
-artifacts:
-  - path: lib\ugInit-consolApp\.application\final-jars\VRL-UserData\VRL-Neurolucida-Project\build\libs\VRL-Neurolucida-Plugin.jar
-    name: mypackage
-deploy:
-  description: 'development'
-  provider: GitHub
-  auth_token:
-    secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
-  draft: true
-  prerelease: false
-  artifact: mypackage
-  on:
-    appveyor_repo_tag: true
+# add this back if console app avaiable for download
+#artifacts:
+#  - path: lib\ugInit-consolApp\.application\final-jars\VRL-UserData\VRL-Neurolucida-Project\build\libs\VRL-Neurolucida-Plugin.jar
+#    name: mypackage
+#deploy:
+#  description: 'development'
+#  provider: GitHub
+#  auth_token:
+#    secure: ChNgJS32tV9vpeZuT0S3nVRohURT4bpUODc2y4csRp2T7ssvdz6CHMHRituo3Gp0
+#  draft: true
+#  prerelease: false
+#  artifact: mypackage
+#  on:
+#    appveyor_repo_tag: true
