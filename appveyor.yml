@@ -8,7 +8,6 @@ install:
 
 build_script:
   - appveyor DownloadFile https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.9-bin.zip
-  - appveyor DownloadFile http://www.stephangrein.de/files/vrl/vrl-app-for-github.zip
   - 7z x apache-ant-1.9.9-bin.zip
   - set PATH=%PATH%;C:\projects\vrl-neurobox-plugin\apache-ant-1.9.9\bin;
   - git config --global core.autocrlf true
