@@ -69,6 +69,7 @@ task to build and install the plugin.
 Finally, restart VRL-Studio
 
 ## TODOs
+- Add back Console App to appveyor build.
 - Move scripts to separate scripts/ folder
 - Buildmatrix for OSX and Linux to be tested
 - Add trigger after_success in all the prerequisites for building the VRL-NeuroBox-Plugin
