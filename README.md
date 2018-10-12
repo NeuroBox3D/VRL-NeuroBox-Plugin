@@ -4,7 +4,7 @@ See also http://www.neurobox.eu for further details.
 
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/NeuroBox3D)
  [![Codacy Badge](https://api.codacy.com/project/badge/grade/24ca78102c7b48d2912ab069a2b73e2e)](https://www.codacy.com/app/stephan_5/VRL-NeuroBox-Plugin)
-[![Linux/OSX Build](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin.svg?branch=ci)](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin)
+[![Linux/OSX Build](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin.svg?branch=ci)](https://travis-ci.org/NeuroBox3D/VRL-NeuroBox-Plugin.svg?branch=ci)
 [![Windows Build](https://ci.appveyor.com/api/projects/status/03r2i9tp7rlu2spr/branch/ci?svg=true)](https://ci.appveyor.com/project/stephanmg/vrl-neurobox-plugin/branch/ci)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
