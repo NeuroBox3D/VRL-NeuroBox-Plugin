@@ -26,7 +26,8 @@ before_script:
 #  - travis_wait 640 ./build_vrl_ug_and_api.sh 
 
 # tests
-#script:
+script:
+  - echo "tests"
 #  - ./build_vrl_userdata.sh
 #  - ./build_neurolucida.sh
  
