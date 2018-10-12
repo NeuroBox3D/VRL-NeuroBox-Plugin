@@ -18,8 +18,8 @@ build_script:
   - git clone https://www.github.com/UG4/ughub
   - ughub/ughub init
   - ughub/ughub addsource neurobox https://github.com/NeuroBox3D/neurobox-packages.git
-  - ughub/ughub install ugcore Neurolucida SkinLayerGenerator ProMesh
-  - cmake -DCMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE=x64 -DTARGET=ugshell -DLAPACK=OFF -DBLAS=OFF -DDIM="3" -DNeurolucida=ON -DSkinLayerGenerator=ON -DProMesh=ON  -DCOMPILE_INFO=OFF -DEMBEDDED_PLUGINS=ON  -G"Visual Studio 15 2017 Win64"
+  - ughub/ughub install ugcore Neurolucida 
+  - cmake -DCMAKE_VS_PLATFORM_TOOLSET_HOST_ARCHITECTURE=x64 -DTARGET=ugshell -DLAPACK=OFF -DBLAS=OFF -DDIM="3" -DNeurolucida=ON -DSkinLayerGenerator=OFF -DSTATIC_BUILD=ON -DProMesh=ON  -DCOMPILE_INFO=OFF -DEMBEDDED_PLUGINS=ON  -G"Visual Studio 15 2017 Win64"
   - MSBuild .\ug4.sln  /property:Configuration=Release /property:Platform=x64
   - echo "%cd%"
   - CALL scripts\build_vrl_ug_and_api.bat
