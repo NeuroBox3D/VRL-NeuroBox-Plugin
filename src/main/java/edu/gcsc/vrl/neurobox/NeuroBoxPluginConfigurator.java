@@ -28,6 +28,7 @@ import edu.gcsc.vrl.neurobox.membrane_transport.SERCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.PMCA_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.Leak_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.RyR_VRL;
+import edu.gcsc.vrl.neurobox.membrane_transport.RyRinstat_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.cable.Hodgkin_Huxley_Nernst;
 import edu.gcsc.vrl.neurobox.membrane_transport.MCU_VRL;
 import edu.gcsc.vrl.neurobox.membrane_transport.MNCX_VRL;
@@ -140,6 +141,7 @@ public class NeuroBoxPluginConfigurator extends VPluginConfigurator
 
             vapi.addComponent(IP3R_VRL.class);
             vapi.addComponent(RyR_VRL.class);
+            vapi.addComponent(RyRinstat_VRL.class);
             vapi.addComponent(SERCA_VRL.class);
             vapi.addComponent(Leak_VRL.class);
             vapi.addComponent(PMCA_VRL.class);
