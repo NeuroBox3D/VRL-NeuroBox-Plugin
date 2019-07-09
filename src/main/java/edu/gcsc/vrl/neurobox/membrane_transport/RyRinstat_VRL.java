@@ -1,5 +1,6 @@
 package edu.gcsc.vrl.neurobox.membrane_transport;
 
+import edu.gcsc.vrl.ug.api.I_ApproximationSpace;
 import edu.gcsc.vrl.ug.api.I_CplUserNumber;
 import edu.gcsc.vrl.ug.api.I_MembraneTransportFV1;
 import edu.gcsc.vrl.ug.api.I_RyRinstat;
@@ -34,6 +35,10 @@ public class RyRinstat_VRL implements Serializable
     @MethodInfo(name="create RyR",hide=false)
     public void createRyR
     (
+        // approx space
+        @ParamInfo(name="Approximation Space", style="default")
+        I_ApproximationSpace approxSpace,
+		
         @ParamInfo(name="", style="default", options="ugx_globalTag=\"gridFile\"; fct_tag=\"fctDef\"; type=\"S2|n:cytosolic calcium, endoplasmic calcium, density\"")
         UserDataTuple ryrData
     )
@@ -47,7 +52,7 @@ public class RyRinstat_VRL implements Serializable
         ryrDensityFct = (I_CplUserNumber) ryrData.getNumberData(1);
         
         // construct RyR object
-        ryr = new RyRinstat(ryrSelFcts);
+        ryr = new RyRinstat(ryrSelFcts, ryrSelSs, approxSpace);
     }
     
     @MethodInfo(name="create elemDisc", valueName="RyR ElemDisc", hide=false)
