@@ -40,7 +40,7 @@ buildscript {
     }
     
     dependencies {
-        classpath (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.3.2.3')
+        classpath (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.4.0.3')
     }
 }
 
@@ -52,8 +52,8 @@ dependencies {
     
     compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.3.2.3')
     compile fileTree (dir: './lib', includes: ['*.jar'])
-    compile files(vrldir+'/plugins/VRL-UG.jar')
-    compile files(vrldir+'/plugins/VRL-UG-API.jar')
+    compile files(vrldir+'/plugins/vrl-ug.jar')
+    compile files(vrldir+'/plugins/vrl-ug-api.jar')
     compile files(vrldir+'/plugins/VRL-UserData.jar')
     //    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.2.8.5-SNAPSHOT', classifier: 'sources')
     //    compile (group: 'eu.mihosoft.vrl', name: 'vrl', version: '0.4.2.8.5-SNAPSHOT', classifier: 'javadoc')
@@ -80,9 +80,9 @@ jar {
     // dependencies except VRL
     from configurations.runtime.asFileTree.
         filter({file->return !file.name.startsWith("vrl-0")}).
-        filter({file->return !file.name.startsWith("VRL-UG.jar")}).
-        filter({file->return !file.name.startsWith("VRL-UG-API.jar")}).
-        filter({file->return !file.name.startsWith("VRL-UserData.jar")}).
+        filter({file->return !file.name.startsWith("vrl-ug.jar")}).
+        filter({file->return !file.name.startsWith("vrl-ug-api.jar")}).
+        filter({file->return !file.name.startsWith("vrl-userdata.jar")}).
         files.collect { zipTree(it) }
 
     // project class files compiled from source
