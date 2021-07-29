@@ -1,0 +1,7 @@
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Breit
+    given-names: Markus
+    orcid: https://orcid.org/0000-0003-4925-7248
+title: "Anatomically Detailed and Large-Scale Simulations Studying Synapse Loss and Synchrony Using NeuroBox"
+doi: 10.3389/fnana.2016.00008
